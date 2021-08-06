@@ -67,7 +67,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'aggregation_regress.tests.AggregationTests.test_boolean_conversion',
                 'aggregation_regress.tests.AggregationTests.test_more_more',
                 'aggregation_regress.tests.JoinPromotionTests.test_ticket_21150',
-                'aggregation.tests.AggregateTestCase.test_aggregation_random_ordering',
                 'annotations.tests.NonAggregateAnnotationTestCase.test_annotation_aggregate_with_m2o',
                 'defer_regress.tests.DeferAnnotateSelectRelatedTest.test_defer_annotate_select_related',
 
@@ -117,7 +116,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'filtered_relation.tests.FilteredRelationTests.test_with_join',
                 'filtered_relation.tests.FilteredRelationTests.test_with_join_and_complex_condition',
                 'fixtures_regress.tests.TestFixtures.test_loaddata_raises_error_when_fixture_has_invalid_foreign_key',
-                'introspection.tests.IntrospectionTests.test_get_table_description_nullable'
+                'introspection.tests.IntrospectionTests.test_get_table_description_nullable',
 
                 # django.db.transaction.TransactionManagementError: An error occurred in the current transaction. You
                 # can't execute queries until the end of the 'atomic' block.
@@ -140,9 +139,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'test_utils.tests.CaptureOnCommitCallbacksTests.test_no_arguments',
                 'test_utils.tests.CaptureOnCommitCallbacksTests.test_pre_callback',
                 'test_utils.tests.CaptureOnCommitCallbacksTests.test_using',
-
-                # not support ORDER BY RANDOM() ASC
-                'ordering.tests.OrderingTests.test_random_ordering',
 
                 # [planner:3065]Expression #1 of ORDER BY clause is not in SELECT list, references column '' which is
                 # not in SELECT list; this is incompatible with
@@ -256,11 +252,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'get_or_create.tests.UpdateOrCreateTests.test_manual_primary_key_test',
                 'get_or_create.tests.UpdateOrCreateTestsWithManualPKs.test_create_with_duplicate_primary_key',
 
-                'db_functions.comparison.test_cast.CastTests.test_cast_from_python',
-                'db_functions.math.test_random.RandomTests.test',
-                'db_functions.text.test_chr.ChrTests.test_basic',
                 'db_functions.text.test_chr.ChrTests.test_non_ascii',
-                'db_functions.text.test_chr.ChrTests.test_transform',
                 'db_functions.text.test_sha224.SHA224Tests.test_basic',
                 'db_functions.text.test_sha224.SHA224Tests.test_transform',
                 'db_functions.text.test_sha256.SHA256Tests.test_basic',
@@ -279,8 +271,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 '.test_trunc_timezone_applied_before_truncation',
                 'db_functions.datetime.test_extract_trunc.DateFunctionWithTimeZoneTests'
                 '.test_trunc_timezone_applied_before_truncation',
-                'db_functions.text.test_concat.ConcatTests.test_basic',
-                'db_functions.text.test_concat.ConcatTests.test_many',
                 'db_functions.text.test_reverse.ReverseTests.test_expressions',
 
                 'migrations.test_commands.MigrateTests.test_migrate_fake_initial_case_insensitive',
