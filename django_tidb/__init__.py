@@ -15,8 +15,10 @@
 # wrong version of Django is installed.
 import pkg_resources
 
+from .functions import register_functions
 from .utils import check_django_compatability
 
 __version__ = pkg_resources.get_distribution("django-tidb").version
 
 check_django_compatability()
+register_functions()
