@@ -78,6 +78,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'lookup.tests.LookupTests.test_regex',
 
                 'queries.tests.ComparisonTests.test_ticket8597',
+                'queries.test_explain.ExplainTests',
                 'queries.test_qs_combinators.QuerySetSetOperationTests.test_union_with_values_list_and_order_on_annotation',
                 'queries.test_qs_combinators.QuerySetSetOperationTests.test_union_with_values_list_and_order',
                 'queries.test_qs_combinators.QuerySetSetOperationTests.test_ordering_subqueries',
@@ -87,6 +88,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'queries.test_qs_combinators.QuerySetSetOperationTests.test_ordering',
                 'queries.test_qs_combinators.QuerySetSetOperationTests.test_order_by_same_type',
                 'queries.test_qs_combinators.QuerySetSetOperationTests.test_combining_multiple_models',
+            
 
                 # is unrelation with tidb
                 'file_uploads.tests.DirectoryCreationTests.test_readonly_root',
