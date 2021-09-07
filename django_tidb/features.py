@@ -63,17 +63,17 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 # 'test_django_tests.aggregation_regress_alfa.id' which is not functionally dependent on columns in
                 # GROUP BY clause; this is incompatible with sql_mode=only_full_group_by"
                 'aggregation.tests.AggregateTestCase.test_annotate_defer_select_related',
+                # TypeError: unsupported type for timedelta microseconds component: decimal.Decimal
+                #'aggregation.tests.AggregateTestCase.test_sum_duration_field',
+                # TypeError: unsupported type for timedelta microseconds component: decimal.Decimal
+                # 'aggregation.tests.AggregateTestCase.test_avg_duration_field',
+
                 'aggregation_regress.tests.AggregationTests.test_aggregate_duplicate_columns_select_related',
                 'aggregation_regress.tests.AggregationTests.test_boolean_conversion',
                 'aggregation_regress.tests.AggregationTests.test_more_more',
                 'aggregation_regress.tests.JoinPromotionTests.test_ticket_21150',
                 'annotations.tests.NonAggregateAnnotationTestCase.test_annotation_aggregate_with_m2o',
                 'defer_regress.tests.DeferAnnotateSelectRelatedTest.test_defer_annotate_select_related',
-
-                # TypeError: unsupported type for timedelta microseconds component: decimal.Decimal
-                'aggregation.tests.AggregateTestCase.test_sum_duration_field',
-                # TypeError: unsupported type for timedelta microseconds component: decimal.Decimal
-                'aggregation.tests.AggregateTestCase.test_avg_duration_field',
 
                 'lookup.tests.LookupTests.test_regex',
 
