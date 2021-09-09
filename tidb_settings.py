@@ -19,6 +19,10 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': '127.0.0.1',
         'PORT': 4000,
+        'TEST': {
+            'CHARSET': 'utf8mb4',
+            'COLLATION': 'utf8mb4_general_ci',
+        }
     },
     'other': {
         'ENGINE': 'django_tidb',

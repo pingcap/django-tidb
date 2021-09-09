@@ -56,9 +56,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'expressions.tests.FTimeDeltaTests.test_durationfield_multiply_divide',
             },
             "tidb": {
-                # https://github.com/pingcap/tidb/issues/25883
-                'or_lookups.tests.OrLookupsTests.test_empty_in',
-
                 # "Expression #5 of SELECT list is not in GROUP BY clause and contains nonaggregated column
                 # 'test_django_tests.aggregation_regress_alfa.id' which is not functionally dependent on columns in
                 # GROUP BY clause; this is incompatible with sql_mode=only_full_group_by"
