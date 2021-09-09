@@ -30,7 +30,11 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '127.0.0.1',
-        'PORT': 4000,
+        'PORT': 4002,
+        'TEST': {
+            'CHARSET': 'utf8mb4',
+            'COLLATION': 'utf8mb4_general_ci',
+        }
     },
 }
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

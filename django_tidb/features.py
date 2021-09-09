@@ -60,10 +60,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 # 'test_django_tests.aggregation_regress_alfa.id' which is not functionally dependent on columns in
                 # GROUP BY clause; this is incompatible with sql_mode=only_full_group_by"
                 'aggregation.tests.AggregateTestCase.test_annotate_defer_select_related',
-                # TypeError: unsupported type for timedelta microseconds component: decimal.Decimal
-                #'aggregation.tests.AggregateTestCase.test_sum_duration_field',
-                # TypeError: unsupported type for timedelta microseconds component: decimal.Decimal
-                # 'aggregation.tests.AggregateTestCase.test_avg_duration_field',
 
                 'aggregation_regress.tests.AggregationTests.test_aggregate_duplicate_columns_select_related',
                 'aggregation_regress.tests.AggregationTests.test_boolean_conversion',
@@ -85,7 +81,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'queries.test_qs_combinators.QuerySetSetOperationTests.test_ordering',
                 'queries.test_qs_combinators.QuerySetSetOperationTests.test_order_by_same_type',
                 'queries.test_qs_combinators.QuerySetSetOperationTests.test_combining_multiple_models',
-            
 
                 # is unrelation with tidb
                 'file_uploads.tests.DirectoryCreationTests.test_readonly_root',
@@ -96,24 +91,10 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'transactions.tests.DisableDurabiltityCheckTests.test_nested_inner_durable',
 
                 # wrong test result
-                'admin_changelist.tests.ChangeListTests.test_builtin_lookup_in_search_fields',
-                'admin_changelist.tests.ChangeListTests'
-                '.test_no_duplicates_for_many_to_many_at_second_level_in_search_fields',
-                'admin_changelist.tests.ChangeListTests'
                 '.test_no_duplicates_for_non_unique_related_object_in_search_fields',
                 'transaction_hooks.tests.TestConnectionOnCommit.test_inner_savepoint_does_not_affect_outer',
-                'filtered_relation.tests.FilteredRelationTests.test_as_subquery',
-                'filtered_relation.tests.FilteredRelationTests.test_defer',
-                'filtered_relation.tests.FilteredRelationTests.test_exclude_relation_with_join',
-                'filtered_relation.tests.FilteredRelationTests.test_extra',
-                'filtered_relation.tests.FilteredRelationTests.test_multiple_times',
                 'filtered_relation.tests.FilteredRelationTests.test_select_for_update',
                 'filtered_relation.tests.FilteredRelationTests.test_union',
-                'filtered_relation.tests.FilteredRelationTests.test_values',
-                'filtered_relation.tests.FilteredRelationTests.test_values_list',
-                'filtered_relation.tests.FilteredRelationTests.test_with_exclude',
-                'filtered_relation.tests.FilteredRelationTests.test_with_join',
-                'filtered_relation.tests.FilteredRelationTests.test_with_join_and_complex_condition',
                 'fixtures_regress.tests.TestFixtures.test_loaddata_raises_error_when_fixture_has_invalid_foreign_key',
                 'introspection.tests.IntrospectionTests.test_get_table_description_nullable',
 
@@ -196,6 +177,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'schema.tests.SchemaTests.test_rename_column_renames_deferred_sql_references',
                 'schema.tests.SchemaTests.test_rename_referenced_field',
                 'schema.tests.SchemaTests.test_rename_table_renames_deferred_sql_references',
+                'schema.tests.SchemaTests.test_add_field_remove_field',
 
                 # Unknown column 'annotations_publisher.id' in 'where clause'
                 'annotations.tests.NonAggregateAnnotationTestCase.test_annotation_filter_with_subquery',
@@ -315,27 +297,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'admin_views.tests.GroupAdminTest.test_group_permission_performance',
                 'admin_views.tests.UserAdminTest.test_user_permission_performance',
 
-                'multiple_database.tests.FixtureTestCase.test_fixture_loading',
-                'multiple_database.tests.RouterTestCase.test_deferred_models',
-                'multiple_database.tests.RouterTestCase.test_foreign_key_cross_database_protection',
-                'multiple_database.tests.RouterTestCase.test_generic_key_cross_database_protection',
-                'multiple_database.tests.SignalTests.test_database_arg_m2m',
-                'multiple_database.tests.AuthTestCase.test_auth_manager',
-                'multiple_database.tests.QueryTestCase.test_basic_queries',
-                'multiple_database.tests.QueryTestCase.test_default_creation',
-                'multiple_database.tests.QueryTestCase.test_foreign_key_deletion',
-                'multiple_database.tests.QueryTestCase.test_foreign_key_separation',
-                'multiple_database.tests.QueryTestCase.test_generic_key_deletion',
-                'multiple_database.tests.QueryTestCase.test_generic_key_reverse_operations',
-                'multiple_database.tests.QueryTestCase.test_m2m_deletion',
-                'multiple_database.tests.QueryTestCase.test_m2m_separation',
-                'multiple_database.tests.QueryTestCase.test_o2o_cross_database_protection',
-                'multiple_database.tests.QueryTestCase.test_o2o_separation',
-                'multiple_database.tests.QueryTestCase.test_ordering',
-                'multiple_database.tests.QueryTestCase.test_other_creation',
-                'multiple_database.tests.QueryTestCase.test_refresh',
-                'multiple_database.tests.RouterTestCase.test_database_routing',
-                'multiple_database.tests.RouterTestCase.test_m2m_cross_database_protection',
+                'multiple_database.tests.AuthTestCase.test_dumpdata',
 
                 # about Pessimistic/Optimistic Transaction Model
                 'select_for_update.tests.SelectForUpdateTests.test_raw_lock_not_available',
