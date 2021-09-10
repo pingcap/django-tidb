@@ -33,7 +33,7 @@ SECRET_KEY = 'django_tests_secret_key'
 - TiDB 5.x (tested with 5.1.x)
 - Django 3.x (tested with 3.2.x)
 - mysqlclient 2.0.3
-- Python 3.6 an newer (tested with Python 3.8)
+- Python 3.6 and newer (tested with Python 3.8)
 
 ## Testing
 
