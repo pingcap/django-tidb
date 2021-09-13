@@ -1,0 +1,8 @@
+# Packages used when running tests. Installed by tox into multiple
+# virtualenvs.
+#
+# To add/update dependencies, update test-requirements.in (not the
+# generated test-requirements.txt) and run make update-requirements
+
+django
+mysqlclient >= 1.4.0
