@@ -11,17 +11,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import io
+import re
 import os
 
 from setuptools import find_packages, setup
 
-BASE_DIR = os.path.dirname(__file__)
-VERSION_FILENAME = os.path.join(BASE_DIR, "version.py")
-PACKAGE_INFO = {}
-with open(VERSION_FILENAME) as f:
-    exec(f.read(), PACKAGE_INFO)
-version = PACKAGE_INFO["__version__"]
+with open(os.path.join(os.path.dirname(__file__), "django_tidb", "__init__.py")) as v:
+    version = re.compile(
+        r'.*__version__ = "(.*?)"',
+        re.S).match(
+        v.read()).group(1)
 
 setup(
     name='django-tidb',
