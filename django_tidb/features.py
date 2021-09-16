@@ -70,7 +70,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
 
                 'lookup.tests.LookupTests.test_regex',
 
-                'queries.tests.ComparisonTests.test_ticket8597',
                 'queries.test_explain.ExplainTests',
                 'queries.test_qs_combinators.QuerySetSetOperationTests.test_union_with_values_list_and_order_on_annotation',
                 'queries.test_qs_combinators.QuerySetSetOperationTests.test_union_with_values_list_and_order',
