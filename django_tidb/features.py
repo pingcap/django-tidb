@@ -71,7 +71,8 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'lookup.tests.LookupTests.test_regex',
 
                 'queries.test_explain.ExplainTests',
-                'queries.test_qs_combinators.QuerySetSetOperationTests.test_union_with_values_list_and_order_on_annotation',
+                'queries.test_qs_combinators.QuerySetSetOperationTests.'
+                'test_union_with_values_list_and_order_on_annotation',
                 'queries.test_qs_combinators.QuerySetSetOperationTests.test_union_with_values_list_and_order',
                 'queries.test_qs_combinators.QuerySetSetOperationTests.test_ordering_subqueries',
                 'queries.test_qs_combinators.QuerySetSetOperationTests.test_ordering_by_f_expression_and_alias',
@@ -211,7 +212,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 # ignore multi database
                 'contenttypes_tests.test_models.ContentTypesMultidbTests.test_multidb',
 
-                # ContentType matching query does not exist. 
+                # ContentType matching query does not exist.
                 'contenttypes_tests.test_models.ContentTypesTests.test_app_labeled_name',
 
                 # IntegrityError not raised
@@ -244,8 +245,10 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'db_functions.comparison.test_greatest.GreatestTests.test_basic',
                 'db_functions.comparison.test_least.LeastTests.test_basic',
                 'db_functions.datetime.test_extract_trunc.DateFunctionTests.test_trunc_time_func',
-                'db_functions.datetime.test_extract_trunc.DateFunctionWithTimeZoneTests.test_extract_func_with_timezone',
-                'db_functions.datetime.test_extract_trunc.DateFunctionWithTimeZoneTests.test_extract_func_with_timezone',
+                'db_functions.datetime.test_extract_trunc.DateFunctionWithTimeZoneTests'
+                '.test_extract_func_with_timezone',
+                'db_functions.datetime.test_extract_trunc.DateFunctionWithTimeZoneTests'
+                '.test_extract_func_with_timezone',
                 'db_functions.datetime.test_extract_trunc.DateFunctionWithTimeZoneTests.test_trunc_time_func',
                 'db_functions.datetime.test_extract_trunc.DateFunctionWithTimeZoneTests'
                 '.test_trunc_timezone_applied_before_truncation',
