@@ -29,6 +29,7 @@ from .version import TiDBVersion
 
 server_version = TiDBVersion()
 
+
 class DatabaseWrapper(MysqlDatabaseWrapper):
     vendor = 'tidb'
     display_name = 'TiDB'

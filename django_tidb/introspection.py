@@ -13,9 +13,7 @@
 
 from collections import namedtuple
 
-from django.db.backends.base.introspection import (
-    BaseDatabaseIntrospection, FieldInfo as BaseFieldInfo, TableInfo,
-)
+from django.db.backends.base.introspection import FieldInfo as BaseFieldInfo
 from django.db.backends.mysql.introspection import (
     DatabaseIntrospection as MysqlDatabaseIntrospection,
 )

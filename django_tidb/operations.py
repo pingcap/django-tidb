@@ -15,6 +15,7 @@ from django.db.backends.mysql.operations import (
     DatabaseOperations as MysqlDatabaseOperations,
 )
 
+
 class DatabaseOperations(MysqlDatabaseOperations):
     def explain_query_prefix(self, format=None, **options):
         if format:
