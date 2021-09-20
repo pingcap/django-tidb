@@ -1,0 +1,244 @@
+on: [push, pull_request]
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: docker://hawkingrei/tind:v5.2.1
+        name: __all__
+        with:
+          args: |
+            bash -c "tox -e lint"
+  test_py39_tidb_v4014:
+    name: test_py39_tidb_v4.0.14
+    runs-on: ubuntu-latest
+    services:
+      tidb:
+        image: hawkingrei/tind:v5.2.1-standalone
+        ports:
+          - 4000
+    steps:
+      - uses: actions/checkout@v1
+      - uses: docker://hawkingrei/tind:v4.0.14
+        name: __all__
+        with:
+          args: |
+            bash -c "service supervisor start && sleep 10s && tox -e py39"
+        env:
+          TIDB_HOST: tidb
+          TIDB_PORT: ${{ job.services.tidb.ports['4000'] }}
+          PYTHONIOENCODING: utf-8
+  test_py38_tidb_v4014:
+    name: test_py38_tidb_v4.0.14
+    runs-on: ubuntu-latest
+    services:
+      tidb:
+        image: hawkingrei/tind:v5.2.1-standalone
+        ports:
+          - 4000
+    steps:
+      - uses: actions/checkout@v1
+      - uses: docker://hawkingrei/tind:v4.0.14
+        name: __all__
+        with:
+          entrypoint: ''
+          args: |
+            bash -c "service supervisor start && sleep 10s && tox -e py38"
+        env:
+          TIDB_HOST: tidb
+          TIDB_PORT: ${{ job.services.tidb.ports['4000'] }}
+          PYTHONIOENCODING: utf-8
+  test_py37_tidb_v4014:
+    name: test_py37_tidb_v4.0.14
+    runs-on: ubuntu-latest
+    services:
+      tidb:
+        image: hawkingrei/tind:v5.2.1-standalone
+        ports:
+          - 4000
+    steps:
+      - uses: actions/checkout@v1
+      - uses: docker://hawkingrei/tind:v4.0.14
+        name: __all__
+        with:
+          args: |
+            bash -c "service supervisor start && sleep 10s && tox -e py37"
+        env:
+          TIDB_HOST: tidb
+          TIDB_PORT: ${{ job.services.tidb.ports['4000'] }}
+          PYTHONIOENCODING: utf-8
+  test_py36_tidb_v4014:
+    name: test_py36_tidb_v4.0.14
+    runs-on: ubuntu-latest
+    services:
+      tidb:
+        image: hawkingrei/tind:v5.2.1-standalone
+        ports:
+          - 4000
+    steps:
+      - uses: actions/checkout@v1
+      - uses: docker://hawkingrei/tind:v4.0.14
+        name: __all__
+        with:
+          args: |
+            bash -c "service supervisor start && sleep 10s && tox -e py36"
+        env:
+          TIDB_HOST: tidb
+          TIDB_PORT: ${{ job.services.tidb.ports['4000'] }}
+          PYTHONIOENCODING: utf-8
+  test_py39_tidb_v511:
+    name: test_py39_tidb_v5.1.1
+    runs-on: ubuntu-latest
+    services:
+      tidb:
+        image: hawkingrei/tind:v5.2.1-standalone
+        ports:
+          - 4000
+    steps:
+      - uses: actions/checkout@v1
+      - uses: docker://hawkingrei/tind:v5.1.1
+        name: __all__
+        with:
+          args: |
+            bash -c "service supervisor start && sleep 10s && tox -e py39"
+        env:
+          TIDB_HOST: tidb
+          TIDB_PORT: ${{ job.services.tidb.ports['4000'] }}
+          PYTHONIOENCODING: utf-8
+  test_py38_tidb_v511:
+    name: test_py38_tidb_v5.1.1
+    runs-on: ubuntu-latest
+    services:
+      tidb:
+        image: hawkingrei/tind:v5.2.1-standalone
+        ports:
+          - 4000 
+    steps:
+      - uses: actions/checkout@v1
+      - uses: docker://hawkingrei/tind:v5.1.1
+        name: __all__
+        with:
+          entrypoint: ''
+          args: |
+            bash -c "service supervisor start && sleep 10s && tox -e py38"
+        env:
+          TIDB_HOST: tidb
+          TIDB_PORT: ${{ job.services.tidb.ports['4000'] }}
+          PYTHONIOENCODING: utf-8
+  test_py37_tidb_v511:
+    name: test_py37_tidb_v5.1.1
+    runs-on: ubuntu-latest
+    services:
+      tidb:
+        image: hawkingrei/tind:v5.2.1-standalone
+        ports:
+          - 4000
+    steps:
+      - uses: actions/checkout@v1
+      - uses: docker://hawkingrei/tind:v5.1.1
+        name: __all__
+        with:
+          args: |
+            bash -c "service supervisor start && sleep 10s && tox -e py37"
+        env:
+          TIDB_HOST: tidb
+          TIDB_PORT: ${{ job.services.tidb.ports['4000'] }}
+          PYTHONIOENCODING: utf-8
+  test_py36_tidb_v511:
+    name: test_py36_tidb_v5.1.1
+    runs-on: ubuntu-latest
+    services:
+      tidb:
+        image: hawkingrei/tind:v5.2.1-standalone
+        ports:
+          - 4000
+    steps:
+      - uses: actions/checkout@v1
+      - uses: docker://hawkingrei/tind:v5.1.1
+        name: __all__
+        with:
+          args: |
+            bash -c "service supervisor start && sleep 10s && tox -e py36"
+        env:
+          TIDB_HOST: tidb
+          TIDB_PORT: ${{ job.services.tidb.ports['4000'] }}
+          PYTHONIOENCODING: utf-8
+  test_py39_tidb_v521:
+    name: test_py39_tidb_v5.2.1
+    runs-on: ubuntu-latest
+    services:
+      tidb:
+        image: hawkingrei/tind:v5.2.1-standalone
+        ports:
+          - 4000
+    steps:
+      - uses: actions/checkout@v1
+      - uses: docker://hawkingrei/tind:v5.2.1
+        name: __all__
+        with:
+          args: |
+            bash -c "service supervisor start && sleep 10s && tox -e py39"
+        env:
+          TIDB_HOST: tidb
+          TIDB_PORT: ${{ job.services.tidb.ports['4000'] }}
+          PYTHONIOENCODING: utf-8
+  test_py38_tidb_v521:
+    name: test_py38_tidb_v5.2.1
+    runs-on: ubuntu-latest
+    services:
+      tidb:
+        image: hawkingrei/tind:v5.2.1-standalone
+        ports:
+          - 4000
+    steps:
+      - uses: actions/checkout@v1
+      - uses: docker://hawkingrei/tind:v5.2.1
+        name: __all__
+        with:
+          entrypoint: ''
+          args: |
+            bash -c "service supervisor start && sleep 10s && tox -e py38"
+        env:
+          TIDB_HOST: tidb
+          TIDB_PORT: ${{ job.services.tidb.ports['4000'] }}
+          PYTHONIOENCODING: utf-8
+  test_py37_tidb_v521:
+    name: test_py37_tidb_v5.2.1
+    runs-on: ubuntu-latest
+    services:
+      tidb:
+        image: hawkingrei/tind:v5.2.1-standalone
+        ports:
+          - 4000
+    steps:
+      - uses: actions/checkout@v1
+      - uses: docker://hawkingrei/tind:v5.2.1
+        name: __all__
+        with:
+          args: |
+            bash -c "service supervisor start && sleep 10s && tox -e py37"
+        env:
+          TIDB_HOST: tidb
+          TIDB_PORT: ${{ job.services.tidb.ports['4000'] }}
+          PYTHONIOENCODING: utf-8
+  test_py36_tidb_v521:
+    name: test_py36_tidb_v5.2.1
+    runs-on: ubuntu-latest
+    services:
+      tidb:
+        image: hawkingrei/tind:v5.2.1-standalone
+        ports:
+          - 4000
+    steps:
+      - uses: actions/checkout@v1
+      - uses: docker://hawkingrei/tind:v5.2.1
+        name: __all__
+        with:
+          args: |
+            bash -c "service supervisor start && sleep 10s && tox -e py36"
+        env:
+          TIDB_HOST: tidb
+          TIDB_PORT: ${{ job.services.tidb.ports['4000'] }}
+          PYTHONIOENCODING: utf-8
