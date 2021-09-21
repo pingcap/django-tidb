@@ -30,6 +30,7 @@ import os
 import random
 import time
 import subprocess
+import random
 
 with open("django_test_apps.txt", "r") as file:
     all_apps = file.read().split("\n")
@@ -39,10 +40,9 @@ print("test apps: ", all_apps)
 if not all_apps:
     exit()
 
-time.sleep(3)
-
-os.system(
+exitcode = os.WEXITSTATUS(os.system(
     """DJANGO_TEST_APPS="{apps}" bash ./django_test_suite.sh""".format(
         apps=" ".join(all_apps)
     )
-)
+))
+exit(exitcode)
