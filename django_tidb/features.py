@@ -68,8 +68,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'annotations.tests.NonAggregateAnnotationTestCase.test_annotation_aggregate_with_m2o',
                 'defer_regress.tests.DeferAnnotateSelectRelatedTest.test_defer_annotate_select_related',
 
-                'lookup.tests.LookupTests.test_regex',
-
                 'queries.test_explain.ExplainTests',
                 'queries.test_qs_combinators.QuerySetSetOperationTests.'
                 'test_union_with_values_list_and_order_on_annotation',
@@ -279,10 +277,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'migrations.test_operations.OperationTests.test_add_or_constraint',
                 'migrations.test_operations.OperationTests.test_create_model_with_constraint',
                 'migrations.test_operations.OperationTests.test_remove_constraint',
-                'model_fields.test_uuid.TestQuerying.test_icontains',
-                'model_fields.test_uuid.TestQuerying.test_iendswith',
-                'model_fields.test_uuid.TestQuerying.test_iexact',
-                'model_fields.test_uuid.TestQuerying.test_istartswith',
 
                 # An error occurred in the current transaction. You can't execute queries until the end of the
                 # 'atomic' block." not found in 'Save with update_fields did not affect any rows.
@@ -305,6 +299,27 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'select_for_update.tests.SelectForUpdateTests.test_raw_lock_not_available',
             }
         }
+        if self.connection.tidb_version < (5,):
+            skips.update({
+                "tidb4": {
+                    # Unsupported modify column
+                    'schema.tests.SchemaTests.test_rename',
+                    'schema.tests.SchemaTests.test_m2m_rename_field_in_target_model',
+                    'schema.tests.SchemaTests.test_alter_textual_field_keep_null_status',
+                    'schema.tests.SchemaTests.test_alter_text_field_to_time_field',
+                    'schema.tests.SchemaTests.test_alter_text_field_to_datetime_field',
+                    'schema.tests.SchemaTests.test_alter_text_field_to_date_field',
+                    'schema.tests.SchemaTests.test_alter_field_type_and_db_collation',
+
+                    # wrong result
+                    'expressions_window.tests.WindowFunctionTests.test_subquery_row_range_rank',
+
+                    'migrations.test_operations.OperationTests.test_alter_fk_non_fk',
+                    'migrations.test_operations.OperationTests'
+                    '.test_alter_field_reloads_state_on_fk_with_to_field_target_changes',
+                    'model_fields.test_integerfield.PositiveIntegerFieldTests.test_negative_values',
+                }
+            })
         return skips
 
     @cached_property

@@ -11,6 +11,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+
+hosts = os.getenv('TIDB_HOST')
+if hosts is None:
+    hosts = "127.0.0.1"
+
+port = os.getenv('TIDB_PORT')
+if port is None:
+    port = 4000
+
 DATABASES = {
     'default': {
         'ENGINE': 'django_tidb',
@@ -26,11 +36,11 @@ DATABASES = {
     },
     'other': {
         'ENGINE': 'django_tidb',
-        'NAME': 'django_tests',
+        'NAME': 'django_tests2',
         'USER': 'root',
         'PASSWORD': '',
-        'HOST': '127.0.0.1',
-        'PORT': 4002,
+        'HOST': hosts,
+        'PORT': port,
         'TEST': {
             'CHARSET': 'utf8mb4',
             'COLLATION': 'utf8mb4_general_ci',

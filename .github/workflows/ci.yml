@@ -279,4 +279,4 @@ jobs:
         env:
           TIDB_HOST: tidb
           TIDB_PORT: ${{ job.services.tidb.ports['4000'] }}
-          PYTHONIOENCODING: utf-8          
+          PYTHONIOENCODING: utf-8
