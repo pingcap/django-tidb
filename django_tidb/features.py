@@ -302,13 +302,14 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
         if self.connection.tidb_version == (5, 0, 3):
             skips.update({
                 "tidb503": {
-                    "expressions_window.tests.WindowFunctionTests.test_subquery_row_range_rank"
+                    'expressions_window.tests.WindowFunctionTests.test_subquery_row_range_rank',
                 }
             })
         if self.connection.tidb_version == (4, 0, 0):
             skips.update({
                 "tidb400": {
-                    "admin_filters.tests.ListFiltersTests.test_relatedfieldlistfilter_reverse_relationships"
+                    'admin_filters.tests.ListFiltersTests.test_relatedfieldlistfilter_reverse_relationships',
+                    'aggregation.test_filter_argument.FilteredAggregateTests.test_filtered_numerical_aggregates',
                 }
             })
         if self.connection.tidb_version < (5,):
