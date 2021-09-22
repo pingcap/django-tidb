@@ -310,6 +310,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "tidb400": {
                     'admin_filters.tests.ListFiltersTests.test_relatedfieldlistfilter_reverse_relationships',
                     'aggregation.test_filter_argument.FilteredAggregateTests.test_filtered_numerical_aggregates',
+                    'aggregation_regress.tests.AggregationTests.test_stddev',
                 }
             })
         if self.connection.tidb_version < (5,):
