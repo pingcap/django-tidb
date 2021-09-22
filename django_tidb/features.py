@@ -315,6 +315,9 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                     'annotations.tests.NonAggregateAnnotationTestCase.test_raw_sql_with_inherited_field',
                 }
             })
+        if self.connection.tidb_version == (4, 0, 5) or self.connection.tidb_version ==  (4, 0, 9):
+            skips['tidb4'].add('lookup.tests.LookupTests.test_regex')
+
         if self.connection.tidb_version < (5,):
             skips.update({
                 "tidb4": {
