@@ -32,7 +32,7 @@ DATABASES = {
         'TEST': {
             'CHARSET': 'utf8mb4',
             'COLLATION': 'utf8mb4_general_ci',
-        }
+        },
     },
     'other': {
         'ENGINE': 'django_tidb',
@@ -44,7 +44,7 @@ DATABASES = {
         'TEST': {
             'CHARSET': 'utf8mb4',
             'COLLATION': 'utf8mb4_general_ci',
-        }
+        },
     },
 }
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
