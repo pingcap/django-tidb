@@ -312,6 +312,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                     'aggregation.test_filter_argument.FilteredAggregateTests.test_filtered_numerical_aggregates',
                     'aggregation_regress.tests.AggregationTests.test_stddev',
                     'aggregation_regress.tests.AggregationTests.test_aggregate_fexpr',
+                    'annotations.tests.NonAggregateAnnotationTestCase.test_raw_sql_with_inherited_field',
                 }
             })
         if self.connection.tidb_version < (5,):
