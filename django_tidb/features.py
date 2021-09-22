@@ -33,7 +33,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
     indexes_foreign_keys = False
     test_collations = {
         'ci': 'utf8mb4_general_ci',
-        'non_default': 'utf8mb4_unicode_ci',
+        'non_default': 'utf8mb4_bin',
     }
 
     @cached_property
@@ -311,6 +311,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                     'admin_filters.tests.ListFiltersTests.test_relatedfieldlistfilter_reverse_relationships',
                     'aggregation.test_filter_argument.FilteredAggregateTests.test_filtered_numerical_aggregates',
                     'aggregation_regress.tests.AggregationTests.test_stddev',
+                    'aggregation_regress.tests.AggregationTests.test_aggregate_fexpr',
                 }
             })
         if self.connection.tidb_version < (5,):
