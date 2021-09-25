@@ -33,7 +33,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
     indexes_foreign_keys = False
     test_collations = {
         'ci': 'utf8mb4_general_ci',
-        'non_default': 'utf8mb4_unicode_ci',
+        'non_default': 'utf8mb4_bin',
     }
 
     @cached_property
@@ -299,6 +299,36 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'select_for_update.tests.SelectForUpdateTests.test_raw_lock_not_available',
             }
         }
+        if self.connection.tidb_version == (5, 0, 3):
+            skips.update({
+                "tidb503": {
+                    'expressions_window.tests.WindowFunctionTests.test_subquery_row_range_rank',
+                    'schema.tests.SchemaTests.test_alter_textual_field_keep_null_status',
+
+                    # Unsupported modify column: column type conversion
+                    # between 'varchar' and 'non-varchar' is currently unsupported yet
+                    'schema.tests.SchemaTests.test_alter',
+                    'schema.tests.SchemaTests.test_alter_field_type_and_db_collation',
+                    'schema.tests.SchemaTests.test_alter_textual_field_keep_null_status',
+                }
+            })
+        if self.connection.tidb_version == (4, 0, 0):
+            skips.update({
+                "tidb400": {
+                    'admin_filters.tests.ListFiltersTests.test_relatedfieldlistfilter_reverse_relationships',
+                    'admin_filters.tests.ListFiltersTests.test_emptylistfieldfilter_reverse_relationships',
+                    'aggregation.test_filter_argument.FilteredAggregateTests.test_filtered_numerical_aggregates',
+                    'aggregation_regress.tests.AggregationTests.test_stddev',
+                    'aggregation_regress.tests.AggregationTests.test_aggregate_fexpr',
+                    'annotations.tests.NonAggregateAnnotationTestCase.test_raw_sql_with_inherited_field',
+                    'auth_tests.test_models.UserWithPermTestCase.test_basic',
+                    'generic_relations_regress.tests.GenericRelationTests.test_ticket_20378',
+                    'queries.test_bulk_update.BulkUpdateNoteTests.test_functions',
+                    'queries.tests.TestTicket24605.test_ticket_24605',
+                    'queries.tests.Queries6Tests.test_tickets_8921_9188',
+                    'schema.tests.SchemaTests.test_add_field_default_nullable'
+                }
+            })
         if self.connection.tidb_version < (5,):
             skips.update({
                 "tidb4": {
@@ -320,6 +350,8 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                     'model_fields.test_integerfield.PositiveIntegerFieldTests.test_negative_values',
                 }
             })
+        if self.connection.tidb_version >= (4, 0, 5) and self.connection.tidb_version <= (4, 0, 9):
+            skips['tidb4'].add('lookup.tests.LookupTests.test_regex')
         return skips
 
     @cached_property

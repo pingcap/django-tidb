@@ -21,7 +21,7 @@ export DJANGO_TESTS_DIR="django_tests_dir"
 mkdir -p $DJANGO_TESTS_DIR
 
 pip3 install .
-git clone --depth 1  --branch "3.2.5" https://github.com/django/django.git $DJANGO_TESTS_DIR/django
+git clone --depth 1  --branch "3.2.7" https://github.com/django/django.git $DJANGO_TESTS_DIR/django
 cp tidb_settings.py $DJANGO_TESTS_DIR/django/tidb_settings.py
 
 cd $DJANGO_TESTS_DIR/django && pip3 install -e . && pip3 install -r tests/requirements/py3.txt && pip3 install -r tests/requirements/mysql.txt; cd ../../
