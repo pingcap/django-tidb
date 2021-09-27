@@ -17,6 +17,8 @@ from django.db.backends.mysql.schema import (
 
 
 class DatabaseSchemaEditor(MysqlDatabaseSchemaEditor):
+    sql_delete_table = "DROP TABLE %(table)s"
+
     @property
     def sql_delete_check(self):
         return 'ALTER TABLE %(table)s DROP CHECK %(name)s'
