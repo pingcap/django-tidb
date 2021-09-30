@@ -18,7 +18,7 @@ from django.utils.version import get_version_tuple
 
 def check_django_compatability():
     """
-    Verify that this version of django-cockroachdb is compatible with the
+    Verify that this version of django-tidb is compatible with the
     installed version of Django. For example, any django-tidb 2.2.x is
     compatible with Django 2.2.y.
     """
