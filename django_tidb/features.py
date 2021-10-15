@@ -31,6 +31,8 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
     order_by_nulls_first = True
     supports_foreign_keys = False
     indexes_foreign_keys = False
+    create_test_procedure_without_params_sql = None
+    create_test_procedure_with_int_param_sql = None
     test_collations = {
         'ci': 'utf8mb4_general_ci',
         'non_default': 'utf8mb4_bin',
@@ -190,17 +192,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'auth_tests.test_views.ChangelistTests.test_view_user_password_is_readonly',
                 'auth_tests.test_migrations.MultiDBProxyModelAppLabelTests',
                 'auth_tests.test_management.GetDefaultUsernameTestCase.test_with_database',
-
-                # You have an error in your SQL syntax; check the manual that corresponds to your TiDB
-                # version for the right syntax to use line 2 column 25 near "PROCEDURE test_procedure
-                # (P_I INTEGER)\n        BEGIN\n            DECLARE V_I INTEGER;\n            SET V_I
-                # = P_I;\n        END;\n    "
-                'backends.test_utils.CursorWrapperTests.test_callproc_with_int_params',
-
-                # You have an error in your SQL syntax; check the manual that corresponds to your TiDB
-                # version for the right syntax to use line 2 column 25 near "PROCEDURE test_procedure ()\n
-                # BEGIN\n            DECLARE V_I INTEGER;\n            SET V_I = 1;\n        END;\n    "
-                'backends.test_utils.CursorWrapperTests.test_callproc_without_params',
 
                 'backends.base.test_base.ExecuteWrapperTests.test_nested_wrapper_invoked',
                 'backends.base.test_base.ExecuteWrapperTests.test_outer_wrapper_blocks',
