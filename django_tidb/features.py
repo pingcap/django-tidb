@@ -33,10 +33,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
     indexes_foreign_keys = False
     create_test_procedure_without_params_sql = None
     create_test_procedure_with_int_param_sql = None
-    test_collations = {
-        'ci': 'utf8mb4_general_ci',
-        'non_default': 'utf8mb4_bin',
-    }
 
     @cached_property
     def django_test_skips(self):
