@@ -234,16 +234,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'db_functions.comparison.test_greatest.GreatestTests.test_basic',
                 'db_functions.comparison.test_least.LeastTests.test_basic',
                 'db_functions.datetime.test_extract_trunc.DateFunctionTests.test_trunc_time_func',
-                #'db_functions.datetime.test_extract_trunc.DateFunctionWithTimeZoneTests'
-                #'.test_extract_func_with_timezone',
-                #'db_functions.datetime.test_extract_trunc.DateFunctionWithTimeZoneTests'
-                #'.test_extract_func_with_timezone',
-                #'db_functions.datetime.test_extract_trunc.DateFunctionWithTimeZoneTests.test_trunc_time_func',
-                #'db_functions.datetime.test_extract_trunc.DateFunctionWithTimeZoneTests'
-                #'.test_trunc_timezone_applied_before_truncation',
-                #'db_functions.datetime.test_extract_trunc.DateFunctionWithTimeZoneTests'
-                #'.test_trunc_timezone_applied_before_truncation',
-                #'db_functions.text.test_reverse.ReverseTests.test_expressions',
 
                 'migrations.test_commands.MigrateTests.test_migrate_fake_initial_case_insensitive',
                 'migrations.test_commands.MigrateTests.test_migrate_fake_split_initial',
