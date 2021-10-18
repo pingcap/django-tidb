@@ -35,6 +35,16 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
     create_test_procedure_with_int_param_sql = None
 
     @cached_property
+    def test_collations(self):
+        charset = 'utf8mb3'
+        return {
+            'ci': f'{charset}_general_ci',
+            'non_default': f'{charset}_esperanto_ci',
+            'swedish_ci': None,
+        }
+
+
+    @cached_property
     def django_test_skips(self):
         skips = {
             "This doesn't work on MySQL.": {
