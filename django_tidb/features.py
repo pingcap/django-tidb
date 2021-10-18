@@ -168,6 +168,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
 
                 # Unsupported modify charset from utf8mb4 to utf8
                 'schema.tests.SchemaTests.test_ci_cs_db_collation',
+                'schema.tests.SchemaTests.test_alter_field_db_collation',
 
                 # Unsupported drop integer primary key
                 'schema.tests.SchemaTests.test_primary_key',
