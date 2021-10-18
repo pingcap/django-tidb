@@ -36,13 +36,12 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
 
     @cached_property
     def test_collations(self):
-        charset = 'utf8mb3'
+        charset = 'utf8mb4'
         return {
             'ci': f'{charset}_general_ci',
-            'non_default': f'{charset}_esperanto_ci',
+            'non_default': f'{charset}_unicode_ci',
             'swedish_ci': None,
         }
-
 
     @cached_property
     def django_test_skips(self):
