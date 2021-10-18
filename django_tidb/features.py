@@ -39,7 +39,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
         charset = 'utf8'
         return {
             'ci': f'{charset}_general_ci',
-            'non_default': f'{charset}_unicode_ci',
+            'non_default': f'{charset}_bin',
             'swedish_ci': None,
         }
 
