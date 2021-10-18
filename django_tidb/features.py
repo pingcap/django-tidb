@@ -36,7 +36,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
 
     @cached_property
     def test_collations(self):
-        charset = 'utf8mb4'
+        charset = 'utf8'
         return {
             'ci': f'{charset}_general_ci',
             'non_default': f'{charset}_unicode_ci',
