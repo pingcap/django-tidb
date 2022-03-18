@@ -16,7 +16,7 @@
 from .functions import register_functions
 from .utils import check_django_compatability
 
-__version__ = "3.2.0"
+__version__ = "4.0.3"
 
 check_django_compatability()
 register_functions()
