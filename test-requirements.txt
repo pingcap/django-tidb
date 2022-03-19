@@ -1,6 +1,6 @@
 asgiref==3.4.1
     # via django
-django==3.2.7
+django==4.0.3
     # via -r test-requirements.in
 mysqlclient==2.0.3
     # via -r test-requirements.in
