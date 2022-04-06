@@ -5,192 +5,158 @@ jobs:
     name: lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: docker://hawkingrei/tind:v5.2.1
-        name: __all__
-        with:
-          args: |
-            bash -c "tox -e lint"
-  test_py39_tidb_v4014:
-    name: test_py39_tidb_v4.0.14
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install tox
+
+      - name: Run lint
+        run: |
+           tox -e lint
+
+  django3_tidb4:
+    name: Python ${{ matrix.python-version }} | Django 3 | TiDB 4
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ['3.6', '3.7', '3.8', '3.9', '3.10']
+
+    services:
+      tidb4:
+        image: hawkingrei/tind:v4.0.15
+        ports:
+          - 4000:4000
+        options: >-
+          --entrypoint /entrypoint.sh
+
     steps:
-      - uses: actions/checkout@v1
-      - uses: docker://hawkingrei/tind:v4.0.14
-        name: __all__
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
         with:
-          args: |
-            bash -c "service supervisor start && sleep 20s && tox -e py39"
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install tox tox-gh-actions
+          sudo apt-get install -y libmemcached-dev zlib1g-dev
+
+      - name: Run tests
+        run: tox
         env:
-          PYTHONIOENCODING: utf-8
-  test_py38_tidb_v4014:
-    name: test_py38_tidb_v4.0.14
+          DJANGO_VERSION: 3.2.12
+
+  django4_tidb4:
+    name: Python ${{ matrix.python-version }} | Django 4 | TiDB 4
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ['3.8', '3.9', '3.10']
+
+    services:
+      tidb4:
+        image: hawkingrei/tind:v4.0.15
+        ports:
+          - 4000:4000
+        options: >-
+          --entrypoint /entrypoint.sh
+
     steps:
-      - uses: actions/checkout@v1
-      - uses: docker://hawkingrei/tind:v4.0.14
-        name: __all__
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
         with:
-          entrypoint: ''
-          args: |
-            bash -c "service supervisor start && sleep 20s && tox -e py38"
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install tox tox-gh-actions
+          sudo apt-get install -y libmemcached-dev zlib1g-dev
+
+      - name: Run tests
+        run: tox
         env:
-          PYTHONIOENCODING: utf-8
-  test_py37_tidb_v4014:
-    name: test_py37_tidb_v4.0.14
+          DJANGO_VERSION: 4.0.3
+
+  django3_tidb5:
+    name: Python ${{ matrix.python-version }} | Django 3 | TiDB 5
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ['3.6', '3.7', '3.8', '3.9', '3.10']
+
+    services:
+      tidb5:
+        image: hawkingrei/tind:v5.2.2
+        ports:
+          - 4000:4000
+        options: >-
+          --entrypoint /entrypoint.sh
+
     steps:
-      - uses: actions/checkout@v1
-      - uses: docker://hawkingrei/tind:v4.0.14
-        name: __all__
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
         with:
-          args: |
-            bash -c "service supervisor start && sleep 20s && tox -e py37"
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install tox tox-gh-actions
+          sudo apt-get install -y libmemcached-dev zlib1g-dev
+
+      - name: Run tests
+        run: tox
         env:
-          PYTHONIOENCODING: utf-8
-  test_py36_tidb_v4014:
-    name: test_py36_tidb_v4.0.14
+          DJANGO_VERSION: 3.2.12
+
+  django4_tidb5:
+    name: Python ${{ matrix.python-version }} | Django 4 | TiDB 5
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ['3.8', '3.9', '3.10']
+
+    services:
+      tidb5:
+        image: hawkingrei/tind:v5.2.2
+        ports:
+          - 4000:4000
+        options: >-
+          --entrypoint /entrypoint.sh
+
     steps:
-      - uses: actions/checkout@v1
-      - uses: docker://hawkingrei/tind:v4.0.14
-        name: __all__
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
         with:
-          args: |
-            bash -c "service supervisor start && sleep 20s && tox -e py36"
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install tox tox-gh-actions
+          sudo apt-get install -y libmemcached-dev zlib1g-dev
+
+      - name: Run tests
+        run: tox
         env:
-          PYTHONIOENCODING: utf-8
-  test_py39_tidb_v511:
-    name: test_py39_tidb_v5.1.1
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: docker://hawkingrei/tind:v5.1.1
-        name: __all__
-        with:
-          args: |
-            bash -c "service supervisor start && sleep 20s && tox -e py39"
-        env:
-          PYTHONIOENCODING: utf-8
-  test_py38_tidb_v511:
-    name: test_py38_tidb_v5.1.1
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: docker://hawkingrei/tind:v5.1.1
-        name: __all__
-        with:
-          entrypoint: ''
-          args: |
-            bash -c "service supervisor start && sleep 20s && tox -e py38"
-        env:
-          PYTHONIOENCODING: utf-8
-  test_py37_tidb_v511:
-    name: test_py37_tidb_v5.1.1
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: docker://hawkingrei/tind:v5.1.1
-        name: __all__
-        with:
-          args: |
-            bash -c "service supervisor start && sleep 20s && tox -e py37"
-        env:
-          PYTHONIOENCODING: utf-8
-  test_py36_tidb_v511:
-    name: test_py36_tidb_v5.1.1
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: docker://hawkingrei/tind:v5.1.1
-        name: __all__
-        with:
-          args: |
-            bash -c "service supervisor start && sleep 20s && tox -e py36"
-        env:
-          PYTHONIOENCODING: utf-8
-  test_py39_tidb_v521:
-    name: test_py39_tidb_v5.2.1
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: docker://hawkingrei/tind:v5.2.1
-        name: __all__
-        with:
-          args: |
-            bash -c "service supervisor start && sleep 20s && tox -e py39"
-        env:
-          PYTHONIOENCODING: utf-8
-  test_py38_tidb_v521:
-    name: test_py38_tidb_v5.2.1
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: docker://hawkingrei/tind:v5.2.1
-        name: __all__
-        with:
-          entrypoint: ''
-          args: |
-            bash -c "service supervisor start && sleep 20s && tox -e py38"
-        env:
-          PYTHONIOENCODING: utf-8
-  test_py37_tidb_v521:
-    name: test_py37_tidb_v5.2.1
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: docker://hawkingrei/tind:v5.2.1
-        name: __all__
-        with:
-          args: |
-            bash -c "service supervisor start && sleep 20s && tox -e py37"
-        env:
-          PYTHONIOENCODING: utf-8
-  test_py36_tidb_v521:
-    name: test_py36_tidb_v5.2.1
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: docker://hawkingrei/tind:v5.2.1
-        name: __all__
-        with:
-          args: |
-            bash -c "service supervisor start && sleep 20s && tox -e py36"
-        env:
-          PYTHONIOENCODING: utf-8
-  test_py36_tidb_v503:
-    name: test_py36_tidb_v5.0.3
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: docker://hawkingrei/tind:v5.0.3
-        name: __all__
-        with:
-          args: |
-            bash -c "service supervisor start && sleep 20s && mycli -P 4000  -h 127.0.0.1  -u root --execute='SET GLOBAL tidb_enable_change_column_type = 1;' && tox -e py36"
-        env:
-          PYTHONIOENCODING: utf-8
-  test_py36_tidb_v4:
-    name: test_py36_tidb_v4.0.0
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: docker://hawkingrei/tind:v4.0.0
-        name: __all__
-        with:
-          args: |
-            bash -c "service supervisor start && sleep 20s && tox -e py39"
-        env:
-          PYTHONIOENCODING: utf-8
-  test_py36_tidb_v409:
-    name: test_py36_tidb_v4.0.9
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: docker://hawkingrei/tind:v4.0.9
-        name: __all__
-        with:
-          args: |
-            bash -c "service supervisor start && sleep 20s && tox -e py39"
-        env:
-          PYTHONIOENCODING: utf-8
+          DJANGO_VERSION: 4.0.3

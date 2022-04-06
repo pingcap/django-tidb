@@ -1,8 +1,10 @@
 # TiDB dialect for Django
 
+[![.github/workflows/ci.yml](https://github.com/pingcap/django-tidb/actions/workflows/ci.yml/badge.svg)](https://github.com/pingcap/django-tidb/actions/workflows/ci.yml)
+
 This adds compatibility for [TiDB](https://github.com/pingcap/tidb) to Django.
 
-## Installation
+## Install
 
 ```
 pip install git+https://github.com/pingcap/django-tidb.git@main
@@ -30,12 +32,11 @@ SECRET_KEY = 'django_tests_secret_key'
 
 ## Supported versions
 
-- TiDB 5.x (tested with 5.1.x)
-- Django 3.x (tested with 3.2.x)
-- mysqlclient 2.0.3
-- Python 3.6 and newer (tested with Python 3.8)
+- TiDB 4.0 and newer
+- Django 3.x and 4.0
+- Python 3.6 and newer(must match Django's Python version requirement)
 
-## Testing
+## Test
 
 create your virtualenv with:
 
@@ -49,7 +50,7 @@ you can use the command ```deactivate``` to exit from the virtual environment.
 run all integration tests.
 
 ```
-$ python run_testing_worker.py
+$ DJANGO_VERSION=3.2.12 python run_testing_worker.py
 ```
 
 ## Known issues
