@@ -110,14 +110,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 # AttributeError: 'NoneType' object has no attribute 'ping'
                 'servers.test_liveserverthread.LiveServerThreadTest.test_closes_connections',
 
-                'test_utils.tests.TestBadSetUpTestData.test_failure_in_setUpTestData_should_rollback_transaction',
-                'test_utils.test_testcase.TestDataTests.test_undeepcopyable_warning',
-                'test_utils.test_testcase.TestDataTests.test_class_attribute_identity',
-                'test_utils.tests.CaptureOnCommitCallbacksTests.test_execute',
-                'test_utils.tests.CaptureOnCommitCallbacksTests.test_no_arguments',
-                'test_utils.tests.CaptureOnCommitCallbacksTests.test_pre_callback',
-                'test_utils.tests.CaptureOnCommitCallbacksTests.test_using',
-
                 # [planner:3065]Expression #1 of ORDER BY clause is not in SELECT list, references column '' which is
                 # not in SELECT list; this is incompatible with
                 'ordering.tests.OrderingTests.test_orders_nulls_first_on_filtered_subquery',
@@ -278,8 +270,17 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'select_for_update.tests.SelectForUpdateTests.test_raw_lock_not_available',
 
                 # https://code.djangoproject.com/ticket/33627#ticket
-                "model_forms.tests.ModelMultipleChoiceFieldTests.test_model_multiple_choice_field"
+                "model_forms.tests.ModelMultipleChoiceFieldTests.test_model_multiple_choice_field",
 
+                # https://code.djangoproject.com/ticket/33633#ticket
+                # once supports_transactions is True, could be opened; same as below
+                'test_utils.test_testcase.TestDataTests.test_undeepcopyable_warning',
+                'test_utils.test_testcase.TestDataTests.test_class_attribute_identity',
+                'test_utils.tests.CaptureOnCommitCallbacksTests.test_execute',
+                'test_utils.tests.CaptureOnCommitCallbacksTests.test_no_arguments',
+                'test_utils.tests.CaptureOnCommitCallbacksTests.test_pre_callback',
+                'test_utils.tests.CaptureOnCommitCallbacksTests.test_using',
+                'test_utils.tests.TestBadSetUpTestData.test_failure_in_setUpTestData_should_rollback_transaction',
             }
         }
         if int(django.__version__[0]) > 3:

@@ -27,11 +27,9 @@ jobs:
 
     services:
       tidb4:
-        image: hawkingrei/tind:v4.0.15
+        image: hawkingrei/tind:v4.0.15-standalone
         ports:
           - 4000:4000
-        options: >-
-          --entrypoint /entrypoint.sh
 
     steps:
       - name: Checkout
@@ -63,11 +61,9 @@ jobs:
 
     services:
       tidb4:
-        image: hawkingrei/tind:v4.0.15
+        image: hawkingrei/tind:v4.0.15-standalone
         ports:
           - 4000:4000
-        options: >-
-          --entrypoint /entrypoint.sh
 
     steps:
       - name: Checkout
@@ -99,11 +95,9 @@ jobs:
 
     services:
       tidb5:
-        image: hawkingrei/tind:v5.2.2
+        image: hawkingrei/tind:v5.2.2-standalone
         ports:
           - 4000:4000
-        options: >-
-          --entrypoint /entrypoint.sh
 
     steps:
       - name: Checkout
@@ -135,11 +129,9 @@ jobs:
 
     services:
       tidb5:
-        image: hawkingrei/tind:v5.2.2
+        image: hawkingrei/tind:v5.2.2-standalone
         ports:
           - 4000:4000
-        options: >-
-          --entrypoint /entrypoint.sh
 
     steps:
       - name: Checkout
