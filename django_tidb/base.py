@@ -41,10 +41,6 @@ class DatabaseWrapper(MysqlDatabaseWrapper):
     ops_class = DatabaseOperations
 
     @cached_property
-    def display_name(self):
-        return 'TiDB'
-
-    @cached_property
     def data_type_check_constraints(self):
         if self.features.supports_column_check_constraints:
             check_constraints = {'PositiveBigIntegerField': '`%(column)s` >= 0',

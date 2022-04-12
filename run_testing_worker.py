@@ -25,12 +25,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import math
 import os
-import random
-import time
-import subprocess
-import random
 
 with open("django_test_apps.txt", "r") as file:
     all_apps = file.read().split("\n")

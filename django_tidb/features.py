@@ -13,6 +13,7 @@
 
 import operator
 
+import django
 from django.db.backends.mysql.features import (
     DatabaseFeatures as MysqlDatabaseFeatures,
 )
@@ -21,6 +22,7 @@ from django.utils.functional import cached_property
 
 class DatabaseFeatures(MysqlDatabaseFeatures):
     has_select_for_update = True
+    # https://code.djangoproject.com/ticket/28263
     supports_transactions = False
     uses_savepoints = False
     can_release_savepoints = False
@@ -44,10 +46,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
             "This doesn't work on MySQL.": {
                 'db_functions.comparison.test_greatest.GreatestTests.test_coalesce_workaround',
                 'db_functions.comparison.test_least.LeastTests.test_coalesce_workaround',
-            },
-            'Running on MySQL requires utf8mb4 encoding (#18392).': {
-                'model_fields.test_textfield.TextFieldTests.test_emoji',
-                'model_fields.test_charfield.TestCharField.test_emoji',
             },
             "MySQL doesn't support functional indexes on a function that "
             "returns JSON": {
@@ -278,8 +276,29 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
 
                 # about Pessimistic/Optimistic Transaction Model
                 'select_for_update.tests.SelectForUpdateTests.test_raw_lock_not_available',
+
+                # https://code.djangoproject.com/ticket/33627#ticket
+                "model_forms.tests.ModelMultipleChoiceFieldTests.test_model_multiple_choice_field"
+
             }
         }
+        if int(django.__version__[0]) > 3:
+            skips.update({
+                "django4": {
+                    # MySQL needs a explicit CAST to ensure consistent results
+                    'aggregation.tests.AggregateTestCase.test_aggregation_default_using_time_from_python',
+                    'aggregation.tests.AggregateTestCase.test_aggregation_default_using_date_from_python',
+                    'aggregation.tests.AggregateTestCase.test_aggregation_default_using_datetime_from_python',
+
+                    'migrations.test_operations.OperationTests.test_alter_field_pk_mti_and_fk_to_base',
+                    'migrations.test_operations.OperationTests.test_alter_field_pk_mti_fk',
+                    # https://code.djangoproject.com/ticket/33633#ticket
+                    # once supports_transactions is True, could be opened
+                    'test_utils.test_testcase.TestTestCase.test_reset_sequences',
+                    'test_utils.tests.CaptureOnCommitCallbacksTests.test_execute_recursive',
+                    'test_utils.tests.CaptureOnCommitCallbacksTests.test_execute_tree',
+                }
+            })
         if self.connection.tidb_version == (5, 0, 3):
             skips.update({
                 "tidb503": {
