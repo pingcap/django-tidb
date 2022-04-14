@@ -2,6 +2,7 @@
 
 ![PyPI](https://img.shields.io/pypi/v/django-tidb)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django-tidb)
+![PyPI - Downloads](https://img.shields.io/pypi/dw/django-tidb)
 [![.github/workflows/ci.yml](https://github.com/pingcap/django-tidb/actions/workflows/ci.yml/badge.svg)](https://github.com/pingcap/django-tidb/actions/workflows/ci.yml)
 
 This adds compatibility for [TiDB](https://github.com/pingcap/tidb) to Django.
