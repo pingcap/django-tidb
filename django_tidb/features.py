@@ -35,10 +35,15 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
     indexes_foreign_keys = False
     create_test_procedure_without_params_sql = None
     create_test_procedure_with_int_param_sql = None
-    test_collations = {
-        'ci': 'utf8mb4_general_ci',
-        'non_default': 'utf8mb4_bin',
-    }
+
+    @cached_property
+    def test_collations(self):
+        charset = 'utf8'
+        return {
+            'ci': f'{charset}_general_ci',
+            'non_default': f'{charset}_bin',
+            'swedish_ci': None,
+        }
 
     @cached_property
     def django_test_skips(self):
@@ -153,6 +158,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
 
                 # Unsupported modify charset from utf8mb4 to utf8
                 'schema.tests.SchemaTests.test_ci_cs_db_collation',
+                'schema.tests.SchemaTests.test_alter_field_db_collation',
 
                 # Unsupported drop integer primary key
                 'schema.tests.SchemaTests.test_primary_key',
@@ -224,6 +230,12 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'db_functions.comparison.test_greatest.GreatestTests.test_basic',
                 'db_functions.comparison.test_least.LeastTests.test_basic',
                 'db_functions.datetime.test_extract_trunc.DateFunctionTests.test_trunc_time_func',
+                'db_functions.datetime.test_extract_trunc.DateFunctionWithTimeZoneTests'
+                '.test_extract_func_with_timezone',
+                'db_functions.datetime.test_extract_trunc.DateFunctionWithTimeZoneTests.test_trunc_time_func',
+                'db_functions.datetime.test_extract_trunc.DateFunctionWithTimeZoneTests'
+                '.test_trunc_timezone_applied_before_truncation',
+                'db_functions.text.test_reverse.ReverseTests.test_expressions',
 
                 'migrations.test_commands.MigrateTests.test_migrate_fake_initial_case_insensitive',
                 'migrations.test_commands.MigrateTests.test_migrate_fake_split_initial',

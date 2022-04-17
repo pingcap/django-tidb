@@ -28,6 +28,7 @@ datatypes
 dates
 datetimes
 db_typecasts
+db_functions
 db_utils
 defer
 defer_regress
