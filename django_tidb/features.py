@@ -24,8 +24,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
     has_select_for_update = True
     # https://code.djangoproject.com/ticket/28263
     supports_transactions = False
-    uses_savepoints = False
-    can_release_savepoints = False
     atomic_transactions = False
     supports_atomic_references_rename = False
     can_clone_databases = False
@@ -90,17 +88,10 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
 
                 # wrong test result
                 '.test_no_duplicates_for_non_unique_related_object_in_search_fields',
-                'transaction_hooks.tests.TestConnectionOnCommit.test_inner_savepoint_does_not_affect_outer',
                 'filtered_relation.tests.FilteredRelationTests.test_select_for_update',
                 'filtered_relation.tests.FilteredRelationTests.test_union',
                 'fixtures_regress.tests.TestFixtures.test_loaddata_raises_error_when_fixture_has_invalid_foreign_key',
                 'introspection.tests.IntrospectionTests.test_get_table_description_nullable',
-
-                # django.db.transaction.TransactionManagementError: An error occurred in the current transaction. You
-                # can't execute queries until the end of the 'atomic' block.
-                'transaction_hooks.tests.TestConnectionOnCommit.test_inner_savepoint_rolled_back_with_outer',
-                'transaction_hooks.tests.TestConnectionOnCommit.test_discards_hooks_from_rolled_back_savepoint',
-                'transaction_hooks.tests.TestConnectionOnCommit.test_inner_savepoint_rolled_back_with_outer',
 
                 # AssertionError: True is not false
                 'sites_tests.tests.CreateDefaultSiteTests.test_multi_db_with_router',
@@ -330,6 +321,17 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                     'schema.tests.SchemaTests.test_add_field_default_nullable'
                 }
             })
+        if self.connection.tidb_version < (6, 2, 0):
+            skips.update({
+                "savepoint": {
+                    # django.db.transaction.TransactionManagementError: An error occurred in the current transaction. You
+                    # can't execute queries until the end of the 'atomic' block.
+                    'transaction_hooks.tests.TestConnectionOnCommit.test_inner_savepoint_rolled_back_with_outer',
+                    'transaction_hooks.tests.TestConnectionOnCommit.test_discards_hooks_from_rolled_back_savepoint',
+                    'transaction_hooks.tests.TestConnectionOnCommit.test_inner_savepoint_rolled_back_with_outer',
+                    'transaction_hooks.tests.TestConnectionOnCommit.test_inner_savepoint_does_not_affect_outer',
+                }
+            })
         if self.connection.tidb_version < (5,):
             skips.update({
                 "tidb4": {
@@ -436,3 +438,11 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
     @cached_property
     def supports_expression_indexes(self):
         return self.connection.tidb_version >= (5, 1, )
+
+    @cached_property
+    def uses_savepoints(self):
+        return self.connection.tidb_version >= (6, 2, )
+
+    @cached_property
+    def can_release_savepoints(self):
+        return self.connection.tidb_version >= (6, 2, )
