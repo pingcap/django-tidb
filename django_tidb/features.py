@@ -324,8 +324,9 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
         if self.connection.tidb_version < (6, 2, 0):
             skips.update({
                 "savepoint": {
-                    # django.db.transaction.TransactionManagementError: An error occurred in the current transaction. You
-                    # can't execute queries until the end of the 'atomic' block.
+                    # django.db.transaction.TransactionManagementError: An error 
+                    # occurred in the current transaction. You can't execute queries 
+                    # until the end of the 'atomic' block.
                     'transaction_hooks.tests.TestConnectionOnCommit.test_inner_savepoint_rolled_back_with_outer',
                     'transaction_hooks.tests.TestConnectionOnCommit.test_discards_hooks_from_rolled_back_savepoint',
                     'transaction_hooks.tests.TestConnectionOnCommit.test_inner_savepoint_rolled_back_with_outer',
