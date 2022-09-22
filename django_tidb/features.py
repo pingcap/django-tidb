@@ -423,7 +423,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
 
     @cached_property
     def supports_json_field(self):
-        return True
+        return self.connection.tidb_version >= (6, 3, )
 
     @cached_property
     def can_introspect_json_field(self):
