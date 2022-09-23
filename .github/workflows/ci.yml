@@ -153,8 +153,8 @@ jobs:
         env:
           DJANGO_VERSION: 4.0.3
 
-  django4_tidb6.3:
-    name: Python ${{ matrix.python-version }} | Django 4 | TiDB 6.3
+  django4_tidb6:
+    name: Python ${{ matrix.python-version }} | Django 4 | TiDB 6
     runs-on: ubuntu-latest
 
     strategy:
