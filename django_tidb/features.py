@@ -22,23 +22,48 @@ from django.utils.functional import cached_property
 
 class DatabaseFeatures(MysqlDatabaseFeatures):
     has_select_for_update = True
-    # https://code.djangoproject.com/ticket/28263
-    supports_transactions = False
-    uses_savepoints = False
-    can_release_savepoints = False
     atomic_transactions = False
     supports_atomic_references_rename = False
     can_clone_databases = False
     can_rollback_ddl = False
     order_by_nulls_first = True
-    supports_foreign_keys = False
-    indexes_foreign_keys = False
     create_test_procedure_without_params_sql = None
     create_test_procedure_with_int_param_sql = None
     test_collations = {
         'ci': 'utf8mb4_general_ci',
         'non_default': 'utf8mb4_bin',
     }
+
+    @cached_property
+    def supports_foreign_keys(self):
+        if self.connection.tidb_version >= (6, 6, 0):
+            return True
+        return False
+
+    @cached_property
+    def indexes_foreign_keys(self):
+        if self.connection.tidb_version >= (6, 6, 0):
+            return True
+        return False
+
+    @cached_property
+    def supports_transactions(self):
+        # https://code.djangoproject.com/ticket/28263
+        if self.connection.tidb_version >= (6, 2, 0):
+            return True
+        return False
+
+    @cached_property
+    def uses_savepoints(self):
+        if self.connection.tidb_version >= (6, 2, 0):
+            return True
+        return False
+    
+    @cached_property
+    def can_release_savepoints(self):
+        if self.connection.tidb_version >= (6, 2, 0):
+            return True
+        return False
 
     @cached_property
     def django_test_skips(self):

@@ -65,5 +65,5 @@ Releases on PyPi before 3.0.0 are published from repository https://github.com/b
 
 ## Known issues
 
-- TiDB does not support FOREIGN KEY constraints([#18209](https://github.com/pingcap/tidb/issues/18209)).
-- TiDB does not support SAVEPOINT([#6840](https://github.com/pingcap/tidb/issues/6840)).
+- TiDB before v6.6.0 does not support FOREIGN KEY constraints([#18209](https://github.com/pingcap/tidb/issues/18209)).
+- TiDB before v6.2.0 does not support SAVEPOINT([#6840](https://github.com/pingcap/tidb/issues/6840)).
