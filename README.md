@@ -53,14 +53,14 @@ you can use the command ```deactivate``` to exit from the virtual environment.
 run all integration tests.
 
 ```
-$ DJANGO_VERSION=3.2.12 python run_testing_worker.py
+$ DJANGO_VERSION=3.2.18 python run_testing_worker.py
 ```
 
 ## Migrate from previous versions
 
 Releases on PyPi before 3.0.0 are published from repository https://github.com/blacktear23/django_tidb. This repository is a new implementation and released under versions from 3.0.0. No backwards compatibility is ensured. The most significant points are:
 
-- Only Django 3.2 and 4.0 are tested and supported.
+- Only Django 3.2 and 4.1 are tested and supported.
 - Engine name is `django_tidb` instead of `django_tidb.tidb`.
 
 ## Known issues

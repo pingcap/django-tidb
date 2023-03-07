@@ -79,6 +79,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install tox tox-gh-actions
+          sudo apt-get update
           sudo apt-get install -y libmemcached-dev zlib1g-dev
 
       - name: Run tests
@@ -113,6 +114,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install tox tox-gh-actions
+          sudo apt-get update
           sudo apt-get install -y libmemcached-dev zlib1g-dev
 
       - name: Run tests
@@ -147,6 +149,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install tox tox-gh-actions
+          sudo apt-get update
           sudo apt-get install -y libmemcached-dev zlib1g-dev
 
       - name: Run tests
