@@ -12,6 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+if [ -z $DJANGO_VERSION ]
+then
+	echo "DJANGO_VERSION is not set"
+       	exit 1
+fi
+
 set -x pipefail
 
 # Disable buffering, so that the logs stream through.
@@ -21,6 +27,7 @@ export DJANGO_TESTS_DIR="django_tests_dir"
 mkdir -p $DJANGO_TESTS_DIR
 
 pip3 install .
+
 git clone --depth 1  --branch $DJANGO_VERSION https://github.com/django/django.git $DJANGO_TESTS_DIR/django
 cp tidb_settings.py $DJANGO_TESTS_DIR/django/tidb_settings.py
 cp tidb_settings.py $DJANGO_TESTS_DIR/django/tests/tidb_settings.py
