@@ -10,7 +10,6 @@ aggregation
 aggregation_regress
 annotations
 auth_tests
-backends
 basic
 bulk_create
 cache
