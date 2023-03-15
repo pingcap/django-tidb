@@ -58,7 +58,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
         if self.connection.tidb_version >= (6, 2, 0):
             return True
         return False
-    
+
     @cached_property
     def can_release_savepoints(self):
         if self.connection.tidb_version >= (6, 2, 0):
