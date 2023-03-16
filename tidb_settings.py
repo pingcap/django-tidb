@@ -24,24 +24,24 @@ if port is None:
 DATABASES = {
     'default': {
         'ENGINE': 'django_tidb',
-        'NAME': 'django_tests',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '127.0.0.1',
         'PORT': 4000,
         'TEST': {
+            'NAME': 'django_tests',
             'CHARSET': 'utf8mb4',
             'COLLATION': 'utf8mb4_general_ci',
         },
     },
     'other': {
         'ENGINE': 'django_tidb',
-        'NAME': 'django_tests2',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': hosts,
         'PORT': port,
         'TEST': {
+            'NAME': 'django_tests2',
             'CHARSET': 'utf8mb4',
             'COLLATION': 'utf8mb4_general_ci',
         },
