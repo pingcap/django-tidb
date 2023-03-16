@@ -109,10 +109,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'file_uploads.tests.DirectoryCreationTests.test_readonly_root',
                 'cache.tests.CacheMiddlewareTest.test_cache_page_timeout',
 
-                # RuntimeError: A durable atomic block cannot be nested within another atomic block.
-                'transactions.tests.DisableDurabiltityCheckTests.test_nested_both_durable',
-                'transactions.tests.DisableDurabiltityCheckTests.test_nested_inner_durable',
-
                 # wrong test result
                 '.test_no_duplicates_for_non_unique_related_object_in_search_fields',
                 'transaction_hooks.tests.TestConnectionOnCommit.test_inner_savepoint_does_not_affect_outer',
@@ -383,6 +379,10 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                     'schema.tests.SchemaTests.test_alter_autofield_pk_to_smallautofield_pk_sequence_owner',
 
                     'test_utils.test_testcase.TestDataTests.test_undeepcopyable_warning',
+
+                    # RuntimeError: A durable atomic block cannot be nested within another atomic block.
+                    'transactions.tests.DisableDurabiltityCheckTests.test_nested_both_durable',
+                    'transactions.tests.DisableDurabiltityCheckTests.test_nested_inner_durable',
                 }
             })
         if django.utils.version.get_complete_version() >= (4, 1):
@@ -403,6 +403,9 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                     'schema.tests.SchemaTests.test_autofield_to_o2o',
                     'schema.tests.SchemaTests.test_func_index_lookups',
                     'schema.tests.SchemaTests.test_func_unique_constraint_lookups',
+
+                    'update.tests.AdvancedTests.test_update_ordered_by_inline_m2m_annotation',
+                    'update.tests.AdvancedTests.test_update_ordered_by_m2m_annotation',
                 }
             })
         return skips
