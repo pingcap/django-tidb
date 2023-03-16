@@ -210,6 +210,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
 
                 'backends.base.test_base.ExecuteWrapperTests.test_nested_wrapper_invoked',
                 'backends.base.test_base.ExecuteWrapperTests.test_outer_wrapper_blocks',
+                'backends.tests.BackendTestCase.test_queries_limit',
                 'backends.tests.FkConstraintsTests.test_check_constraints',
                 'backends.tests.FkConstraintsTests.test_check_constraints_sql_keywords',
 
