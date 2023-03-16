@@ -295,7 +295,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
 
                 # https://code.djangoproject.com/ticket/33633#ticket
                 # once supports_transactions is True, could be opened; same as below
-                'test_utils.test_testcase.TestDataTests.test_undeepcopyable_warning',
                 'test_utils.test_testcase.TestDataTests.test_class_attribute_identity',
                 'test_utils.tests.CaptureOnCommitCallbacksTests.test_execute',
                 'test_utils.tests.CaptureOnCommitCallbacksTests.test_no_arguments',
@@ -382,6 +381,8 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
 
                     # 'Unsupported modify column: this column has primary key flag
                     'schema.tests.SchemaTests.test_alter_autofield_pk_to_smallautofield_pk_sequence_owner',
+
+                    'test_utils.test_testcase.TestDataTests.test_undeepcopyable_warning',
                 }
             })
         if django.utils.version.get_complete_version() >= (4, 1):
