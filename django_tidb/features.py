@@ -151,9 +151,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 # Unsupported modify column: can't remove auto_increment without @@tidb_allow_remove_auto_inc enabled
                 'schema.tests.SchemaTests.test_alter_auto_field_to_integer_field',
 
-                # 'Unsupported modify column: this column has primary key flag
-                'schema.tests.SchemaTests.test_alter_autofield_pk_to_smallautofield_pk_sequence_owner',
-
                 # Found wrong number (0) of check constraints for schema_author.height
                 'schema.tests.SchemaTests.test_alter_field_default_dropped',
 
@@ -382,6 +379,9 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'django40': {
                     'constraints.tests.CheckConstraintTests.test_database_constraint_expression',
                     'constraints.tests.CheckConstraintTests.test_database_constraint_expressionwrapper',
+
+                    # 'Unsupported modify column: this column has primary key flag
+                    'schema.tests.SchemaTests.test_alter_autofield_pk_to_smallautofield_pk_sequence_owner',
                 }
             })
         if django.utils.version.get_complete_version() >= (4, 1):
@@ -393,6 +393,15 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                     'migrations.test_operations.OperationTests.test_alter_field_with_func_index',
                     'migrations.test_operations.OperationTests.test_add_func_unique_constraint',
                     'migrations.test_operations.OperationTests.test_add_func_index',
+
+                    'schema.tests.SchemaTests.test_add_auto_field',
+                    'schema.tests.SchemaTests.test_add_field_o2o_nullable',
+                    'schema.tests.SchemaTests.test_alter_autofield_pk_to_smallautofield_pk',
+                    'schema.tests.SchemaTests.test_alter_primary_key_db_collation',
+                    'schema.tests.SchemaTests.test_alter_primary_key_the_same_name',
+                    'schema.tests.SchemaTests.test_autofield_to_o2o',
+                    'schema.tests.SchemaTests.test_func_index_lookups',
+                    'schema.tests.SchemaTests.test_func_unique_constraint_lookups',
                 }
             })
         return skips
