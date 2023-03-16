@@ -384,6 +384,17 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                     'constraints.tests.CheckConstraintTests.test_database_constraint_expressionwrapper',
                 }
             })
+        if django.utils.version.get_complete_version() >= (4, 1):
+            skips.update({
+                'django41': {
+                    'migrations.test_operations.OperationTests.test_create_model_with_boolean_expression_in_check_constraint',
+                    'migrations.test_operations.OperationTests.test_remove_func_unique_constraint',
+                    'migrations.test_operations.OperationTests.test_remove_func_index',
+                    'migrations.test_operations.OperationTests.test_alter_field_with_func_index',
+                    'migrations.test_operations.OperationTests.test_add_func_unique_constraint',
+                    'migrations.test_operations.OperationTests.test_add_func_index',
+                }
+            })
         return skips
 
     @cached_property
