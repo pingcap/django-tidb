@@ -222,8 +222,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
 
                 # IntegrityError not raised
                 'constraints.tests.CheckConstraintTests.test_database_constraint',
-                'constraints.tests.CheckConstraintTests.test_database_constraint_expression',
-                'constraints.tests.CheckConstraintTests.test_database_constraint_expressionwrapper',
                 'constraints.tests.CheckConstraintTests.test_database_constraint_unicode',
 
                 # Cannot assign "<Book: Book object (90)>": the current database router prevents this relation.
@@ -379,6 +377,13 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
             })
         if self.connection.tidb_version >= (4, 0, 5) and self.connection.tidb_version <= (4, 0, 9):
             skips['tidb4'].add('lookup.tests.LookupTests.test_regex')
+        if django.utils.version.get_complete_version() < (4, 1):
+            skips.update({
+                'django40': {
+                    'constraints.tests.CheckConstraintTests.test_database_constraint_expression',
+                    'constraints.tests.CheckConstraintTests.test_database_constraint_expressionwrapper',
+                }
+            })
         return skips
 
     @cached_property
