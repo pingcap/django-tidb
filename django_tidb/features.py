@@ -109,10 +109,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 'file_uploads.tests.DirectoryCreationTests.test_readonly_root',
                 'cache.tests.CacheMiddlewareTest.test_cache_page_timeout',
 
-                # RuntimeError: A durable atomic block cannot be nested within another atomic block.
-                'transactions.tests.DisableDurabiltityCheckTests.test_nested_both_durable',
-                'transactions.tests.DisableDurabiltityCheckTests.test_nested_inner_durable',
-
                 # wrong test result
                 '.test_no_duplicates_for_non_unique_related_object_in_search_fields',
                 'transaction_hooks.tests.TestConnectionOnCommit.test_inner_savepoint_does_not_affect_outer',
@@ -150,9 +146,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
 
                 # Unsupported modify column: can't remove auto_increment without @@tidb_allow_remove_auto_inc enabled
                 'schema.tests.SchemaTests.test_alter_auto_field_to_integer_field',
-
-                # 'Unsupported modify column: this column has primary key flag
-                'schema.tests.SchemaTests.test_alter_autofield_pk_to_smallautofield_pk_sequence_owner',
 
                 # Found wrong number (0) of check constraints for schema_author.height
                 'schema.tests.SchemaTests.test_alter_field_default_dropped',
@@ -210,6 +203,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
 
                 'backends.base.test_base.ExecuteWrapperTests.test_nested_wrapper_invoked',
                 'backends.base.test_base.ExecuteWrapperTests.test_outer_wrapper_blocks',
+                'backends.tests.BackendTestCase.test_queries_limit',
                 'backends.tests.FkConstraintsTests.test_check_constraints',
                 'backends.tests.FkConstraintsTests.test_check_constraints_sql_keywords',
 
@@ -221,8 +215,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
 
                 # IntegrityError not raised
                 'constraints.tests.CheckConstraintTests.test_database_constraint',
-                'constraints.tests.CheckConstraintTests.test_database_constraint_expression',
-                'constraints.tests.CheckConstraintTests.test_database_constraint_expressionwrapper',
                 'constraints.tests.CheckConstraintTests.test_database_constraint_unicode',
 
                 # Cannot assign "<Book: Book object (90)>": the current database router prevents this relation.
@@ -299,7 +291,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
 
                 # https://code.djangoproject.com/ticket/33633#ticket
                 # once supports_transactions is True, could be opened; same as below
-                'test_utils.test_testcase.TestDataTests.test_undeepcopyable_warning',
                 'test_utils.test_testcase.TestDataTests.test_class_attribute_identity',
                 'test_utils.tests.CaptureOnCommitCallbacksTests.test_execute',
                 'test_utils.tests.CaptureOnCommitCallbacksTests.test_no_arguments',
@@ -378,6 +369,45 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
             })
         if self.connection.tidb_version >= (4, 0, 5) and self.connection.tidb_version <= (4, 0, 9):
             skips['tidb4'].add('lookup.tests.LookupTests.test_regex')
+        if django.utils.version.get_complete_version() < (4, 1):
+            skips.update({
+                'django40': {
+                    'constraints.tests.CheckConstraintTests.test_database_constraint_expression',
+                    'constraints.tests.CheckConstraintTests.test_database_constraint_expressionwrapper',
+
+                    # 'Unsupported modify column: this column has primary key flag
+                    'schema.tests.SchemaTests.test_alter_autofield_pk_to_smallautofield_pk_sequence_owner',
+
+                    'test_utils.test_testcase.TestDataTests.test_undeepcopyable_warning',
+
+                    # RuntimeError: A durable atomic block cannot be nested within another atomic block.
+                    'transactions.tests.DisableDurabiltityCheckTests.test_nested_both_durable',
+                    'transactions.tests.DisableDurabiltityCheckTests.test_nested_inner_durable',
+                }
+            })
+        if django.utils.version.get_complete_version() >= (4, 1):
+            skips.update({
+                'django41': {
+                    'migrations.test_operations.OperationTests.test_create_model_with_boolean_expression_in_check_constraint',
+                    'migrations.test_operations.OperationTests.test_remove_func_unique_constraint',
+                    'migrations.test_operations.OperationTests.test_remove_func_index',
+                    'migrations.test_operations.OperationTests.test_alter_field_with_func_index',
+                    'migrations.test_operations.OperationTests.test_add_func_unique_constraint',
+                    'migrations.test_operations.OperationTests.test_add_func_index',
+
+                    'schema.tests.SchemaTests.test_add_auto_field',
+                    'schema.tests.SchemaTests.test_add_field_o2o_nullable',
+                    'schema.tests.SchemaTests.test_alter_autofield_pk_to_smallautofield_pk',
+                    'schema.tests.SchemaTests.test_alter_primary_key_db_collation',
+                    'schema.tests.SchemaTests.test_alter_primary_key_the_same_name',
+                    'schema.tests.SchemaTests.test_autofield_to_o2o',
+                    'schema.tests.SchemaTests.test_func_index_lookups',
+                    'schema.tests.SchemaTests.test_func_unique_constraint_lookups',
+
+                    'update.tests.AdvancedTests.test_update_ordered_by_inline_m2m_annotation',
+                    'update.tests.AdvancedTests.test_update_ordered_by_m2m_annotation',
+                }
+            })
         return skips
 
     @cached_property

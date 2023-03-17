@@ -84,7 +84,7 @@ jobs:
       - name: Run tests
         run: tox
         env:
-          DJANGO_VERSION: 4.0.10
+          DJANGO_VERSION: 4.1.7
 
   django3_tidb5:
     name: Python ${{ matrix.python-version }} | Django 3 | TiDB 5
@@ -152,4 +152,4 @@ jobs:
       - name: Run tests
         run: tox
         env:
-          DJANGO_VERSION: 4.0.10
+          DJANGO_VERSION: 4.1.7
