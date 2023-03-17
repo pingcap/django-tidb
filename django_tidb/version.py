@@ -11,6 +11,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 # TiDBVersion deal with tidb's version string.
 # Our tidb version string is got from ```select version();```
 # it look like this:
@@ -20,10 +21,10 @@ class TiDBVersion:
     _version = (0, 0, 0)
 
     def match(self, version):
-        version_list = version.split('-')
+        version_list = version.split("-")
         if len(version_list) < 3:
             return False
-        tidb_version_list = version_list[2].lstrip('v').split('.')
+        tidb_version_list = version_list[2].lstrip("v").split(".")
         self._version = tuple(int(x) for x in tidb_version_list)
         return True
 
