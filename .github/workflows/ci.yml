@@ -159,7 +159,7 @@ jobs:
 
 
   django4_tidb6:
-    name: Python ${{ matrix.python-version }} | Django 4 | TiDB 5
+    name: Python ${{ matrix.python-version }} | Django 4 | TiDB 6
     runs-on: ubuntu-latest
 
     strategy:
