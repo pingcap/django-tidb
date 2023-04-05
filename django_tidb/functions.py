@@ -19,8 +19,10 @@ from django.db.models.functions.text import MySQLSHA2Mixin
 
 def char(self, compiler, connection, **extra_context):
     return self.as_sql(
-        compiler, connection, function='CHAR',
-        template='%(function)s(%(expressions)s USING utf8mb4)',
+        compiler,
+        connection,
+        function="CHAR",
+        template="%(function)s(%(expressions)s USING utf8mb4)",
         **extra_context
     )
 
