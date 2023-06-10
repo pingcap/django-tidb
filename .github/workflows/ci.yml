@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install dependencies
         run: |
@@ -23,7 +23,7 @@ jobs:
 
     strategy:
       matrix:
-        python-version: ['3.6', '3.7', '3.8', '3.9', '3.10']
+        python-version: ['3.7', '3.8', '3.9', '3.10']
 
     services:
       tidb4:
@@ -33,10 +33,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -44,12 +44,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install tox tox-gh-actions
+          sudo apt-get update
           sudo apt-get install -y libmemcached-dev zlib1g-dev
 
       - name: Run tests
         run: tox
         env:
-          DJANGO_VERSION: 3.2.12
+          DJANGO_VERSION: 3.2.18
 
   django4_tidb4:
     name: Python ${{ matrix.python-version }} | Django 4 | TiDB 4
@@ -57,7 +58,7 @@ jobs:
 
     strategy:
       matrix:
-        python-version: ['3.8', '3.9', '3.10']
+        python-version: ['3.8', '3.9', '3.10', '3.11']
 
     services:
       tidb4:
@@ -67,10 +68,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -83,7 +84,7 @@ jobs:
       - name: Run tests
         run: tox
         env:
-          DJANGO_VERSION: 4.0.3
+          DJANGO_VERSION: 4.1.7
 
   django3_tidb5:
     name: Python ${{ matrix.python-version }} | Django 3 | TiDB 5
@@ -91,7 +92,7 @@ jobs:
 
     strategy:
       matrix:
-        python-version: ['3.6', '3.7', '3.8', '3.9', '3.10']
+        python-version: ['3.7', '3.8', '3.9', '3.10']
 
     services:
       tidb5:
@@ -101,10 +102,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -117,7 +118,7 @@ jobs:
       - name: Run tests
         run: tox
         env:
-          DJANGO_VERSION: 3.2.12
+          DJANGO_VERSION: 3.2.18
 
   django4_tidb5:
     name: Python ${{ matrix.python-version }} | Django 4 | TiDB 5
@@ -125,7 +126,7 @@ jobs:
 
     strategy:
       matrix:
-        python-version: ['3.8', '3.9', '3.10']
+        python-version: ['3.8', '3.9', '3.10', '3.11']
 
     services:
       tidb5:
@@ -135,10 +136,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -151,37 +152,4 @@ jobs:
       - name: Run tests
         run: tox
         env:
-          DJANGO_VERSION: 4.0.3
-
-  django4_tidb6:
-    name: Python ${{ matrix.python-version }} | Django 4 | TiDB 6
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        python-version: ['3.8', '3.9', '3.10']
-
-    services:
-      tidb5:
-        image: jwxdocker/tidb:6.3
-        ports:
-          - 4000:4000
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install tox tox-gh-actions
-          sudo apt-get install -y libmemcached-dev zlib1g-dev
-      - name: Run tests
-        run: tox
-        env:
-          DJANGO_VERSION: 4.0.3
+          DJANGO_VERSION: 4.1.7

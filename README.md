@@ -36,7 +36,7 @@ SECRET_KEY = 'django_tests_secret_key'
 ## Supported versions
 
 - TiDB 4.0 and newer
-- Django 3.2 and 4.0
+- Django 3.2 and 4.1
 - Python 3.6 and newer(must match Django's Python version requirement)
 
 ## Test
@@ -65,5 +65,5 @@ Releases on PyPi before 3.0.0 are published from repository https://github.com/b
 
 ## Known issues
 
-- TiDB does not support FOREIGN KEY constraints([#18209](https://github.com/pingcap/tidb/issues/18209)).
-- TiDB does not support SAVEPOINT([#6840](https://github.com/pingcap/tidb/issues/6840)).
+- TiDB before v6.6.0 does not support FOREIGN KEY constraints([#18209](https://github.com/pingcap/tidb/issues/18209)).
+- TiDB before v6.2.0 does not support SAVEPOINT([#6840](https://github.com/pingcap/tidb/issues/6840)).
