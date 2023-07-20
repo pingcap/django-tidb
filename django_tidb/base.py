@@ -40,6 +40,9 @@ class DatabaseWrapper(MysqlDatabaseWrapper):
     introspection_class = DatabaseIntrospection
     ops_class = DatabaseOperations
 
+    def get_database_version(self):
+        return self.tidb_version
+
     @cached_property
     def data_type_check_constraints(self):
         if self.features.supports_column_check_constraints:

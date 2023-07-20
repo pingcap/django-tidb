@@ -26,11 +26,15 @@ class DatabaseSchemaEditor(MysqlDatabaseSchemaEditor):
         return "ALTER TABLE %(table)s CHANGE %(old_column)s %(new_column)s %(type)s"
 
     def skip_default_on_alter(self, field):
+        if self._is_limited_data_type(field):
+            # TiDB doesn't support defaults for BLOB/TEXT/JSON in the
+            # ALTER COLUMN statement.
+            return True
         return False
 
     @property
     def _supports_limited_data_type_defaults(self):
-        return True
+        return False
 
     def _field_should_be_indexed(self, model, field):
         return False
