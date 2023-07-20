@@ -34,7 +34,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
         "non_default": "utf8mb4_bin",
     }
 
-    minimum_database_version = (4, )
+    minimum_database_version = (4,)
 
     @cached_property
     def supports_foreign_keys(self):
@@ -279,7 +279,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "test_utils.tests.TestBadSetUpTestData.test_failure_in_setUpTestData_should_rollback_transaction",
             },
         }
-        if django.VERSION > (3, ):
+        if django.VERSION > (3,):
             skips.update(
                 {
                     "django4": {

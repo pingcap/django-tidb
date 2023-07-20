@@ -21,7 +21,8 @@ from django.db.models import Index
 from django.utils.datastructures import OrderedSet
 
 FieldInfo = namedtuple(
-    "FieldInfo", BaseFieldInfo._fields + ("extra", "is_unsigned", "has_json_constraint", "comment")
+    "FieldInfo",
+    BaseFieldInfo._fields + ("extra", "is_unsigned", "has_json_constraint", "comment"),
 )
 InfoLine = namedtuple(
     "InfoLine",
