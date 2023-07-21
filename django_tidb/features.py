@@ -232,9 +232,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "migrations.test_operations.OperationTests.test_smallfield_bigautofield_foreignfield_growth",
                 # Unsupported modifying the Reorg-Data types on the primary key
                 "migrations.test_operations.OperationTests.test_alter_field_pk_fk",
-                # Unsupported modifying collation of column from 'utf8mb4_general_ci' to 'utf8mb4_bin'
-                # when index is defined on it.
-                "migrations.test_operations.OperationTests.test_alter_field_pk_fk_db_collation",
                 # Unsupported add column and foreign key in single statement
                 # https://github.com/pingcap/tidb/issues/45474
                 "migrations.test_operations.OperationTests.test_remove_fk",
@@ -399,6 +396,9 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                         "schema.tests.SchemaTests.test_func_unique_constraint_lookups",
                         "update.tests.AdvancedTests.test_update_ordered_by_inline_m2m_annotation",
                         "update.tests.AdvancedTests.test_update_ordered_by_m2m_annotation",
+                        # Unsupported modifying collation of column from 'utf8mb4_general_ci' to 'utf8mb4_bin'
+                        # when index is defined on it.
+                        "migrations.test_operations.OperationTests.test_alter_field_pk_fk_db_collation",
                     }
                 }
             )
