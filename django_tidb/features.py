@@ -404,15 +404,16 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                     }
                 }
             )
-        if "ONLY_FULL_GROUP_BY" in self.connection.sql_mode:
-            skips.update(
-                {
-                    "GROUP BY cannot contain nonaggregated column when "
-                    "ONLY_FULL_GROUP_BY mode is enabled on TiDB.": {
-                        "aggregation.tests.AggregateTestCase.test_group_by_nested_expression_with_params",
-                    },
-                }
-            )
+        if django.utils.version.get_complete_version() >= (4, 2):
+            if "ONLY_FULL_GROUP_BY" in self.connection.sql_mode:
+                skips.update(
+                    {
+                        "GROUP BY cannot contain nonaggregated column when "
+                        "ONLY_FULL_GROUP_BY mode is enabled on TiDB.": {
+                            "aggregation.tests.AggregateTestCase.test_group_by_nested_expression_with_params",
+                        },
+                    }
+                )
         return skips
 
     @cached_property
