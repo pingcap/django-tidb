@@ -67,3 +67,53 @@ Releases on PyPi before 3.0.0 are published from repository https://github.com/b
 
 - TiDB before v6.6.0 does not support FOREIGN KEY constraints([#18209](https://github.com/pingcap/tidb/issues/18209)).
 - TiDB before v6.2.0 does not support SAVEPOINT([#6840](https://github.com/pingcap/tidb/issues/6840)).
+
+## Connect to TiDB Cloud Serverless
+
+TiDB Serverless offers the TiDB database with full HTAP capabilities for you and your organization. It is a fully managed, auto-scaling deployment of TiDB that lets you start using your database immediately, develop and run your application without caring about the underlying nodes, and automatically scale based on your application's workload changes.
+
+### 0. Signup to [TiDB Cloud](https://tidbcloud.com/signup?utm_source=github&utm_medium=django_tidb)
+
+### 1. Create a [serverless cluster](https://tidbcloud.com/console/clusters/create-cluster?utm_source=github&utm_medium=django_tidb)
+
+### 2. Obtain TiDB serverless [connection parameters](https://docs.pingcap.com/tidbcloud/connect-via-standard-connection-serverless#obtain-tidb-serverless-connection-parameters)
+
+Example
+
+```text
+host: 'gateway01.us-east-1.prod.aws.tidbcloud.com',
+port: 4000,
+user: 'xxxxxx.root',
+password: '<your_password>',
+ssl_ca: /etc/ssl/cert.pem   # macos
+```
+
+### 3. Determain your root certificate based on your system
+
+[Root certificate default path](https://docs.pingcap.com/tidbcloud/secure-connections-to-serverless-clusters#root-certificate-default-path)
+
+### 4. Connect to Serverless cluster
+
+Edit `DATABASES` in `settings.py` like below
+
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django_tidb',
+        'HOST': host,
+        'PORT': port,
+        'USER': user,
+        'PASSWORD': password,
+        'NAME': db_name,
+        'OPTIONS': {
+            'ssl_mode': 'VERIFY_IDENTITY',
+            'ssl': {
+                'ca': '/etc/ssl/cert.pem'
+            }
+        }
+
+    }
+}
+```
+
+You got it, enjoy!
