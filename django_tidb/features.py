@@ -279,7 +279,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "test_utils.tests.TestBadSetUpTestData.test_failure_in_setUpTestData_should_rollback_transaction",
             },
         }
-        if django.VERSION > (3,):
+        if django.VERSION[0] > 3:
             skips.update(
                 {
                     "django4": {
