@@ -232,8 +232,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "migrations.test_operations.OperationTests.test_smallfield_bigautofield_foreignfield_growth",
                 # Unsupported modifying the Reorg-Data types on the primary key
                 "migrations.test_operations.OperationTests.test_alter_field_pk_fk",
-                # Ditto
-                "migrations.test_operations.OperationTests.test_alter_field_pk_fk_char_to_int",
                 # Unsupported modifying collation of column from 'utf8mb4_general_ci' to 'utf8mb4_bin'
                 # when index is defined on it.
                 "migrations.test_operations.OperationTests.test_alter_field_pk_fk_db_collation",
@@ -405,6 +403,14 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 }
             )
         if django.utils.version.get_complete_version() >= (4, 2):
+            skips.update(
+                {
+                    "django42": {
+                        # Unsupported modifying the Reorg-Data types on the primary key
+                        "migrations.test_operations.OperationTests.test_alter_field_pk_fk_char_to_int",
+                    }
+                }
+            )
             if "ONLY_FULL_GROUP_BY" in self.connection.sql_mode:
                 skips.update(
                     {
