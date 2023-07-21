@@ -36,7 +36,7 @@ SECRET_KEY = 'django_tests_secret_key'
 ## Supported versions
 
 - TiDB 4.0 and newer
-- Django 3.2 and 4.1
+- Django 3.2, 4.1 and 4.2
 - Python 3.6 and newer(must match Django's Python version requirement)
 
 ## Test
