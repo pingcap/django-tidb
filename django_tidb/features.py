@@ -34,6 +34,8 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
         "non_default": "utf8mb4_bin",
     }
 
+    minimum_database_version = (4,)
+
     @cached_property
     def supports_foreign_keys(self):
         if self.connection.tidb_version >= (6, 6, 0):
@@ -90,7 +92,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "aggregation_regress.tests.AggregationTests.test_more_more",
                 "aggregation_regress.tests.JoinPromotionTests.test_ticket_21150",
                 "annotations.tests.NonAggregateAnnotationTestCase.test_annotation_aggregate_with_m2o",
-                "defer_regress.tests.DeferAnnotateSelectRelatedTest.test_defer_annotate_select_related",
                 "queries.test_explain.ExplainTests",
                 "queries.test_qs_combinators.QuerySetSetOperationTests."
                 "test_union_with_values_list_and_order_on_annotation",
@@ -146,8 +147,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "schema.tests.SchemaTests.test_alter_not_unique_field_to_primary_key",
                 # Unsupported modify column: can't set auto_increment
                 "schema.tests.SchemaTests.test_alter_smallint_pk_to_smallautofield_pk",
-                # BLOB/TEXT/JSON column 'address' can't have a default value
-                "schema.tests.SchemaTests.test_alter_text_field_to_not_null_with_default_value",
                 # Unsupported modify column: this column has primary key flag
                 "schema.tests.SchemaTests.test_char_field_pk_to_auto_field",
                 # Unsupported modify charset from utf8mb4 to utf8
@@ -156,6 +155,17 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "schema.tests.SchemaTests.test_primary_key",
                 # wrong result
                 "schema.tests.SchemaTests.test_alter_pk_with_self_referential_field",
+                # Unsupported add foreign key reference to themselves
+                "schema.tests.SchemaTests.test_add_inline_fk_update_data",
+                # This testcase is designed for MySQL only
+                "schema.tests.SchemaTests.test_add_foreign_key_quoted_db_table",
+                # Unsupported add column and foreign key in single statement
+                # https://github.com/pingcap/tidb/issues/45474
+                "schema.tests.SchemaTests.test_add_foreign_key_long_names",
+                # Ditto
+                "schema.tests.SchemaTests.test_unique_together_with_fk_with_existing_index",
+                # Ditto
+                "schema.tests.SchemaTests.test_add_inline_fk_index_update_data",
                 "schema.tests.SchemaTests.test_db_table",
                 "schema.tests.SchemaTests.test_indexes",
                 "schema.tests.SchemaTests.test_inline_fk",
@@ -220,6 +230,11 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "migrations.test_operations.OperationTests.test_rename_field_reloads_state_on_fk_target_changes",
                 "migrations.test_operations.OperationTests.test_smallfield_autofield_foreignfield_growth",
                 "migrations.test_operations.OperationTests.test_smallfield_bigautofield_foreignfield_growth",
+                # Unsupported modifying the Reorg-Data types on the primary key
+                "migrations.test_operations.OperationTests.test_alter_field_pk_fk",
+                # Unsupported add column and foreign key in single statement
+                # https://github.com/pingcap/tidb/issues/45474
+                "migrations.test_operations.OperationTests.test_remove_fk",
                 "migrations.test_loader.RecorderTests.test_apply",
                 "migrations.test_commands.MigrateTests.test_migrate_fake_initial",
                 "migrations.test_commands.MigrateTests.test_migrate_initial_false",
@@ -259,7 +274,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "test_utils.tests.TestBadSetUpTestData.test_failure_in_setUpTestData_should_rollback_transaction",
             },
         }
-        if int(django.__version__[0]) > 3:
+        if django.VERSION[0] > 3:
             skips.update(
                 {
                     "django4": {
@@ -274,6 +289,15 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                         "test_utils.test_testcase.TestTestCase.test_reset_sequences",
                         "test_utils.tests.CaptureOnCommitCallbacksTests.test_execute_recursive",
                         "test_utils.tests.CaptureOnCommitCallbacksTests.test_execute_tree",
+                    }
+                }
+            )
+        if django.VERSION < (4, 2):
+            skips.update(
+                {
+                    "django4.1": {
+                        # removed after Django 4.1
+                        "defer_regress.tests.DeferAnnotateSelectRelatedTest.test_defer_annotate_select_related",
                     }
                 }
             )
@@ -372,9 +396,30 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                         "schema.tests.SchemaTests.test_func_unique_constraint_lookups",
                         "update.tests.AdvancedTests.test_update_ordered_by_inline_m2m_annotation",
                         "update.tests.AdvancedTests.test_update_ordered_by_m2m_annotation",
+                        # Unsupported modifying collation of column from 'utf8mb4_general_ci' to 'utf8mb4_bin'
+                        # when index is defined on it.
+                        "migrations.test_operations.OperationTests.test_alter_field_pk_fk_db_collation",
                     }
                 }
             )
+        if django.utils.version.get_complete_version() >= (4, 2):
+            skips.update(
+                {
+                    "django42": {
+                        # Unsupported modifying the Reorg-Data types on the primary key
+                        "migrations.test_operations.OperationTests.test_alter_field_pk_fk_char_to_int",
+                    }
+                }
+            )
+            if "ONLY_FULL_GROUP_BY" in self.connection.sql_mode:
+                skips.update(
+                    {
+                        "GROUP BY cannot contain nonaggregated column when "
+                        "ONLY_FULL_GROUP_BY mode is enabled on TiDB.": {
+                            "aggregation.tests.AggregateTestCase.test_group_by_nested_expression_with_params",
+                        },
+                    }
+                )
         return skips
 
     @cached_property
@@ -383,6 +428,8 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
 
     @cached_property
     def can_introspect_foreign_keys(self):
+        if self.connection.tidb_version >= (6, 6, 0):
+            return True
         return False
 
     @cached_property
