@@ -17,6 +17,8 @@ from django.db.backends.mysql.schema import (
 
 
 class DatabaseSchemaEditor(MysqlDatabaseSchemaEditor):
+    # Unsupported add column and foreign key in single statement
+    # https://github.com/pingcap/tidb/issues/45474
     sql_create_column_inline_fk = None
 
     @property
