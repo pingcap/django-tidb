@@ -17,7 +17,6 @@ from django.db.backends.mysql.schema import (
 
 
 class DatabaseSchemaEditor(MysqlDatabaseSchemaEditor):
-
     sql_create_column_inline_fk = None
 
     @property
