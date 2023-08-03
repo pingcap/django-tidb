@@ -159,13 +159,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "schema.tests.SchemaTests.test_add_inline_fk_update_data",
                 # This testcase is designed for MySQL only
                 "schema.tests.SchemaTests.test_add_foreign_key_quoted_db_table",
-                # Unsupported add column and foreign key in single statement
-                # https://github.com/pingcap/tidb/issues/45474
-                "schema.tests.SchemaTests.test_add_foreign_key_long_names",
-                # Ditto
-                "schema.tests.SchemaTests.test_unique_together_with_fk_with_existing_index",
-                # Ditto
-                "schema.tests.SchemaTests.test_add_inline_fk_index_update_data",
                 "schema.tests.SchemaTests.test_db_table",
                 "schema.tests.SchemaTests.test_indexes",
                 "schema.tests.SchemaTests.test_inline_fk",
@@ -232,9 +225,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "migrations.test_operations.OperationTests.test_smallfield_bigautofield_foreignfield_growth",
                 # Unsupported modifying the Reorg-Data types on the primary key
                 "migrations.test_operations.OperationTests.test_alter_field_pk_fk",
-                # Unsupported add column and foreign key in single statement
-                # https://github.com/pingcap/tidb/issues/45474
-                "migrations.test_operations.OperationTests.test_remove_fk",
                 "migrations.test_loader.RecorderTests.test_apply",
                 "migrations.test_commands.MigrateTests.test_migrate_fake_initial",
                 "migrations.test_commands.MigrateTests.test_migrate_initial_false",
