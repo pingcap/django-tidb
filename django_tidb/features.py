@@ -468,7 +468,8 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                     {
                         # It's Django's fault for not checking if the database supports transactions.
                         "django42_unsupport_transactions": {
-                            "auth_tests.test_management.CreatePermissionsMultipleDatabasesTests.test_set_permissions_fk_to_using_parameter",
+                            "auth_tests.test_management.CreatePermissionsMultipleDatabasesTests"
+                            ".test_set_permissions_fk_to_using_parameter",
                         }
                     }
                 )
