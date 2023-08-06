@@ -94,10 +94,15 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                     "model_fields.test_jsonfield.TestQuerying.test_none_key_and_exact_lookup",
                     "model_fields.test_jsonfield.TestQuerying.test_obj_subquery_lookup",
                     "model_fields.test_jsonfield.TestQuerying.test_shallow_obj_lookup",
-                    "model_fields.test_jsonfield.TestQuerying.test_key_text_transform_char_lookup",
                     "model_fields.test_jsonfield.TestQuerying.test_ordering_grouping_by_key_transform",
                 }
             )
+            if django.VERSION >= (4, 2):
+                expected_failures.update(
+                    {
+                        "model_fields.test_jsonfield.TestQuerying.test_key_text_transform_char_lookup",
+                    }
+                )
         return expected_failures
 
     @cached_property

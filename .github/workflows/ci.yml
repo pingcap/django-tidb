@@ -2,7 +2,7 @@ on:
   pull_request:
   push:
     branches:
-      - update-ci
+      - main
 
 jobs:
   lint:
