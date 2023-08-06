@@ -463,6 +463,15 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                         },
                     }
                 )
+            if not self.supports_transactions:
+                skips.update(
+                    {
+                        # It's Django's fault for not checking if the database supports transactions.
+                        "django42_unsupport_transactions": {
+                            "auth_tests.test_management.CreatePermissionsMultipleDatabasesTests.test_set_permissions_fk_to_using_parameter",
+                        }
+                    }
+                )
         return skips
 
     @cached_property
