@@ -68,6 +68,39 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
         return False
 
     @cached_property
+    def django_test_expected_failures(self):
+        expected_failures = set()
+        # https://github.com/pingcap/django-tidb/issues/38
+        # These expected failures will be removed once this issue is resolved
+        if self.supports_json_field:
+            expected_failures.update(
+                {
+                    "model_fields.test_jsonfield.TestQuerying.test_key_quoted_string",
+                    "model_fields.test_jsonfield.TestQuerying.test_deep_lookup_mixed",
+                    "model_fields.test_jsonfield.TestQuerying.test_deep_lookup_objs",
+                    "model_fields.test_jsonfield.TestQuerying.test_icontains",
+                    "model_fields.test_jsonfield.TestQuerying.test_key_icontains",
+                    "model_fields.test_jsonfield.TestQuerying.test_key_iendswith",
+                    "model_fields.test_jsonfield.TestQuerying.test_key_iexact",
+                    "model_fields.test_jsonfield.TestQuerying.test_key_in",
+                    "model_fields.test_jsonfield.TestQuerying.test_key_iregex",
+                    "model_fields.test_jsonfield.TestQuerying.test_key_endswith",
+                    "model_fields.test_jsonfield.TestQuerying.test_key_regex",
+                    "model_fields.test_jsonfield.TestQuerying.test_key_startswith",
+                    "model_fields.test_jsonfield.TestQuerying.test_key_istartswith",
+                    "model_fields.test_jsonfield.TestQuerying.test_lookup_exclude",
+                    "model_fields.test_jsonfield.TestQuerying.test_lookup_exclude_nonexistent_key",
+                    "model_fields.test_jsonfield.TestQuerying.test_nested_key_transform_on_subquery",
+                    "model_fields.test_jsonfield.TestQuerying.test_none_key_and_exact_lookup",
+                    "model_fields.test_jsonfield.TestQuerying.test_obj_subquery_lookup",
+                    "model_fields.test_jsonfield.TestQuerying.test_shallow_obj_lookup",
+                    "model_fields.test_jsonfield.TestQuerying.test_key_text_transform_char_lookup",
+                    "model_fields.test_jsonfield.TestQuerying.test_ordering_grouping_by_key_transform",
+                }
+            )
+        return expected_failures
+
+    @cached_property
     def django_test_skips(self):
         skips = {
             "This doesn't work on MySQL.": {
