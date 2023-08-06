@@ -78,15 +78,11 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                     "model_fields.test_jsonfield.TestQuerying.test_key_quoted_string",
                     "model_fields.test_jsonfield.TestQuerying.test_deep_lookup_mixed",
                     "model_fields.test_jsonfield.TestQuerying.test_deep_lookup_objs",
-                    "model_fields.test_jsonfield.TestQuerying.test_icontains",
                     "model_fields.test_jsonfield.TestQuerying.test_key_icontains",
                     "model_fields.test_jsonfield.TestQuerying.test_key_iendswith",
                     "model_fields.test_jsonfield.TestQuerying.test_key_iexact",
                     "model_fields.test_jsonfield.TestQuerying.test_key_in",
                     "model_fields.test_jsonfield.TestQuerying.test_key_iregex",
-                    "model_fields.test_jsonfield.TestQuerying.test_key_endswith",
-                    "model_fields.test_jsonfield.TestQuerying.test_key_regex",
-                    "model_fields.test_jsonfield.TestQuerying.test_key_startswith",
                     "model_fields.test_jsonfield.TestQuerying.test_key_istartswith",
                     "model_fields.test_jsonfield.TestQuerying.test_lookup_exclude",
                     "model_fields.test_jsonfield.TestQuerying.test_lookup_exclude_nonexistent_key",
@@ -94,13 +90,23 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                     "model_fields.test_jsonfield.TestQuerying.test_none_key_and_exact_lookup",
                     "model_fields.test_jsonfield.TestQuerying.test_obj_subquery_lookup",
                     "model_fields.test_jsonfield.TestQuerying.test_shallow_obj_lookup",
-                    "model_fields.test_jsonfield.TestQuerying.test_ordering_grouping_by_key_transform",
                 }
             )
+            if django.VERSION >= (4, 1):
+                expected_failures.update(
+                    {
+                        "model_fields.test_jsonfield.TestQuerying.test_icontains",
+                    }
+                )
             if django.VERSION >= (4, 2):
                 expected_failures.update(
                     {
+                        "model_fields.test_jsonfield.TestQuerying.test_key_endswith",
+                        "model_fields.test_jsonfield.TestQuerying.test_key_regex",
                         "model_fields.test_jsonfield.TestQuerying.test_key_text_transform_char_lookup",
+                        "model_fields.test_jsonfield.TestQuerying.test_key_startswith",
+                        "model_fields.test_jsonfield.TestQuerying.test_ordering_grouping_by_key_transform",
+                        "model_fields.test_jsonfield.TestQuerying.test_ordering_grouping_by_key_transform",
                     }
                 )
         return expected_failures
@@ -445,6 +451,15 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                         "GROUP BY cannot contain nonaggregated column when "
                         "ONLY_FULL_GROUP_BY mode is enabled on TiDB.": {
                             "aggregation.tests.AggregateTestCase.test_group_by_nested_expression_with_params",
+                        },
+                    }
+                )
+            if not self.supports_foreign_keys:
+                skips.update(
+                    {
+                        # It's Django's fault for not checking if the database supports foreign keys.
+                        "django42_unsupport_foreign_keys": {
+                            "inspectdb.tests.InspectDBTestCase.test_same_relations",
                         },
                     }
                 )
