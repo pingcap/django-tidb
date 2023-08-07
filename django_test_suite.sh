@@ -31,7 +31,7 @@ cd $DJANGO_TESTS_DIR/django/tests
 EXIT_STATUS=0
 for DJANGO_TEST_APP in $DJANGO_TEST_APPS
 do
-   python3 runtests.py $DJANGO_TEST_APP --keepdb --noinput --settings tidb_settings || EXIT_STATUS=$?
+   python3 runtests.py $DJANGO_TEST_APP --noinput --settings tidb_settings || EXIT_STATUS=$?
    if [[ $EXIT_STATUS -ne 0 ]]; then
       exit $EXIT_STATUS
    fi
