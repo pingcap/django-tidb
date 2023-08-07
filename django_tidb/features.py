@@ -201,6 +201,8 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "schema.tests.SchemaTests.test_alter_pk_with_self_referential_field",
                 # Unsupported add foreign key reference to themselves
                 "schema.tests.SchemaTests.test_add_inline_fk_update_data",
+                # This testcase is designed for MySQL only
+                "schema.tests.SchemaTests.test_add_foreign_key_quoted_db_table",
                 "schema.tests.SchemaTests.test_db_table",
                 "schema.tests.SchemaTests.test_indexes",
                 "schema.tests.SchemaTests.test_inline_fk",
