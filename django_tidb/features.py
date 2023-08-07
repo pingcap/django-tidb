@@ -201,8 +201,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "schema.tests.SchemaTests.test_alter_pk_with_self_referential_field",
                 # Unsupported add foreign key reference to themselves
                 "schema.tests.SchemaTests.test_add_inline_fk_update_data",
-                # This testcase is designed for MySQL only
-                "schema.tests.SchemaTests.test_add_foreign_key_quoted_db_table",
                 "schema.tests.SchemaTests.test_db_table",
                 "schema.tests.SchemaTests.test_indexes",
                 "schema.tests.SchemaTests.test_inline_fk",
@@ -457,20 +455,10 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
             if not self.supports_foreign_keys:
                 skips.update(
                     {
-                        # It's Django's fault for not checking if the database supports foreign keys.
-                        "django42_unsupport_foreign_keys": {
+                        # Django does not check if the database supports foreign keys.
+                        "django42_db_unsupport_foreign_keys": {
                             "inspectdb.tests.InspectDBTestCase.test_same_relations",
                         },
-                    }
-                )
-            if not self.supports_transactions:
-                skips.update(
-                    {
-                        # It's Django's fault for not checking if the database supports transactions.
-                        "django42_unsupport_transactions": {
-                            "auth_tests.test_management.CreatePermissionsMultipleDatabasesTests"
-                            ".test_set_permissions_fk_to_using_parameter",
-                        }
                     }
                 )
         return skips
