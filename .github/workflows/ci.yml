@@ -37,6 +37,15 @@ jobs:
           - 'v6.5.3'
           - 'v5.4.3'
           - 'v4.0.15'
+        exclude:
+          # Django introduced the `debug_transaction` feature in version 4.2.x,
+          # but it does not consider databases that do not support savepoints(TiDB < 6.2.0),
+          # as a result, all `assertNumQueries` in test cases failed.
+          # https://github.com/django/django/commit/798e38c2b9c46ab72e2ee8c33dc822f01b194b1e
+          - django-version: '4.2.4'
+            tidb-version: 'v4.0.15'
+          - django-version: '4.2.4'
+            tidb-version: 'v5.4.3'
 
     name: py${{ matrix.python-version }}_tidb${{ matrix.tidb-version }}_django${{ matrix.django-version }}
     runs-on: ubuntu-latest
