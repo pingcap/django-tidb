@@ -28,6 +28,7 @@ jobs:
         python-version:
           - '3.9'
           - '3.10'
+          - '3.11'
         django-version:
           - '3.2.20'
           - '4.1.10'
