@@ -93,9 +93,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "aggregation_regress.tests.JoinPromotionTests.test_ticket_21150",
                 "annotations.tests.NonAggregateAnnotationTestCase.test_annotation_aggregate_with_m2o",
                 # Designed for MySQL only
-                "backends.mysql.tests.Tests.test_check_database_version_supported",
                 "backends.mysql.test_features.TestFeatures.test_supports_transactions",
-                "backends.mysql.test_introspection.StorageEngineTests.test_get_storage_engine",
                 "check_framework.test_database.DatabaseCheckTests.test_mysql_strict_mode",
                 # Unsupported add column and foreign key in single statement
                 "indexes.tests.SchemaIndexesMySQLTests.test_no_index_for_foreignkey",
@@ -375,6 +373,9 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
             skips.update(
                 {
                     "django41": {
+                        # Designed for MySQL only
+                        "backends.mysql.tests.Tests.test_check_database_version_supported",
+                        "backends.mysql.test_introspection.StorageEngineTests.test_get_storage_engine",
                         "migrations.test_operations.OperationTests.test_create_model_with_boolean_expression_in_check_constraint",
                         "migrations.test_operations.OperationTests.test_remove_func_unique_constraint",
                         "migrations.test_operations.OperationTests.test_remove_func_index",
