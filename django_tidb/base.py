@@ -31,7 +31,9 @@ server_version = TiDBVersion()
 
 
 class DatabaseWrapper(MysqlDatabaseWrapper):
-    vendor = "tidb"
+    # Django has some hard code for mysql in `JSONFields` and tests through check vendor name,
+    # as TiDB is compatible with MySQL, so setting vendor name to mysql is ok.
+    vendor = "mysql"
     display_name = "TiDB"
 
     SchemaEditorClass = DatabaseSchemaEditor

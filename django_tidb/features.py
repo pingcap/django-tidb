@@ -68,50 +68,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
         return False
 
     @cached_property
-    def django_test_expected_failures(self):
-        expected_failures = set()
-        # https://github.com/pingcap/django-tidb/issues/38
-        # These expected failures will be removed once this issue is resolved
-        if self.supports_json_field:
-            expected_failures.update(
-                {
-                    "model_fields.test_jsonfield.TestQuerying.test_key_quoted_string",
-                    "model_fields.test_jsonfield.TestQuerying.test_deep_lookup_mixed",
-                    "model_fields.test_jsonfield.TestQuerying.test_deep_lookup_objs",
-                    "model_fields.test_jsonfield.TestQuerying.test_key_icontains",
-                    "model_fields.test_jsonfield.TestQuerying.test_key_iendswith",
-                    "model_fields.test_jsonfield.TestQuerying.test_key_iexact",
-                    "model_fields.test_jsonfield.TestQuerying.test_key_in",
-                    "model_fields.test_jsonfield.TestQuerying.test_key_iregex",
-                    "model_fields.test_jsonfield.TestQuerying.test_key_istartswith",
-                    "model_fields.test_jsonfield.TestQuerying.test_lookup_exclude",
-                    "model_fields.test_jsonfield.TestQuerying.test_lookup_exclude_nonexistent_key",
-                    "model_fields.test_jsonfield.TestQuerying.test_nested_key_transform_on_subquery",
-                    "model_fields.test_jsonfield.TestQuerying.test_none_key_and_exact_lookup",
-                    "model_fields.test_jsonfield.TestQuerying.test_obj_subquery_lookup",
-                    "model_fields.test_jsonfield.TestQuerying.test_shallow_obj_lookup",
-                }
-            )
-            if django.VERSION >= (4, 1):
-                expected_failures.update(
-                    {
-                        "model_fields.test_jsonfield.TestQuerying.test_icontains",
-                    }
-                )
-            if django.VERSION >= (4, 2):
-                expected_failures.update(
-                    {
-                        "model_fields.test_jsonfield.TestQuerying.test_key_endswith",
-                        "model_fields.test_jsonfield.TestQuerying.test_key_regex",
-                        "model_fields.test_jsonfield.TestQuerying.test_key_text_transform_char_lookup",
-                        "model_fields.test_jsonfield.TestQuerying.test_key_startswith",
-                        "model_fields.test_jsonfield.TestQuerying.test_ordering_grouping_by_key_transform",
-                        "model_fields.test_jsonfield.TestQuerying.test_ordering_grouping_by_key_transform",
-                    }
-                )
-        return expected_failures
-
-    @cached_property
     def django_test_skips(self):
         skips = {
             "This doesn't work on MySQL.": {
@@ -136,6 +92,13 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "aggregation_regress.tests.AggregationTests.test_more_more",
                 "aggregation_regress.tests.JoinPromotionTests.test_ticket_21150",
                 "annotations.tests.NonAggregateAnnotationTestCase.test_annotation_aggregate_with_m2o",
+                # Designed for MySQL only
+                "backends.mysql.tests.Tests.test_check_database_version_supported",
+                "backends.mysql.test_features.TestFeatures.test_supports_transactions",
+                "backends.mysql.test_introspection.StorageEngineTests.test_get_storage_engine",
+                "check_framework.test_database.DatabaseCheckTests.test_mysql_strict_mode",
+                # Unsupported add column and foreign key in single statement
+                "indexes.tests.SchemaIndexesMySQLTests.test_no_index_for_foreignkey",
                 "queries.test_explain.ExplainTests",
                 "queries.test_qs_combinators.QuerySetSetOperationTests."
                 "test_union_with_values_list_and_order_on_annotation",
@@ -201,8 +164,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "schema.tests.SchemaTests.test_alter_pk_with_self_referential_field",
                 # Unsupported add foreign key reference to themselves
                 "schema.tests.SchemaTests.test_add_inline_fk_update_data",
-                # This testcase is designed for MySQL only
-                "schema.tests.SchemaTests.test_add_foreign_key_quoted_db_table",
                 "schema.tests.SchemaTests.test_db_table",
                 "schema.tests.SchemaTests.test_indexes",
                 "schema.tests.SchemaTests.test_inline_fk",
