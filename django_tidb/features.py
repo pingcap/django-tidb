@@ -114,6 +114,8 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 # wrong test result
                 ".test_no_duplicates_for_non_unique_related_object_in_search_fields",
                 "transaction_hooks.tests.TestConnectionOnCommit.test_inner_savepoint_does_not_affect_outer",
+                # TiDB cannot guarantee to always rollback the main thread txn when deadlock occurs
+                "transactions.tests.AtomicMySQLTests.test_implicit_savepoint_rollback",
                 "filtered_relation.tests.FilteredRelationTests.test_select_for_update",
                 "filtered_relation.tests.FilteredRelationTests.test_union",
                 "fixtures_regress.tests.TestFixtures.test_loaddata_raises_error_when_fixture_has_invalid_foreign_key",
