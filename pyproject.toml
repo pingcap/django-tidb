@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wdtest-django-tidb"
+authors = [
+  { name="Xiang Zhang", email="zhangxiang02@pingcap.com" }
+]
+description = "Django backend for TiDB"
+readme = "README.md"
+requires-python = ">=3.6"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Framework :: Django",
+    "Framework :: Django :: 3.2",
+    "Framework :: Django :: 4.1",
+    "Framework :: Django :: 4.2",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dynamic = ["version"]
+
+[project.urls]
+"Homepage" = "https://github.com/pingcap/tidb"
+"Bug Reports" = "https://github.com/pingcap/django-tidb/issues"
+"Source" = "https://github.com/pingcap/django-tidb"
+
+[tool.setuptools]
+packages = ["django_tidb"]
+
+[tool.setuptools.dynamic]
+version = {attr = "django_tidb.__version__"}

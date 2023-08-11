@@ -15,6 +15,6 @@
 # wrong version of Django is installed.
 from .functions import register_functions
 
-__version__ = "3.0.0"
+__version__ = "3.1.0"
 
 register_functions()
