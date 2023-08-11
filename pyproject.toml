@@ -5,7 +5,8 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "django-tidb"
 authors = [
-  { name="Xiang Zhang", email="zhangxiang02@pingcap.com" }
+  { name="Xiang Zhang", email="zhangxiang02@pingcap.com" },
+  { name="Di Wang", email="wangdi@pingcap.com" }
 ]
 description = "Django backend for TiDB"
 readme = "README.md"
@@ -20,9 +21,6 @@ classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
