@@ -43,9 +43,3 @@ class DatabaseOperations(MysqlDatabaseOperations):
         if lookup_type == "regex":
             return "%s REGEXP BINARY %s"
         return "%s REGEXP %s"
-
-    def lookup_cast(self, lookup_type, internal_type=None):
-        lookup = "%s"
-        if internal_type == "JSONField":
-            lookup = "JSON_UNQUOTE(%s)"
-        return lookup
