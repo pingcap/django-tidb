@@ -7,9 +7,37 @@
 
 This adds compatibility for [TiDB](https://github.com/pingcap/tidb) to Django.
 
-## Install
+## Installation Guide
 
+### Prerequisites
+
+Before installing django-tidb, ensure you have a MySQL driver installed. You can choose either `mysqlclient`(recommended) or `pymysql`.
+
+#### Install mysqlclient (Recommended)
+
+Please refer to the [mysqlclient official guide](https://github.com/PyMySQL/mysqlclient#install)
+
+#### Install pymysql
+
+To install pymysql, use the following command:
+
+```bash
+pip install pymysql
 ```
+
+Then add the following code at the beginning of your Django's `manage.py`:
+
+```python
+import pymysql
+
+pymysql.install_as_MySQLdb()
+```
+
+### Installing django-tidb
+
+Once you have a MySQL driver in place, proceed to install django-tidb:
+
+```bash
 pip install django-tidb
 ```
 
@@ -17,7 +45,7 @@ pip install django-tidb
 
 Set `'ENGINE': 'django_tidb'` in your settings to this:
 
-```
+```python
 DATABASES = {
     'default': {
         'ENGINE': 'django_tidb',
@@ -43,7 +71,7 @@ SECRET_KEY = 'django_tests_secret_key'
 
 create your virtualenv with:
 
-```
+```bash
 $ virtualenv venv
 $ source venv/bin/activate
 ```
@@ -52,7 +80,7 @@ you can use the command ```deactivate``` to exit from the virtual environment.
 
 run all integration tests.
 
-```
+```bash
 $ DJANGO_VERSION=3.2.12 python run_testing_worker.py
 ```
 
