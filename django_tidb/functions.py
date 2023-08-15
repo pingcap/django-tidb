@@ -23,7 +23,7 @@ def char(self, compiler, connection, **extra_context):
         connection,
         function="CHAR",
         template="%(function)s(%(expressions)s USING utf8mb4)",
-        **extra_context
+        **extra_context,
     )
 
 
