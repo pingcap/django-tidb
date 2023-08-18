@@ -11,21 +11,21 @@ This adds compatibility for [TiDB](https://github.com/pingcap/tidb) to Django.
 
 ### Prerequisites
 
-Before installing django-tidb, ensure you have a MySQL driver installed. You can choose either `mysqlclient`(recommended) or `pymysql`.
+Before installing django-tidb, ensure you have a MySQL driver installed. You can choose either `mysqlclient`(recommended) or `pymysql`(at your own risk).
 
 #### Install mysqlclient (Recommended)
 
 Please refer to the [mysqlclient official guide](https://github.com/PyMySQL/mysqlclient#install)
 
-#### Install pymysql
+#### Install pymysql (At your own risk)
 
-To install pymysql, use the following command:
+> django-tidb has not been tested with pymysql
 
 ```bash
 pip install pymysql
 ```
 
-Then add the following code at the beginning of your Django's `manage.py`:
+Then add the following code at the beginning of your Django's `settings.py`:
 
 ```python
 import pymysql
@@ -35,11 +35,15 @@ pymysql.install_as_MySQLdb()
 
 ### Installing django-tidb
 
-Once you have a MySQL driver in place, proceed to install django-tidb:
+To install django-tidb, you need to select the version that corresponds with your Django version. Please refer to the table below for guidance:
 
-```bash
-pip install django-tidb
-```
+> The minor release number of Django doesn't correspond to the minor release number of django-tidb. Use the latest minor release of each.
+
+|django|django-tidb|install command|
+|:----:|:---------:|:-------------:|
+|v4.2.x|v4.2.x|`pip install 'django-tidb>=4.2.0,<4.3.0'`|
+|v4.1.x|v4.1.x|`pip install 'django-tidb>=4.1.0,<4.2.0'`|
+|v3.2.x|v3.2.x|`pip install 'django-tidb>=3.2.0,<3.3.0'`|
 
 ## Usage
 
