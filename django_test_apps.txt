@@ -29,6 +29,7 @@ dates
 datetimes
 db_typecasts
 db_utils
+db_functions
 defer
 defer_regress
 delete

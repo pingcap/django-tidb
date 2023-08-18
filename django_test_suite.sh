@@ -20,12 +20,14 @@ export PYTHONUNBUFFERED=1
 export DJANGO_TESTS_DIR="django_tests_dir"
 mkdir -p $DJANGO_TESTS_DIR
 
-pip3 install .
+pip3 install -e .
 git clone --depth 1  --branch $DJANGO_VERSION https://github.com/django/django.git $DJANGO_TESTS_DIR/django
 cp tidb_settings.py $DJANGO_TESTS_DIR/django/tidb_settings.py
 cp tidb_settings.py $DJANGO_TESTS_DIR/django/tests/tidb_settings.py
 
-cd $DJANGO_TESTS_DIR/django && pip3 install -e . && pip3 install -r tests/requirements/py3.txt && pip3 install -r tests/requirements/mysql.txt; cd ../../
+# Do not install django in editable mode until this issue is fixed: https://github.com/python/cpython/issues/108078
+# Django Ticket: https://code.djangoproject.com/ticket/34780
+cd $DJANGO_TESTS_DIR/django && pip3 install . && pip3 install -r tests/requirements/py3.txt && pip3 install -r tests/requirements/mysql.txt; cd ../../
 cd $DJANGO_TESTS_DIR/django/tests
 
 EXIT_STATUS=0
