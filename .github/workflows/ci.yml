@@ -26,12 +26,11 @@ jobs:
       fail-fast: false
       matrix:
         python-version:
+          - '3.8'
           - '3.9'
           - '3.10'
           - '3.11'
         django-version:
-          - '3.2.20'
-          - '4.1.10'
           - '4.2.4'
         tidb-version:
           - 'v7.1.1'
@@ -47,9 +46,6 @@ jobs:
             tidb-version: 'v4.0.15'
           - django-version: '4.2.4'
             tidb-version: 'v5.4.3'
-          # Django 3.2 is under extended support, some functions are not compatible with Python 3.11
-          - python-version: '3.11'
-            django-version: '3.2.20'
 
     name: py${{ matrix.python-version }}_tidb${{ matrix.tidb-version }}_django${{ matrix.django-version }}
     runs-on: ubuntu-latest

@@ -20,7 +20,7 @@ export PYTHONUNBUFFERED=1
 export DJANGO_TESTS_DIR="django_tests_dir"
 mkdir -p $DJANGO_TESTS_DIR
 
-pip3 install .
+pip3 install -e .
 git clone --depth 1  --branch $DJANGO_VERSION https://github.com/django/django.git $DJANGO_TESTS_DIR/django
 cp tidb_settings.py $DJANGO_TESTS_DIR/django/tidb_settings.py
 cp tidb_settings.py $DJANGO_TESTS_DIR/django/tests/tidb_settings.py
