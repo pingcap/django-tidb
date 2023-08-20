@@ -25,9 +25,7 @@ git clone --depth 1  --branch $DJANGO_VERSION https://github.com/django/django.g
 cp tidb_settings.py $DJANGO_TESTS_DIR/django/tidb_settings.py
 cp tidb_settings.py $DJANGO_TESTS_DIR/django/tests/tidb_settings.py
 
-# Do not install django in editable mode until this issue is fixed: https://github.com/python/cpython/issues/108078
-# Django Ticket: https://code.djangoproject.com/ticket/34780
-cd $DJANGO_TESTS_DIR/django && pip3 install . && pip3 install -r tests/requirements/py3.txt && pip3 install -r tests/requirements/mysql.txt; cd ../../
+cd $DJANGO_TESTS_DIR/django && pip3 install -e . && pip3 install -r tests/requirements/py3.txt && pip3 install -r tests/requirements/mysql.txt; cd ../../
 cd $DJANGO_TESTS_DIR/django/tests
 
 EXIT_STATUS=0
