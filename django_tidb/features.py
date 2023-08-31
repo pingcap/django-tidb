@@ -287,7 +287,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
 
     @cached_property
     def supported_explain_formats(self):
-        return {"DOT", "ROW", "BRIEF"}
+        return {"TRADITIONAL", "ROW", "BRIEF", "DOT", "TIDB_JSON"}
 
     @cached_property
     def ignores_table_name_case(self):

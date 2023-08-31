@@ -18,23 +18,33 @@ from django.db.backends.mysql.operations import (
 
 class DatabaseOperations(MysqlDatabaseOperations):
     def explain_query_prefix(self, format=None, **options):
-        if format:
-            supported_formats = self.connection.features.supported_explain_formats
-            normalized_format = format.upper()
-            if normalized_format not in supported_formats:
-                msg = "%s is not a recognized format." % normalized_format
-                if supported_formats:
-                    msg += " Allowed formats: %s" % ", ".join(sorted(supported_formats))
-                raise ValueError(msg)
+        # Alias TiDB's "ROW" format to "TEXT" for consistency with other backends.
+        if format and format.upper() == "TEXT":
+            format = "ROW"
+        elif not format:
+            format = "ROW"
+
+        # Check if the format is supported by TiDB.
+        supported_formats = self.connection.features.supported_explain_formats
+        normalized_format = format.upper()
+        if normalized_format not in supported_formats:
+            msg = "%s is not a recognized format." % normalized_format
+            if supported_formats:
+                msg += " Allowed formats: %s" % ", ".join(sorted(supported_formats))
+            else:
+                msg += (
+                    f" {self.connection.display_name} does not support any formats."
+                )
+            raise ValueError(msg)
+
+        analyze = options.pop("analyze", False)
         if options:
             raise ValueError("Unknown options: %s" % ", ".join(sorted(options.keys())))
-        analyze = options.pop("analyze", False)
+
         prefix = self.explain_prefix
-        if analyze and self.connection.features.supports_explain_analyze:
+        if analyze:
             prefix += " ANALYZE"
-        if format and not analyze:
-            # Only TiDB supports the analyze option with formats but with "ROW".
-            prefix += ' FORMAT="%s"' % format
+        prefix += ' FORMAT="%s"' % format
         return prefix
 
     def regex_lookup(self, lookup_type):
