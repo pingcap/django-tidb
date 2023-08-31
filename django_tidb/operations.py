@@ -32,9 +32,7 @@ class DatabaseOperations(MysqlDatabaseOperations):
             if supported_formats:
                 msg += " Allowed formats: %s" % ", ".join(sorted(supported_formats))
             else:
-                msg += (
-                    f" {self.connection.display_name} does not support any formats."
-                )
+                msg += f" {self.connection.display_name} does not support any formats."
             raise ValueError(msg)
 
         analyze = options.pop("analyze", False)
