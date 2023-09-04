@@ -41,4 +41,11 @@ class DatabaseSchemaEditor(MysqlDatabaseSchemaEditor):
         return False
 
     def _field_should_be_indexed(self, model, field):
-        return False
+        if not field.db_index or field.unique:
+            return False
+        # No need to create an index for ForeignKey fields except if
+        # db_constraint=False because the index from that constraint won't be
+        # created.
+        if field.get_internal_type() == "ForeignKey" and field.db_constraint:
+            return False
+        return not self._is_limited_data_type(field)

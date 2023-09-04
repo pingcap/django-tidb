@@ -1,3 +1,4 @@
+tidb
 admin_changelist
 admin_custom_urls
 admin_docs
