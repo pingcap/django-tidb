@@ -2,7 +2,7 @@ import json
 
 from django.test import TestCase
 from django.test.utils import CaptureQueriesContext
-from django.db import models, connection, transaction
+from django.db import connection, transaction
 
 from .models import Course
 
@@ -38,7 +38,7 @@ class TiDBExplainTests(TestCase):
                     self.assertTrue(
                         captured_queries[0]["sql"].startswith(
                             connection.ops.explain_prefix
-                            + " ANALYZE FORMAT=\"{format}\"".format(format=format)
+                            + f" ANALYZE FORMAT=\"{format}\""
                         )
                     )
                     if format == "TIDB_JSON":
