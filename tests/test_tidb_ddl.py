@@ -42,7 +42,9 @@ class TiDBDDLTests(TransactionTestCase):
                 app_label = "tidb"
 
         class Node2(models.Model):
-            node1 = models.ForeignKey(Node1, on_delete=models.CASCADE, db_constraint=False)
+            node1 = models.ForeignKey(
+                Node1, on_delete=models.CASCADE, db_constraint=False
+            )
 
             class Meta:
                 app_label = "tidb"
@@ -50,5 +52,5 @@ class TiDBDDLTests(TransactionTestCase):
         with connection.schema_editor() as editor:
             editor.create_model(Node1)
             editor.create_model(Node2)
-        
+
         self.assertIn("node1_id", self.get_indexes("tidb_node2"))
