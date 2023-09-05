@@ -17,7 +17,7 @@ class TiDBExplainTests(TestCase):
                     result = Course.objects.filter(name="test").explain(format=format)
                     self.assertTrue(
                         captured_queries[0]["sql"].startswith(
-                            connection.ops.explain_prefix + f" FORMAT=\"{format}\""
+                            connection.ops.explain_prefix + f' FORMAT="{format}"'
                         )
                     )
                     if format == "TIDB_JSON":
@@ -38,7 +38,7 @@ class TiDBExplainTests(TestCase):
                     self.assertTrue(
                         captured_queries[0]["sql"].startswith(
                             connection.ops.explain_prefix
-                            + f" ANALYZE FORMAT=\"{format}\""
+                            + f' ANALYZE FORMAT="{format}"'
                         )
                     )
                     if format == "TIDB_JSON":
@@ -55,9 +55,7 @@ class TiDBExplainTests(TestCase):
 
     def test_explain_analyze_with_unsupported_format(self):
         with self.assertRaises(ValueError):
-            Course.objects.filter(name="test").explain(
-                analyze=True, format="JSON"
-            )
+            Course.objects.filter(name="test").explain(analyze=True, format="JSON")
 
     def test_explain_with_unkonwn_option(self):
         with self.assertRaises(ValueError):
@@ -69,6 +67,6 @@ class TiDBExplainTests(TestCase):
                 Course.objects.filter(name="test").explain()
                 self.assertTrue(
                     captured_queries[0]["sql"].startswith(
-                        connection.ops.explain_prefix + " FORMAT=\"ROW\""
+                        connection.ops.explain_prefix + ' FORMAT="ROW"'
                     )
                 )

@@ -42,7 +42,9 @@ class TiDBDDLTests(TransactionTestCase):
                 app_label = "tidb"
 
         class Node2(models.Model):
-            node1 = models.ForeignKey(Node1, on_delete=models.CASCADE, db_constraint=False)
+            node1 = models.ForeignKey(
+                Node1, on_delete=models.CASCADE, db_constraint=False
+            )
 
             class Meta:
                 app_label = "tidb"
