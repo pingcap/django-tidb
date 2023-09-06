@@ -84,6 +84,12 @@ class TiDBDDLTests(TransactionTestCase):
             editor.create_model(Node3)
         self.assertIn("title", self.get_uniques("tidb_node3"))
 
+        new_field = models.CharField(max_length=255, unique=True)
+        new_field.set_attributes_from_name("new_field")
+        with connection.schema_editor() as editor:
+            editor.add_field(Node3, new_field)
+        self.assertIn("new_field", self.get_uniques("tidb_node3"))
+
         parent = models.OneToOneField(Node3, models.CASCADE)
         parent.set_attributes_from_name("parent")
         with connection.schema_editor() as editor:
