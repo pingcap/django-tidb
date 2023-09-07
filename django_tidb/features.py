@@ -305,6 +305,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 {
                     "tidb_lt6": {
                         "tidb.test_tidb_explain.TiDBExplainTests",
+                        "schema.tests.SchemaTests.test_remove_indexed_field",
                     }
                 }
             )
