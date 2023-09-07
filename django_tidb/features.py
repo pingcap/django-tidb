@@ -300,6 +300,14 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                     }
                 }
             )
+        if self.connection.tidb_version < (6,):
+            skips.update(
+                {
+                    "tidb_lt6": {
+                        "tidb.test_tidb_explain.TiDBExplainTests",
+                    }
+                }
+            )
         if self.connection.tidb_version == (5, 0, 3):
             skips.update(
                 {
