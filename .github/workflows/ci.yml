@@ -4,6 +4,10 @@ on:
     branches:
       - stable/4.1.x
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lint:
     name: lint
@@ -31,7 +35,7 @@ jobs:
           - '3.10'
           - '3.11'
         django-version:
-          - '4.1.10'
+          - '4.1.11'
         tidb-version:
           - 'v7.1.1'
           - 'v6.5.3'
