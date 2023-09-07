@@ -117,6 +117,9 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 # wrong test result
                 ".test_no_duplicates_for_non_unique_related_object_in_search_fields",
                 "transaction_hooks.tests.TestConnectionOnCommit.test_inner_savepoint_does_not_affect_outer",
+                # TiDB does not support `JSON` format for `EXPLAIN ANALYZE`
+                "queries.test_explain.ExplainTests.test_mysql_analyze",
+                "queries.test_explain.ExplainTests.test_mysql_text_to_traditional",
                 # TiDB cannot guarantee to always rollback the main thread txn when deadlock occurs
                 "transactions.tests.AtomicMySQLTests.test_implicit_savepoint_rollback",
                 "filtered_relation.tests.FilteredRelationTests.test_select_for_update",
@@ -168,10 +171,8 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 # Unsupported add foreign key reference to themselves
                 "schema.tests.SchemaTests.test_add_inline_fk_update_data",
                 "schema.tests.SchemaTests.test_db_table",
-                "schema.tests.SchemaTests.test_indexes",
                 "schema.tests.SchemaTests.test_inline_fk",
                 "schema.tests.SchemaTests.test_remove_constraints_capital_letters",
-                "schema.tests.SchemaTests.test_remove_db_index_doesnt_remove_custom_indexes",
                 "schema.tests.SchemaTests.test_rename_column_renames_deferred_sql_references",
                 "schema.tests.SchemaTests.test_rename_referenced_field",
                 "schema.tests.SchemaTests.test_rename_table_renames_deferred_sql_references",
@@ -195,6 +196,13 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "contenttypes_tests.test_models.ContentTypesMultidbTests.test_multidb",
                 # ContentType matching query does not exist.
                 "contenttypes_tests.test_models.ContentTypesTests.test_app_labeled_name",
+                "schema.tests.SchemaTests.test_add_auto_field",
+                "schema.tests.SchemaTests.test_alter_autofield_pk_to_smallautofield_pk",
+                "schema.tests.SchemaTests.test_alter_primary_key_db_collation",
+                "schema.tests.SchemaTests.test_alter_primary_key_the_same_name",
+                "schema.tests.SchemaTests.test_autofield_to_o2o",
+                "update.tests.AdvancedTests.test_update_ordered_by_inline_m2m_annotation",
+                "update.tests.AdvancedTests.test_update_ordered_by_m2m_annotation",
                 # IntegrityError not raised
                 "constraints.tests.CheckConstraintTests.test_database_constraint",
                 "constraints.tests.CheckConstraintTests.test_database_constraint_unicode",
@@ -388,7 +396,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                         "migrations.test_operations.OperationTests.test_add_func_unique_constraint",
                         "migrations.test_operations.OperationTests.test_add_func_index",
                         "schema.tests.SchemaTests.test_add_auto_field",
-                        "schema.tests.SchemaTests.test_add_field_o2o_nullable",
                         "schema.tests.SchemaTests.test_alter_autofield_pk_to_smallautofield_pk",
                         "schema.tests.SchemaTests.test_alter_primary_key_db_collation",
                         "schema.tests.SchemaTests.test_alter_primary_key_the_same_name",

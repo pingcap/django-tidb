@@ -49,3 +49,14 @@ class DatabaseSchemaEditor(MysqlDatabaseSchemaEditor):
         if field.get_internal_type() == "ForeignKey" and field.db_constraint:
             return False
         return not self._is_limited_data_type(field)
+
+    def add_field(self, model, field):
+        if field.unique:
+            # TiDB does not support multiple operations with a single DDL statement,
+            # so we need to execute the unique constraint creation separately.
+            field._unique = False
+            super().add_field(model, field)
+            field._unique = True
+            self.execute(self._create_unique_sql(model, [field]))
+        else:
+            super().add_field(model, field)

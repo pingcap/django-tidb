@@ -35,9 +35,11 @@ print("test apps: ", all_apps)
 if not all_apps:
     exit()
 
-exitcode = os.WEXITSTATUS(os.system(
-    """DJANGO_TEST_APPS="{apps}" bash ./django_test_suite.sh""".format(
-        apps=" ".join(all_apps)
+exitcode = os.WEXITSTATUS(
+    os.system(
+        """DJANGO_TEST_APPS="{apps}" bash ./django_test_suite.sh""".format(
+            apps=" ".join(all_apps)
+        )
     )
-))
+)
 exit(exitcode)
