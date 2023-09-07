@@ -196,13 +196,6 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "contenttypes_tests.test_models.ContentTypesMultidbTests.test_multidb",
                 # ContentType matching query does not exist.
                 "contenttypes_tests.test_models.ContentTypesTests.test_app_labeled_name",
-                "schema.tests.SchemaTests.test_add_auto_field",
-                "schema.tests.SchemaTests.test_alter_autofield_pk_to_smallautofield_pk",
-                "schema.tests.SchemaTests.test_alter_primary_key_db_collation",
-                "schema.tests.SchemaTests.test_alter_primary_key_the_same_name",
-                "schema.tests.SchemaTests.test_autofield_to_o2o",
-                "update.tests.AdvancedTests.test_update_ordered_by_inline_m2m_annotation",
-                "update.tests.AdvancedTests.test_update_ordered_by_m2m_annotation",
                 # IntegrityError not raised
                 "constraints.tests.CheckConstraintTests.test_database_constraint",
                 "constraints.tests.CheckConstraintTests.test_database_constraint_unicode",
