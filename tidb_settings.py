@@ -13,38 +13,38 @@
 
 import os
 
-hosts = os.getenv('TIDB_HOST', '127.0.0.1')
-port = os.getenv('TIDB_PORT', 4000)
+hosts = os.getenv("TIDB_HOST", "127.0.0.1")
+port = os.getenv("TIDB_PORT", 4000)
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django_tidb',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': hosts,
-        'PORT': port,
-        'TEST': {
-            'NAME': 'django_tests',
-            'CHARSET': 'utf8mb4',
-            'COLLATION': 'utf8mb4_general_ci',
+    "default": {
+        "ENGINE": "django_tidb",
+        "USER": "root",
+        "PASSWORD": "",
+        "HOST": hosts,
+        "PORT": port,
+        "TEST": {
+            "NAME": "django_tests",
+            "CHARSET": "utf8mb4",
+            "COLLATION": "utf8mb4_general_ci",
         },
     },
-    'other': {
-        'ENGINE': 'django_tidb',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': hosts,
-        'PORT': port,
-        'TEST': {
-            'NAME': 'django_tests2',
-            'CHARSET': 'utf8mb4',
-            'COLLATION': 'utf8mb4_general_ci',
+    "other": {
+        "ENGINE": "django_tidb",
+        "USER": "root",
+        "PASSWORD": "",
+        "HOST": hosts,
+        "PORT": port,
+        "TEST": {
+            "NAME": "django_tests2",
+            "CHARSET": "utf8mb4",
+            "COLLATION": "utf8mb4_general_ci",
         },
     },
 }
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 USE_TZ = False
-SECRET_KEY = 'django_tests_secret_key'
+SECRET_KEY = "django_tests_secret_key"
 
 # Use a fast hasher to speed up tests.
 PASSWORD_HASHERS = [
