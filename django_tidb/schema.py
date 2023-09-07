@@ -57,6 +57,6 @@ class DatabaseSchemaEditor(MysqlDatabaseSchemaEditor):
             field._unique = False
             super().add_field(model, field)
             field._unique = True
-            self.execute(self._create_unique_sql(model, [field]))
+            self.execute(self._create_unique_sql(model, [field.column]))
         else:
             super().add_field(model, field)
