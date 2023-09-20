@@ -17,6 +17,11 @@ from django.db.backends.mysql.operations import (
 
 
 class DatabaseOperations(MysqlDatabaseOperations):
+    integer_field_ranges = {
+        **MysqlDatabaseOperations.integer_field_ranges,
+        "BigAutoRandomField": (-9223372036854775808, 9223372036854775807),
+    }
+
     def explain_query_prefix(self, format=None, **options):
         # Alias TiDB's "ROW" format to "TEXT" for consistency with other backends.
         if format and format.upper() == "TEXT":
