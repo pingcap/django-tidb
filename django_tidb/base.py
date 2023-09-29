@@ -42,6 +42,11 @@ class DatabaseWrapper(MysqlDatabaseWrapper):
     introspection_class = DatabaseIntrospection
     ops_class = DatabaseOperations
 
+    data_types = {
+        **MysqlDatabaseWrapper.data_types,
+        "BigAutoRandomField": "bigint AUTO_RANDOM(%(shard_bits)s, %(range)s)",
+    }
+
     def get_database_version(self):
         return self.tidb_version
 
