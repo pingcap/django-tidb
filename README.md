@@ -65,6 +65,51 @@ USE_TZ = False
 SECRET_KEY = 'django_tests_secret_key'
 ```
 
+### Using `AUTO_RANDOM`
+
+[`AUTO_RANDOM`](https://docs.pingcap.com/tidb/stable/auto-random) is a feature in TiDB that generates unique IDs for a table automatically. It is similar to `AUTO_INCREMENT`, but it can avoid write hotspot in a single storage node caused by TiDB assigning consecutive IDs. It also have some restrictions, please refer to the [documentation](https://docs.pingcap.com/tidb/stable/auto-random#restrictions).
+
+To use `AUTO_RANDOM` in Django, you can do it by following two ways:
+
+1. Declare globally in `settings.py` as shown below, it will affect all models:
+
+    ```python
+    DEFAULT_AUTO_FIELD = 'django_tidb.fields.BigAutoRandomField'
+    ```
+
+2. Manually declare it in the model as shown below:
+
+    ```python
+    from django_tidb.fields import BigAutoRandomField
+
+    class MyModel(models.Model):
+        id = BigAutoRandomField(primary_key=True)
+        title = models.CharField(max_length=200)
+    ```
+
+`BigAutoRandomField` is a subclass of `BigAutoField`, it can only be used for primary key and its behavior can be controlled by setting the parameters `shard_bits` and `range`. For detailed information, please refer to the [documentation](https://docs.pingcap.com/tidb/stable/auto-random#basic-concepts).
+
+Migrate from `AUTO_INCREMENT` to `AUTO_RANDOM`:
+
+1. Check if the original column is `BigAutoField(bigint)`, if not, migrate it to `BigAutoField(bigint)` first.
+2. In the database configuration (`settings.py`), define [`SET @@tidb_allow_remove_auto_inc = ON`](https://docs.pingcap.com/tidb/stable/system-variables#tidb_allow_remove_auto_inc-new-in-v2118-and-v304) in the `init_command`. You can remove it after completing the migration.
+
+    ```python
+    # settings.py
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django_tidb',
+            ...
+            'OPTIONS': {
+                'init_command': 'SET @@tidb_allow_remove_auto_inc = ON',
+            }
+
+        }
+    }
+    ```
+
+3. Finnaly, migrate it to `BigAutoRandomField(bigint)`.
+
 ## Supported versions
 
 - TiDB 4.0 and newer
