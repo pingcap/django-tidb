@@ -63,7 +63,7 @@ class DatabaseSchemaEditor(MysqlDatabaseSchemaEditor):
 
     def table_sql(self, model):
         sql, params = super().table_sql(model)
-        tidb_auto_id_cache = getattr(model._meta, 'tidb_auto_id_cache', None)
+        tidb_auto_id_cache = getattr(model._meta, "tidb_auto_id_cache", None)
         if tidb_auto_id_cache is not None:
             sql += " AUTO_ID_CACHE %s" % tidb_auto_id_cache
         return sql, params
