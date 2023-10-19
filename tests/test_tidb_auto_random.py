@@ -190,9 +190,12 @@ class TiDBAutoRandomMigrateTests(TransactionTestCase):
 
     def get_primary_key(self, table):
         with connection.cursor() as cursor:
-            primary_key_columns = connection.introspection.get_primary_key_columns(
+            primary_key_columns = None
+            for constraint in connection.introspection.get_constraints(
                 cursor, table
-            )
+            ).values():
+                if constraint["primary_key"]:
+                    primary_key_columns = constraint["columns"]
             return primary_key_columns[0] if primary_key_columns else None
 
     def get_auto_random_info(self, table):
