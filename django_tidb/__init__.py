@@ -13,8 +13,10 @@
 
 # Check Django compatibility before other imports which may fail if the
 # wrong version of Django is installed.
-from .functions import register_functions
+
+from .patch import monkey_patch
 
 __version__ = "4.2.1"
 
-register_functions()
+
+monkey_patch()
