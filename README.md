@@ -110,6 +110,25 @@ Migrate from `AUTO_INCREMENT` to `AUTO_RANDOM`:
 
 3. Finnaly, migrate it to `BigAutoRandomField(bigint)`.
 
+### Using `AUTO_ID_CACHE`
+
+[`AUTO_ID_CACHE`](https://docs.pingcap.com/tidb/stable/auto-increment#auto_id_cache) allow users to set the cache size for allocating the auto-increment ID, as you may know, TiDB guarantees that AUTO_INCREMENT values are monotonic (always increasing) on a per-server basis, but its value may appear to jump dramatically if an INSERT operation is performed against another TiDB Server, This is caused by the fact that each server has its own cache which is controlled by `AUTO_ID_CACHE`. But from TiDB v6.4.0, it introduces a centralized auto-increment ID allocating service, you can enable [*MySQL compatibility mode*](https://docs.pingcap.com/tidb/stable/auto-increment#mysql-compatibility-mode) by set `AUTO_ID_CACHE` to `1` when creating a table without losing performance.
+
+To use `AUTO_ID_CACHE` in Django, you can specify `tidb_auto_id_cache` in the model's `Meta` class as shown below when creating a new table:
+
+```python
+class MyModel(models.Model):
+    title = models.CharField(max_length=200)
+
+    class Meta:
+        tidb_auto_id_cache = 1
+```
+
+But there are some limitations:
+
+- `tidb_auto_id_cache` can only affect the table creation, after that it will be ignored even if you change it.
+- `tidb_auto_id_cache` only affects the `AUTO_INCREMENT` column.
+
 ## Supported versions
 
 - TiDB 4.0 and newer
