@@ -60,3 +60,10 @@ class DatabaseSchemaEditor(MysqlDatabaseSchemaEditor):
             self.execute(self._create_unique_sql(model, [field]))
         else:
             super().add_field(model, field)
+
+    def table_sql(self, model):
+        sql, params = super().table_sql(model)
+        tidb_auto_id_cache = getattr(model._meta, "tidb_auto_id_cache", None)
+        if tidb_auto_id_cache is not None:
+            sql += " AUTO_ID_CACHE %s" % tidb_auto_id_cache
+        return sql, params
