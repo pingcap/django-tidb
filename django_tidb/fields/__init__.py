@@ -79,3 +79,12 @@ class BigAutoRandomField(BigAutoField):
         if self.range is not None:
             kwargs["range"] = self.range
         return name, path, args, kwargs
+
+    def db_type(self, connection):
+        data = self.db_type_parameters(connection)
+        if connection.tidb_version < (6, 5):
+            # TiDB < 6.5 doesn't support define AUTO_RANDOM with range
+            data_type = "bigint AUTO_RANDOM(%(shard_bits)s)"
+        else:
+            data_type = "bigint AUTO_RANDOM(%(shard_bits)s, %(range)s)"
+        return data_type % data
