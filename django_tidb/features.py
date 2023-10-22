@@ -185,7 +185,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                     }
                 }
             )
-        if self.connection.tidb_version < (6, 5):
+        if self.connection.tidb_version < (6, 3):
             skips.update(
                 {
                     "auto_random": {

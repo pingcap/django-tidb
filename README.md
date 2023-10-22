@@ -112,7 +112,7 @@ Migrate from `AUTO_INCREMENT` to `AUTO_RANDOM`:
 
 > **Note**
 >
-> `AUTO_RANDOM` is supported after TiDB v3.1.0, and only support define with `range` after v6.5.0, so `range` will be ignored if TiDB version is lower than v6.5.0
+> `AUTO_RANDOM` is supported after TiDB v3.1.0, and only support define with `range` after v6.3.0, so `range` will be ignored if TiDB version is lower than v6.3.0
 
 ### Using `AUTO_ID_CACHE`
 

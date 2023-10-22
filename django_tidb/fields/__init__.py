@@ -82,8 +82,8 @@ class BigAutoRandomField(BigAutoField):
 
     def db_type(self, connection):
         data = self.db_type_parameters(connection)
-        if connection.tidb_version < (6, 5):
-            # TiDB < 6.5 doesn't support define AUTO_RANDOM with range
+        if connection.tidb_version < (6, 3):
+            # TiDB < 6.3 doesn't support define AUTO_RANDOM with range
             data_type = "bigint AUTO_RANDOM(%(shard_bits)s)"
         else:
             data_type = "bigint AUTO_RANDOM(%(shard_bits)s, %(range)s)"
