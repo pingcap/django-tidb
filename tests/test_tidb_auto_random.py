@@ -181,7 +181,8 @@ class TiDBBigAutoRandomFieldTests(TestCase):
             )
         else:
             self.assertEqual(
-                self.rel_db_type_class().db_type(connection), "bigint AUTO_RANDOM(5, 64)"
+                self.rel_db_type_class().db_type(connection),
+                "bigint AUTO_RANDOM(5, 64)",
             )
 
 
