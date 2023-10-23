@@ -185,6 +185,17 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                     }
                 }
             )
+        if self.connection.tidb_version < (6, 3):
+            skips.update(
+                {
+                    "auto_random": {
+                        "tidb.test_tidb_auto_random.TiDBAutoRandomMigrateTests"
+                        ".test_create_table_explicit_auto_random_field_with_shard_bits_and_range",
+                        "tidb.test_tidb_auto_random.TiDBAutoRandomMigrateTests"
+                        ".test_create_table_explicit_auto_random_field_with_range",
+                    }
+                }
+            )
         if self.connection.tidb_version < (6, 6):
             skips.update(
                 {

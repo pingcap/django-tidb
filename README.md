@@ -110,6 +110,10 @@ Migrate from `AUTO_INCREMENT` to `AUTO_RANDOM`:
 
 3. Finnaly, migrate it to `BigAutoRandomField(bigint)`.
 
+> **Note**
+>
+> `AUTO_RANDOM` is supported after TiDB v3.1.0, and only support define with `range` after v6.3.0, so `range` will be ignored if TiDB version is lower than v6.3.0
+
 ### Using `AUTO_ID_CACHE`
 
 [`AUTO_ID_CACHE`](https://docs.pingcap.com/tidb/stable/auto-increment#auto_id_cache) allow users to set the cache size for allocating the auto-increment ID, as you may know, TiDB guarantees that AUTO_INCREMENT values are monotonic (always increasing) on a per-server basis, but its value may appear to jump dramatically if an INSERT operation is performed against another TiDB Server, This is caused by the fact that each server has its own cache which is controlled by `AUTO_ID_CACHE`. But from TiDB v6.4.0, it introduces a centralized auto-increment ID allocating service, you can enable [*MySQL compatibility mode*](https://docs.pingcap.com/tidb/stable/auto-increment#mysql-compatibility-mode) by set `AUTO_ID_CACHE` to `1` when creating a table without losing performance.
