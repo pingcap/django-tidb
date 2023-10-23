@@ -368,6 +368,17 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
             5,
         ) and self.connection.tidb_version <= (4, 0, 9):
             skips["tidb4"].add("lookup.tests.LookupTests.test_regex")
+        if self.connection.tidb_version < (6, 3):
+            skips.update(
+                {
+                    "auto_random": {
+                        "tidb.test_tidb_auto_random.TiDBAutoRandomMigrateTests"
+                        ".test_create_table_explicit_auto_random_field_with_shard_bits_and_range",
+                        "tidb.test_tidb_auto_random.TiDBAutoRandomMigrateTests"
+                        ".test_create_table_explicit_auto_random_field_with_range",
+                    }
+                }
+            )
         if django.utils.version.get_complete_version() < (4, 1):
             skips.update(
                 {

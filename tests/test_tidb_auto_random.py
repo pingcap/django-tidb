@@ -175,9 +175,15 @@ class TiDBBigAutoRandomFieldTests(TestCase):
         rel_db_type = field.rel_db_type(connection)
         # Currently, We can't find a general way to get the auto_random info from the field.
         self.assertEqual(rel_db_type, "bigint")
-        self.assertEqual(
-            self.rel_db_type_class().db_type(connection), "bigint AUTO_RANDOM(5, 64)"
-        )
+        if connection.tidb_version < (6, 3):
+            self.assertEqual(
+                self.rel_db_type_class().db_type(connection), "bigint AUTO_RANDOM(5)"
+            )
+        else:
+            self.assertEqual(
+                self.rel_db_type_class().db_type(connection),
+                "bigint AUTO_RANDOM(5, 64)",
+            )
 
 
 AUTO_RANDOM_PATTERN = re.compile(
