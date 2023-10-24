@@ -33,7 +33,7 @@ dynamic = ["version"]
 "Source" = "https://github.com/pingcap/django-tidb"
 
 [tool.setuptools]
-packages = ["django_tidb"]
+packages = ["django_tidb", "django_tidb.fields"]
 
 [tool.setuptools.dynamic]
 version = {attr = "django_tidb.__version__"}
