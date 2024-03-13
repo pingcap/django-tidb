@@ -177,7 +177,6 @@ TiDB Vector support below distance functions:
 Get instances with vector field and calculate distance to a given vector:
 
 ```python
-
 Test.objects.annotate(distance=CosineDistance('embedding', [3, 1, 2]))
 ```
 
