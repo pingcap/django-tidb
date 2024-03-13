@@ -39,6 +39,13 @@ def decode_vector(value):
 
 
 class VectorField(Field):
+"""
+Support for AI Vector storage.
+
+Status: Beta
+
+Info: https://www.pingcap.com/blog/integrating-vector-search-into-tidb-for-ai-applications/
+"""
     description = "Vector"
     empty_strings_allowed = False
 
