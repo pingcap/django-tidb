@@ -65,6 +65,10 @@ USE_TZ = False
 SECRET_KEY = 'django_tests_secret_key'
 ```
 
+- [AUTO_RANDOM](#using-auto_random)
+- [AUTO_ID_CACHE](#using-auto_id_cache)
+- [VectorField (Beta)](#vectorfield-beta)
+
 ### Using `AUTO_RANDOM`
 
 [`AUTO_RANDOM`](https://docs.pingcap.com/tidb/stable/auto-random) is a feature in TiDB that generates unique IDs for a table automatically. It is similar to `AUTO_INCREMENT`, but it can avoid write hotspot in a single storage node caused by TiDB assigning consecutive IDs. It also have some restrictions, please refer to the [documentation](https://docs.pingcap.com/tidb/stable/auto-random#restrictions).
@@ -132,6 +136,56 @@ But there are some limitations:
 
 - `tidb_auto_id_cache` can only affect the table creation, after that it will be ignored even if you change it.
 - `tidb_auto_id_cache` only affects the `AUTO_INCREMENT` column.
+
+### VectorField (Beta)
+
+Now only TiDB Cloud Serverless cluster supports vector data type, see [Integrating Vector Search into TiDB Serverless for AI Applications](https://www.pingcap.com/blog/integrating-vector-search-into-tidb-for-ai-applications/).
+
+`VectorField` is still in beta, and the API may change in the future.
+
+To use `VectorField` in Django, you need to install `django-tidb` with `vector` extra:
+
+```bash
+pip install 'django-tidb[vector]'
+```
+
+Then you can use `VectorField` in your model:
+
+```python
+from django.db import models
+from django_tidb.fields.vector import VectorField
+
+class Test(models.Model):
+    embedding = VectorField(dimensions=3)
+```
+
+#### Create a record
+
+```python
+Test.objects.create(embedding=[1, 2, 3])
+```
+
+#### Get instances with vector field
+
+TiDB Vector support below distance functions:
+
+- `L1Distance`
+- `L2Distance`
+- `CosineDistance`
+- `NegativeInnerProduct`
+
+Get instances with vector field and calculate distance to a given vector:
+
+```python
+
+Test.objects.annotate(distance=CosineDistance('embedding', [3, 1, 2]))
+```
+
+Get instances with vector field and calculate distance to a given vector, and filter by distance:
+
+```python
+Test.objects.alias(distance=CosineDistance('embedding', [3, 1, 2])).filter(distance__lt=5)
+```
 
 ## Supported versions
 
