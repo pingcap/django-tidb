@@ -45,6 +45,27 @@ class VectorField(Field):
     Status: Beta
 
     Info: https://www.pingcap.com/blog/integrating-vector-search-into-tidb-for-ai-applications/
+
+    Example:
+    ```python
+    from django.db import models
+    from django_tidb.fields.vector import VectorField, CosineDistance
+
+    class Document(models.Model):
+        content = models.TextField()
+        embedding = VectorField(dimensions=3)
+
+    # Create a document
+    Document.objects.create(
+        content="test content",
+        embedding=[1, 2, 3],
+    )
+
+    # Query with distance
+    Document.objects.alias(
+        distance=CosineDistance('embedding', [3, 1, 2])
+    ).filter(distance__lt=5)
+    ```
     """
 
     description = "Vector"
@@ -62,8 +83,8 @@ class VectorField(Field):
 
     def db_type(self, connection):
         if self.dimensions is None:
-            return "vector"
-        return "vector(%d)" % self.dimensions
+            return "vector<float>"
+        return "vector<float>(%d)" % self.dimensions
 
     def from_db_value(self, value, expression, connection):
         return decode_vector(value)

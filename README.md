@@ -67,7 +67,7 @@ SECRET_KEY = 'django_tests_secret_key'
 
 - [AUTO_RANDOM](#using-auto_random)
 - [AUTO_ID_CACHE](#using-auto_id_cache)
-- [VectorField (Beta)](#vectorfield-beta)
+- [Vector (Beta)](#vector-beta)
 
 ### Using `AUTO_RANDOM`
 
@@ -137,7 +137,7 @@ But there are some limitations:
 - `tidb_auto_id_cache` can only affect the table creation, after that it will be ignored even if you change it.
 - `tidb_auto_id_cache` only affects the `AUTO_INCREMENT` column.
 
-### VectorField (Beta)
+### Vector (Beta)
 
 Now only TiDB Cloud Serverless cluster supports vector data type, see [Integrating Vector Search into TiDB Serverless for AI Applications](https://www.pingcap.com/blog/integrating-vector-search-into-tidb-for-ai-applications/).
 
