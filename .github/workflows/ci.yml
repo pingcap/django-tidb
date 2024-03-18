@@ -80,3 +80,47 @@ jobs:
         run: tox
         env:
           DJANGO_VERSION: ${{ matrix.django-version }}
+
+  vector-tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version:
+          - '3.11'
+        django-version:
+          - '4.2.5'
+
+    name: vector-py${{ matrix.python-version }}_django${{ matrix.django-version }}
+    runs-on: ubuntu-latest
+    env:
+      TIDB_HOST: ${{ secrets.SERVRLESS_TEST_TIDB_HOST }}
+      TIDB_USER: ${{ secrets.SERVRLESS_TEST_TIDB_USER }}
+      TIDB_PASSWORD: ${{ secrets.SERVRLESS_TEST_TIDB_PASSWORD }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install tox tox-gh-actions
+          sudo apt-get update
+          sudo apt-get install -y libmemcached-dev zlib1g-dev
+
+      - name: Hack for vector tests
+        run: |
+          sed '27a cp -r ./tests/tidb_vector/ $DJANGO_TESTS_DIR/django/tests/tidb_vector/' -i django_test_suite.sh
+          sed '31a pip install numpy~=1.0' -i django_test_suite.sh
+          cat django_test_suite.sh
+          echo -n "tidb_vector" > django_test_apps.txt
+          cat django_test_apps.txt
+
+      - name: Run tests
+        run: tox
+        env:
+          DJANGO_VERSION: ${{ matrix.django-version }}

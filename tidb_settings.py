@@ -15,12 +15,14 @@ import os
 
 hosts = os.getenv("TIDB_HOST", "127.0.0.1")
 port = os.getenv("TIDB_PORT", 4000)
+user = os.getenv("TIDB_USER", "root")
+password = os.getenv("TIDB_PASSWORD", "")
 
 DATABASES = {
     "default": {
         "ENGINE": "django_tidb",
-        "USER": "root",
-        "PASSWORD": "",
+        "USER": user,
+        "PASSWORD": password,
         "HOST": hosts,
         "PORT": port,
         "TEST": {
@@ -31,8 +33,8 @@ DATABASES = {
     },
     "other": {
         "ENGINE": "django_tidb",
-        "USER": "root",
-        "PASSWORD": "",
+        "USER": user,
+        "PASSWORD": password,
         "HOST": hosts,
         "PORT": port,
         "TEST": {

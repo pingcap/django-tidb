@@ -31,6 +31,9 @@ dynamic = ["version"]
 "Bug Reports" = "https://github.com/pingcap/django-tidb/issues"
 "Source" = "https://github.com/pingcap/django-tidb"
 
+[project.optional-dependencies]
+vector = ["numpy~=1.0"]
+
 [tool.setuptools]
 packages = ["django_tidb", "django_tidb.fields"]
 
