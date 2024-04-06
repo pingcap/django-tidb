@@ -1,4 +1,5 @@
 tidb
+tidb_field_defaults
 admin_changelist
 admin_custom_urls
 admin_docs

@@ -86,7 +86,7 @@ jobs:
         python-version:
           - '3.11'
         django-version:
-          - '4.2.5'
+          - '5.0.4'
 
     name: vector-py${{ matrix.python-version }}_django${{ matrix.django-version }}
     runs-on: ubuntu-latest
