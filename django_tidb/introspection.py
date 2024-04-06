@@ -22,7 +22,8 @@ from django.utils.datastructures import OrderedSet
 
 FieldInfo = namedtuple(
     "FieldInfo",
-    BaseFieldInfo._fields + ("extra", "is_unsigned", "has_json_constraint", "comment"),
+    BaseFieldInfo._fields
+    + ("extra", "is_unsigned", "has_json_constraint", "comment", "data_type"),
 )
 InfoLine = namedtuple(
     "InfoLine",
@@ -115,6 +116,7 @@ class DatabaseIntrospection(MysqlDatabaseIntrospection):
                     info.is_unsigned,
                     line[0] in json_constraints,
                     info.comment,
+                    info.data_type,
                 )
             )
         return fields

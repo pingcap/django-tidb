@@ -40,7 +40,6 @@ empty
 expressions_case
 expressions_window
 extra_regress
-field_defaults
 field_subclassing
 file_storage
 file_uploads
