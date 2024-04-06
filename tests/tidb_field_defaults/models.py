@@ -14,7 +14,6 @@ from decimal import Decimal
 
 from django.db import models
 from django.db.models.functions import Random, Now
-from django.db.models.lookups import GreaterThan
 
 
 class Article(models.Model):
@@ -46,6 +45,7 @@ class DBDefaults(models.Model):
     both = models.IntegerField(default=1, db_default=2)
     null = models.FloatField(null=True, db_default=1.1)
 
+
 # This model has too many db_default expressions that TiDB does not support
 # class DBDefaultsFunction(models.Model):
 #     number = models.FloatField(db_default=Pi())
@@ -58,6 +58,7 @@ class DBDefaults(models.Model):
 
 #     class Meta:
 #         required_db_features = {"supports_expression_defaults"}
+
 
 class TiDBDefaultsFunction(models.Model):
     number = models.DecimalField(max_digits=3, decimal_places=2, db_default=Random())

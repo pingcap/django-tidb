@@ -1,6 +1,5 @@
 from datetime import datetime
 from decimal import Decimal
-from math import pi
 
 from django.core.exceptions import ValidationError
 from django.db import connection
