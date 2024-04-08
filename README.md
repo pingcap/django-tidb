@@ -41,6 +41,7 @@ To install django-tidb, you need to select the version that corresponds with you
 
 |django|django-tidb|install command|
 |:----:|:---------:|:-------------:|
+|v5.0.x|v5.0.x|`pip install 'django-tidb>=5.0.0,<5.1.0'`|
 |v4.2.x|v4.2.x|`pip install 'django-tidb>=4.2.0,<4.3.0'`|
 |v4.1.x|v4.1.x|`pip install 'django-tidb>=4.1.0,<4.2.0'`|
 |v3.2.x|v3.2.x|`pip install 'django-tidb>=3.2.0,<3.3.0'`|
@@ -188,8 +189,8 @@ Test.objects.alias(distance=CosineDistance('embedding', [3, 1, 2])).filter(dista
 
 ## Supported versions
 
-- TiDB 4.0 and newer
-- Django 3.2, 4.1 and 4.2
+- TiDB 5.0 and newer
+- Django 3.2, 4.1, 4.2 and 5.0
 - Python 3.6 and newer(must match Django's Python version requirement)
 
 ## Test
@@ -213,10 +214,10 @@ $ DJANGO_VERSION=3.2.12 python run_testing_worker.py
 
 Releases on PyPi before 3.0.0 are published from repository https://github.com/blacktear23/django_tidb. This repository is a new implementation and released under versions from 3.0.0. No backwards compatibility is ensured. The most significant points are:
 
-- Only Django 3.2 and 4.0 are tested and supported.
 - Engine name is `django_tidb` instead of `django_tidb.tidb`.
 
 ## Known issues
 
 - TiDB before v6.6.0 does not support FOREIGN KEY constraints([#18209](https://github.com/pingcap/tidb/issues/18209)).
 - TiDB before v6.2.0 does not support SAVEPOINT([#6840](https://github.com/pingcap/tidb/issues/6840)).
+- TiDB has limited support for default value expressions, please refer to the [documentation](https://docs.pingcap.com/tidb/dev/data-type-default-values#specify-expressions-as-default-values).

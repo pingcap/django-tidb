@@ -21,6 +21,7 @@ from django.utils.functional import cached_property
 
 class DatabaseFeatures(MysqlDatabaseFeatures):
     has_select_for_update = True
+    has_native_uuid_field = False
     atomic_transactions = False
     supports_atomic_references_rename = False
     can_clone_databases = False
@@ -34,9 +35,10 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
     test_collations = {
         "ci": "utf8mb4_general_ci",
         "non_default": "utf8mb4_bin",
+        "virtual": "utf8mb4_general_ci",
     }
 
-    minimum_database_version = (4,)
+    minimum_database_version = (5,)
 
     @cached_property
     def supports_foreign_keys(self):
@@ -75,6 +77,8 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
             "This doesn't work on MySQL.": {
                 "db_functions.comparison.test_greatest.GreatestTests.test_coalesce_workaround",
                 "db_functions.comparison.test_least.LeastTests.test_coalesce_workaround",
+                # UPDATE ... ORDER BY syntax on MySQL/MariaDB does not support ordering by related fields
+                "update.tests.AdvancedTests.test_update_ordered_by_m2m_annotation_desc",
             },
             "MySQL doesn't support functional indexes on a function that "
             "returns JSON": {
@@ -135,6 +139,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 # IntegrityError not raised
                 "constraints.tests.CheckConstraintTests.test_database_constraint",
                 "constraints.tests.CheckConstraintTests.test_database_constraint_unicode",
+                # Result of function ROUND(x, d) is different from MySQL
                 # https://github.com/pingcap/tidb/issues/26993
                 "db_functions.math.test_round.RoundTests.test_integer_with_negative_precision",
                 "db_functions.text.test_chr.ChrTests.test_transform",
@@ -160,8 +165,27 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "migrations.test_operations.OperationTests.test_alter_field_pk_mti_and_fk_to_base",
                 "migrations.test_operations.OperationTests.test_alter_field_pk_mti_fk",
                 "migrations.test_operations.OperationTests.test_create_model_with_boolean_expression_in_check_constraint",
+                # Unsupported adding a stored generated column through ALTER TABLE
+                "migrations.test_operations.OperationTests.test_add_field_after_generated_field",
+                "migrations.test_operations.OperationTests.test_add_generated_field_stored",
+                "migrations.test_operations.OperationTests.test_invalid_generated_field_changes_stored",
+                "migrations.test_operations.OperationTests.test_invalid_generated_field_persistency_change",
+                "migrations.test_operations.OperationTests.test_remove_generated_field_stored",
+                "schema.tests.SchemaTests.test_add_generated_field_contains",
+                # Failed to modify column's default value when has expression index
+                # https://github.com/pingcap/tidb/issues/52355
+                "migrations.test_operations.OperationTests.test_alter_field_with_func_index",
+                # TiDB has limited support for default value expressions
+                # https://docs.pingcap.com/tidb/dev/data-type-default-values#specify-expressions-as-default-values
+                "migrations.test_operations.OperationTests.test_add_field_database_default_function",
+                "schema.tests.SchemaTests.test_add_text_field_with_db_default",
+                "schema.tests.SchemaTests.test_db_default_equivalent_sql_noop",
+                "schema.tests.SchemaTests.test_db_default_output_field_resolving",
                 # about Pessimistic/Optimistic Transaction Model
                 "select_for_update.tests.SelectForUpdateTests.test_raw_lock_not_available",
+                # Wrong referenced_table_schema in information_schema.key_column_usage
+                # https://github.com/pingcap/tidb/issues/52350
+                "backends.mysql.test_introspection.TestCrossDatabaseRelations.test_omit_cross_database_relations",
             },
         }
         if self.connection.tidb_version < (5,):
@@ -267,6 +291,12 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
 
     @cached_property
     def supports_column_check_constraints(self):
+        return True
+
+    @cached_property
+    def supports_expression_defaults(self):
+        # TiDB has limited support for default value expressions
+        # https://docs.pingcap.com/tidb/dev/data-type-default-values#specify-expressions-as-default-values
         return True
 
     supports_table_check_constraints = property(
