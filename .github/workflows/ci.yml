@@ -37,6 +37,7 @@ jobs:
         django-version:
           - '5.0.4'
         tidb-version:
+          - 'v8.1.0'
           - 'v7.5.1'
           - 'v7.1.4'
           - 'v6.5.8'
