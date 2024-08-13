@@ -41,10 +41,10 @@ To install django-tidb, you need to select the version that corresponds with you
 
 |django|django-tidb|install command|
 |:----:|:---------:|:-------------:|
-|v5.0.x|v5.0.x|`pip install 'django-tidb>=5.0.0,<5.1.0'`|
-|v4.2.x|v4.2.x|`pip install 'django-tidb>=4.2.0,<4.3.0'`|
-|v4.1.x|v4.1.x|`pip install 'django-tidb>=4.1.0,<4.2.0'`|
-|v3.2.x|v3.2.x|`pip install 'django-tidb>=3.2.0,<3.3.0'`|
+|v5.0.x|v5.0.x|`pip install 'django-tidb~=5.0.0'`|
+|v4.2.x|v4.2.x|`pip install 'django-tidb~=4.2.0'`|
+|v4.1.x|v4.1.x|`pip install 'django-tidb~=4.1.0'`|
+|v3.2.x|v3.2.x|`pip install 'django-tidb~=3.2.0'`|
 
 ## Usage
 
