@@ -134,6 +134,32 @@ class VectorField(Field):
 
 
 class VectorIndex(Index):
+    """
+    Example:
+    ```python
+    from django.db import models
+    from django_tidb.fields.vector import VectorField, VectorIndex, CosineDistance
+
+    class Document(models.Model):
+        content = models.TextField()
+        embedding = VectorField(dimensions=3)
+        class Meta:
+            indexes = [
+                VectorIndex(CosineDistance("embedding"), name='idx_cos'),
+            ]
+
+    # Create a document
+    Document.objects.create(
+        content="test content",
+        embedding=[1, 2, 3],
+    )
+
+    # Query with distance
+    Document.objects.alias(
+        distance=CosineDistance('embedding', [3, 1, 2])
+    ).filter(distance__lt=5)
+    ```
+    """
 
     def __init__(
         self,
@@ -151,14 +177,17 @@ class VectorIndex(Index):
             index_expression = models.indexes.IndexExpression(expression)
             index_expression.set_wrapper_classes(schema_editor.connection)
             index_expressions.append(index_expression)
-        expressions = models.indexes.ExpressionList(*index_expressions).resolve_expression(
+        expressions = models.indexes.ExpressionList(
+            *index_expressions
+        ).resolve_expression(
             models.sql.query.Query(model, alias_cols=False),
         )
         fields = None
         col_suffixes = None
-        # TODO: simplify the sql_template after we support `ADD_TIFLASH_ON_DEMAND`
-        #       in the `CREATE VECTOR INDEX ...`
-        sql_template = "ALTER TABLE %(table)s SET TIFLASH REPLICA 1; CREATE VECTOR INDEX %(name)s ON %(table)s%(using)s (%(columns)s)%(extra)s"
+        # TODO: remove the tiflash replica setting statement from sql_template
+        #       after we support `ADD_TIFLASH_ON_DEMAND` in the `CREATE VECTOR INDEX ...`
+        sql_template = """ALTER TABLE %(table)s SET TIFLASH REPLICA 1;
+        CREATE VECTOR INDEX %(name)s ON %(table)s%(using)s (%(columns)s)%(extra)s"""
         return schema_editor._create_index_sql(
             model,
             fields=fields,
@@ -184,6 +213,8 @@ class DistanceBase(Func):
         vector: a vector to compare against
         """
         expressions = [expression]
+        # When using the distance function as expression in the vector index
+        # statement, the `vector` is None
         if vector is not None:
             if not hasattr(vector, "resolve_expression"):
                 vector = Value(encode_vector(vector))

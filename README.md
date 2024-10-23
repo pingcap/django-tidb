@@ -164,11 +164,11 @@ You can also add an hnsw index when creating the table, for more information, pl
 
 ```python
 class Test(models.Model):
-    # Note:
-    #   - Using comment to add hnsw index is a temporary solution. In the future it will use `CREATE INDEX` syntax.
-    #   - Currently the hnsw index cannot be changed after the table has been created.
-    #   - Only Django >= 4.2 supports `db_comment`.
-    embedding = VectorField(dimensions=3, db_comment="hnsw(distance=l2)")
+    embedding = VectorField(dimensions=3)
+    class Meta:
+        indexes = [
+            VectorIndex(L2Distance("embedding"), name='idx_l2'),
+        ]
 ```
 
 #### Create a record
