@@ -1,7 +1,8 @@
 import numpy as np
 from django.core import checks
 from django import forms
-from django.db.models import Field, FloatField, Func, Value
+from django.db import models
+from django.db.models import Field, FloatField, Func, Value, Index
 
 MAX_DIM_LENGTH = 16000
 MIN_DIM_LENGTH = 1
@@ -132,13 +133,62 @@ class VectorField(Field):
         return []
 
 
+class VectorIndex(Index):
+
+    def __init__(
+        self,
+        *expressions,
+        name,
+    ) -> None:
+        super().__init__(*expressions, fields=(), name=name)
+
+    def create_sql(self, model, schema_editor, using="", **kwargs):
+        include = [
+            model._meta.get_field(field_name).column for field_name in self.include
+        ]
+        index_expressions = []
+        for expression in self.expressions:
+            index_expression = models.indexes.IndexExpression(expression)
+            index_expression.set_wrapper_classes(schema_editor.connection)
+            index_expressions.append(index_expression)
+        expressions = models.indexes.ExpressionList(*index_expressions).resolve_expression(
+            models.sql.query.Query(model, alias_cols=False),
+        )
+        fields = None
+        col_suffixes = None
+        # TODO: simplify the sql_template after we support `ADD_TIFLASH_ON_DEMAND`
+        #       in the `CREATE VECTOR INDEX ...`
+        sql_template = "ALTER TABLE %(table)s SET TIFLASH REPLICA 1; CREATE VECTOR INDEX %(name)s ON %(table)s%(using)s (%(columns)s)%(extra)s"
+        return schema_editor._create_index_sql(
+            model,
+            fields=fields,
+            name=self.name,
+            using=using,
+            db_tablespace=self.db_tablespace,
+            col_suffixes=col_suffixes,
+            sql=sql_template,
+            opclasses=self.opclasses,
+            condition=None,
+            include=include,
+            expressions=expressions,
+            **kwargs,
+        )
+
+
 class DistanceBase(Func):
     output_field = FloatField()
 
-    def __init__(self, expression, vector, **extra):
-        if not hasattr(vector, "resolve_expression"):
-            vector = Value(encode_vector(vector))
-        super().__init__(expression, vector, **extra)
+    def __init__(self, expression, vector=None, **extra):
+        """
+        expression: the name of a field, or an expression returing a vector
+        vector: a vector to compare against
+        """
+        expressions = [expression]
+        if vector is not None:
+            if not hasattr(vector, "resolve_expression"):
+                vector = Value(encode_vector(vector))
+            expressions.append(vector)
+        super().__init__(*expressions, **extra)
 
 
 class L1Distance(DistanceBase):
