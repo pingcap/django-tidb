@@ -91,10 +91,11 @@ jobs:
 
     name: vector-py${{ matrix.python-version }}_django${{ matrix.django-version }}
     runs-on: ubuntu-latest
-    env:
-      TIDB_HOST: ${{ secrets.SERVRLESS_TEST_TIDB_HOST }}
-      TIDB_USER: ${{ secrets.SERVRLESS_TEST_TIDB_USER }}
-      TIDB_PASSWORD: ${{ secrets.SERVRLESS_TEST_TIDB_PASSWORD }}
+    services:
+      tidb:
+        image: wangdi4zm/tind:v8.4.0-vector-index
+        ports:
+          - 4000:4000
     steps:
       - name: Checkout
         uses: actions/checkout@v3
