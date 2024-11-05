@@ -159,6 +159,17 @@ class Test(models.Model):
     embedding = VectorField(dimensions=3)
 ```
 
+You can also add an hnsw index when creating the table, for more information, please refer to the [documentation](https://docs.google.com/document/d/15eAO0xrvEd6_tTxW_zEko4CECwnnSwQg8GGrqK1Caiw).
+
+```python
+class Test(models.Model):
+    embedding = VectorField(dimensions=3)
+    class Meta:
+        indexes = [
+            VectorIndex(L2Distance("embedding"), name='idx_l2'),
+        ]
+```
+
 #### Create a record
 
 ```python

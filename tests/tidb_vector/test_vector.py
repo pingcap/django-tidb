@@ -9,7 +9,7 @@ from django_tidb.fields.vector import (
     NegativeInnerProduct,
 )
 
-from .models import Document, DocumentExplicitDimension
+from .models import Document, DocumentExplicitDimension, DocumentWithAnnIndex
 
 
 class TiDBVectorFieldTests(TestCase):
@@ -76,3 +76,7 @@ class TiDBVectorFieldTests(TestCase):
 
 class TiDBVectorFieldExplicitDimensionTests(TiDBVectorFieldTests):
     model = DocumentExplicitDimension
+
+
+class TiDBVectorFieldWithAnnIndexTests(TiDBVectorFieldTests):
+    model = DocumentWithAnnIndex
