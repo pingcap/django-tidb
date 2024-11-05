@@ -159,6 +159,11 @@ class VectorIndex(Index):
         distance=CosineDistance('embedding', [3, 1, 2])
     ).filter(distance__lt=5)
     ```
+
+    Note:
+    Creating a vector index will automatically set the "TiFlash replica" to 1 in TiDB.
+    If you want to use high-availability columnar storage feature, use raw SQL instead.
+
     """
 
     def __init__(
