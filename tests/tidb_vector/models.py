@@ -23,6 +23,7 @@ class DocumentWithAnnIndex(models.Model):
     embedding = VectorField(dimensions=3)
 
     class Meta:
+        tiflash_replica = 1  # When defining a vector index, the tiflash_replica must be non-zero
         indexes = [
             VectorIndex(CosineDistance("embedding"), name="idx_cos"),
             VectorIndex(L2Distance("embedding"), name="idx_l2"),

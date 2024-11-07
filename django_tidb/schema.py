@@ -65,5 +65,8 @@ class DatabaseSchemaEditor(MysqlDatabaseSchemaEditor):
         sql, params = super().table_sql(model)
         tidb_auto_id_cache = getattr(model._meta, "tidb_auto_id_cache", None)
         if tidb_auto_id_cache is not None:
-            sql += " AUTO_ID_CACHE %s" % tidb_auto_id_cache
+            sql += f" AUTO_ID_CACHE {tidb_auto_id_cache}"
+        tiflash_replica = getattr(model._meta, "tiflash_replica", None)
+        if tiflash_replica is not None:
+            sql += f" TIFLASH_REPLICA={tiflash_replica}"
         return sql, params
