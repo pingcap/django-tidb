@@ -160,6 +160,9 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "migrations.test_operations.OperationTests.test_alter_field_pk_mti_and_fk_to_base",
                 "migrations.test_operations.OperationTests.test_alter_field_pk_mti_fk",
                 "migrations.test_operations.OperationTests.test_create_model_with_boolean_expression_in_check_constraint",
+                # Failed to modify column's default value when has expression index
+                # https://github.com/pingcap/tidb/issues/52355
+                "migrations.test_operations.OperationTests.test_alter_field_with_func_index",
                 # about Pessimistic/Optimistic Transaction Model
                 "select_for_update.tests.SelectForUpdateTests.test_raw_lock_not_available",
             },
