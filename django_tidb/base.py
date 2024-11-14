@@ -103,3 +103,7 @@ class DatabaseWrapper(MysqlDatabaseWrapper):
     def sql_mode(self):
         sql_mode = self.tidb_server_data["sql_mode"]
         return set(sql_mode.split(",") if sql_mode else ())
+
+    @cached_property
+    def mysql_is_mariadb(self):
+        return False
