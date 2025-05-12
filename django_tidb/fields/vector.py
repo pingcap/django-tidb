@@ -84,8 +84,8 @@ class VectorField(Field):
 
     def db_type(self, connection):
         if self.dimensions is None:
-            return "vector<float>"
-        return "vector<float>(%d)" % self.dimensions
+            return "vector"
+        return "vector(%d)" % self.dimensions
 
     def from_db_value(self, value, expression, connection):
         return decode_vector(value)
