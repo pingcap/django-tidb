@@ -35,19 +35,20 @@ jobs:
           # blocked by https://github.com/lericson/pylibmc/issues/288
           # - '3.12'
         django-version:
-          - '5.0.4'
+          - '5.0.14'
         tidb-version:
-          - 'v8.1.0'
-          - 'v7.5.1'
-          - 'v7.1.4'
-          - 'v6.5.8'
+          - 'v8.5.1'
+          - 'v8.1.2'
+          - 'v7.5.6'
+          - 'v7.1.6'
+          - 'v6.5.9'
           - 'v5.4.3'
         exclude:
           # Django introduced the `debug_transaction` feature in version 4.2.x,
           # but it does not consider databases that do not support savepoints(TiDB < 6.2.0),
           # as a result, all `assertNumQueries` in test cases failed.
           # https://github.com/django/django/commit/798e38c2b9c46ab72e2ee8c33dc822f01b194b1e
-          - django-version: '5.0.4'
+          - django-version: '5.0.14'
             tidb-version: 'v5.4.3'
 
     name: py${{ matrix.python-version }}_tidb${{ matrix.tidb-version }}_django${{ matrix.django-version }}

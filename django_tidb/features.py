@@ -165,7 +165,10 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "migrations.test_operations.OperationTests.test_alter_field_pk_mti_and_fk_to_base",
                 "migrations.test_operations.OperationTests.test_alter_field_pk_mti_fk",
                 "migrations.test_operations.OperationTests.test_create_model_with_boolean_expression_in_check_constraint",
+                # TiDB doesn't allow renaming columns referenced by generated columns (same as MySQL)
+                "migrations.test_operations.OperationTests.test_invalid_generated_field_changes_on_rename_virtual",
                 # Unsupported adding a stored generated column through ALTER TABLE
+                "migrations.test_operations.OperationTests.test_invalid_generated_field_changes_on_rename_stored",
                 "migrations.test_operations.OperationTests.test_add_field_after_generated_field",
                 "migrations.test_operations.OperationTests.test_add_generated_field_stored",
                 "migrations.test_operations.OperationTests.test_invalid_generated_field_changes_stored",
@@ -232,6 +235,16 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                         "migrations.test_commands.MigrateTests.test_migrate_syncdb_deferred_sql_executed_with_schemaeditor",
                         "schema.tests.SchemaTests.test_rename_column_renames_deferred_sql_references",
                         "schema.tests.SchemaTests.test_rename_table_renames_deferred_sql_references",
+                    }
+                }
+            )
+        if self.connection.tidb_version < (7, 2):
+            skips.update(
+                {
+                    "tidb72": {
+                        # TiDB support CHECK constraint from v7.2
+                        # https://github.com/pingcap/tidb/issues/41711
+                        "migrations.test_operations.OperationTests.test_create_model_constraint_percent_escaping",
                     }
                 }
             )
