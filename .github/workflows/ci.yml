@@ -87,13 +87,13 @@ jobs:
         python-version:
           - '3.11'
         django-version:
-          - '5.0.4'
+          - '5.0.14'
 
     name: vector-py${{ matrix.python-version }}_django${{ matrix.django-version }}
     runs-on: ubuntu-latest
     services:
       tidb:
-        image: wangdi4zm/tind:v8.5.1-standalone
+        image: wangdi4zm/tind:v8.5.1-with-tiflash
         ports:
           - 4000:4000
     steps:
