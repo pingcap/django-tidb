@@ -93,7 +93,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       tidb:
-        image: wangdi4zm/tind:v8.4.0-vector-index
+        image: wangdi4zm/tind:v8.5.1-standalone
         ports:
           - 4000:4000
     steps:
