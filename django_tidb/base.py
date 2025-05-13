@@ -12,7 +12,7 @@
 # limitations under the License.
 
 """
-MySQL database backend for Django.
+TiDB database backend for Django.
 Requires mysqlclient: https://pypi.org/project/mysqlclient/
 """
 from django.db.backends.mysql.base import (

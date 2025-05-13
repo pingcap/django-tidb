@@ -41,6 +41,7 @@ To install django-tidb, you need to select the version that corresponds with you
 
 |django|django-tidb|install command|
 |:----:|:---------:|:-------------:|
+|v5.1.x|v5.1.x|`pip install 'django-tidb~=5.1.0'`|
 |v5.0.x|v5.0.x|`pip install 'django-tidb~=5.0.0'`|
 |v4.2.x|v4.2.x|`pip install 'django-tidb~=4.2.0'`|
 |v4.1.x|v4.1.x|`pip install 'django-tidb~=4.1.0'`|
@@ -200,8 +201,8 @@ Test.objects.alias(distance=CosineDistance('embedding', [3, 1, 2])).filter(dista
 
 ## Supported versions
 
-- TiDB 5.0 and newer
-- Django 3.2, 4.1, 4.2 and 5.0
+- TiDB 5.4 and newer(https://www.pingcap.com/tidb-release-support-policy/)
+- Django 3.2, 4.1, 4.2, 5.0 and 5.1
 - Python 3.6 and newer(must match Django's Python version requirement)
 
 ## Test
