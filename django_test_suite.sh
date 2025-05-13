@@ -24,8 +24,8 @@ pip3 install -e .
 git clone --depth 1  --branch $DJANGO_VERSION https://github.com/django/django.git $DJANGO_TESTS_DIR/django
 cp tidb_settings.py $DJANGO_TESTS_DIR/django/tidb_settings.py
 cp tidb_settings.py $DJANGO_TESTS_DIR/django/tests/tidb_settings.py
-cp -r ./tests/tidb/ $DJANGO_TESTS_DIR/django/tests/tidb/
-cp -r ./tests/tidb_field_defaults/ $DJANGO_TESTS_DIR/django/tests/tidb_field_defaults/
+cp -rT ./tests/tidb $DJANGO_TESTS_DIR/django/tests/tidb
+cp -rT ./tests/tidb_field_defaults $DJANGO_TESTS_DIR/django/tests/tidb_field_defaults
 
 cd $DJANGO_TESTS_DIR/django && pip3 install -e . && pip3 install -r tests/requirements/py3.txt && pip3 install -r tests/requirements/mysql.txt; cd ../../
 cd $DJANGO_TESTS_DIR/django/tests

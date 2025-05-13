@@ -165,6 +165,8 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "migrations.test_operations.OperationTests.test_alter_field_pk_mti_and_fk_to_base",
                 "migrations.test_operations.OperationTests.test_alter_field_pk_mti_fk",
                 "migrations.test_operations.OperationTests.test_create_model_with_boolean_expression_in_check_constraint",
+                # TiDB doesn't support drop integer primary key
+                "migrations.test_operations.OperationTests.test_alter_id_pk_to_uuid_pk",
                 # TiDB doesn't allow renaming columns referenced by generated columns (same as MySQL)
                 "migrations.test_operations.OperationTests.test_invalid_generated_field_changes_on_rename_virtual",
                 # Unsupported adding a stored generated column through ALTER TABLE
