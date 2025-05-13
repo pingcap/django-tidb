@@ -51,16 +51,18 @@ class DatabaseSchemaEditor(MysqlDatabaseSchemaEditor):
         return not self._is_limited_data_type(field)
 
     def add_field(self, model, field):
-        if field.unique:
+        if field._unique:
             # TiDB does not support multiple operations with a single DDL statement,
             # so we need to execute the unique constraint creation separately.
             field._unique = False
             # Django set `cached_property` decorator for `unique` property,
             # so we need to clear the cached value.
-            del field.unique
+            if "unique" in field.__dict__:
+                del field.unique
             super().add_field(model, field)
             field._unique = True
-            del field.unique
+            if "unique" in field.__dict__:
+                del field.unique
             self.execute(self._create_unique_sql(model, [field]))
         else:
             super().add_field(model, field)

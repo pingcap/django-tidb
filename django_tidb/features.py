@@ -153,6 +153,10 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "migrations.test_operations.OperationTests.test_alter_field_pk",
                 "migrations.test_operations.OperationTests.test_alter_field_reloads_state_on_fk_target_changes",
                 "migrations.test_operations.OperationTests.test_rename_field_reloads_state_on_fk_target_changes",
+                # Unsupported drop primary key when the table is using clustered index
+                "migrations.test_operations.OperationTests.test_composite_pk_operations",
+                # 'Adding generated stored column through ALTER TABLE' is not supported for generated columns
+                "migrations.test_operations.OperationTests.test_generated_field_changes_output_field",
                 # Unsupported modifying the Reorg-Data types on the primary key
                 "migrations.test_operations.OperationTests.test_alter_field_pk_fk",
                 "migrations.test_operations.OperationTests.test_alter_field_pk_fk_char_to_int",
@@ -191,6 +195,9 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 # Wrong referenced_table_schema in information_schema.key_column_usage
                 # https://github.com/pingcap/tidb/issues/52350
                 "backends.mysql.test_introspection.TestCrossDatabaseRelations.test_omit_cross_database_relations",
+                # https://github.com/pingcap/tidb/issues/61091
+                "model_fields.test_jsonfield.TestQuerying.test_lookups_special_chars",
+                "model_fields.test_jsonfield.TestQuerying.test_lookups_special_chars_double_quotes",
             },
         }
         if self.connection.tidb_version < (5,):
