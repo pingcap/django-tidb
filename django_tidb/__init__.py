@@ -16,7 +16,7 @@
 
 from .patch import monkey_patch
 
-__version__ = "5.1.0"
+__version__ = "5.1.1"
 
 
 monkey_patch()
