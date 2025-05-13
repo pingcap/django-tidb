@@ -30,6 +30,9 @@ DATABASES = {
             "CHARSET": "utf8mb4",
             "COLLATION": "utf8mb4_general_ci",
         },
+        "OPTIONS": {
+            "init_command": "SET @@tidb_allow_remove_auto_inc = ON",
+        },
     },
     "other": {
         "ENGINE": "django_tidb",
@@ -41,6 +44,9 @@ DATABASES = {
             "NAME": "django_tests2",
             "CHARSET": "utf8mb4",
             "COLLATION": "utf8mb4_general_ci",
+        },
+        "OPTIONS": {
+            "init_command": "SET @@tidb_allow_remove_auto_inc = ON",
         },
     },
 }
