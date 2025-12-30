@@ -264,6 +264,15 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                     }
                 }
             )
+        if self.connection.tidb_version < (8, 5, 4):
+            skips.update(
+                {
+                    "tidb_before_854": {
+                        # https://github.com/pingcap/tidb/issues/52350
+                        "backends.mysql.test_introspection.TestCrossDatabaseRelations.test_omit_cross_database_relations",
+                    }
+                }
+            )
         if "ONLY_FULL_GROUP_BY" in self.connection.sql_mode:
             skips.update(
                 {
