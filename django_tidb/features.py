@@ -201,6 +201,10 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "model_fields.test_jsonfield.TestQuerying.test_lookups_special_chars_double_quotes",
                 # https://github.com/pingcap/tidb/issues/65334
                 "aggregation.tests.AggregateTestCase.test_any_value_aggregate_clause",
+                # This test relies on MySQL's implicit physical scan order,
+                # which is an implementation detail rather than a guaranteed feature
+                # https://gist.github.com/wd0517/17b30fed4cdffd08a23d18038cee6bc3
+                "aggregation.tests.AggregateTestCase.test_string_agg_filter_outerref",
             },
         }
         if self.connection.tidb_version < (5,):

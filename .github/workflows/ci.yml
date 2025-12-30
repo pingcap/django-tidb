@@ -115,7 +115,7 @@ jobs:
       - name: Hack for vector tests
         run: |
           sed '27a cp -rT ./tests/tidb_vector $DJANGO_TESTS_DIR/django/tests/tidb_vector' -i django_test_suite.sh
-          sed '31a pip install numpy~=1.0' -i django_test_suite.sh
+          sed '31a pip install numpy~=2.0' -i django_test_suite.sh
           cat django_test_suite.sh
           echo -n "tidb_vector" > django_test_apps.txt
           cat django_test_apps.txt
