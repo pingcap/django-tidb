@@ -50,7 +50,7 @@ DATABASES = {
         },
     },
 }
-DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 USE_TZ = False
 SECRET_KEY = "django_tests_secret_key"
 

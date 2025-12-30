@@ -30,6 +30,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
     # https://github.com/pingcap/tidb/issues/45474
     can_create_inline_fk = False
     order_by_nulls_first = True
+    supports_any_value = True
     create_test_procedure_without_params_sql = None
     create_test_procedure_with_int_param_sql = None
     test_collations = {
@@ -110,6 +111,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "ordering.tests.OrderingTests.test_orders_nulls_first_on_filtered_subquery",
                 # Unsupported modify column: this column has primary key flag
                 "schema.tests.SchemaTests.test_alter_auto_field_to_char_field",
+                "schema.tests.SchemaTests.test_alter_implicit_id_to_explicit",
                 # Unsupported modify column: can't remove auto_increment without @@tidb_allow_remove_auto_inc enabled
                 "schema.tests.SchemaTests.test_alter_auto_field_to_integer_field",
                 # Found wrong number (0) of check constraints for schema_author.height
@@ -181,23 +183,24 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "migrations.test_operations.OperationTests.test_invalid_generated_field_persistency_change",
                 "migrations.test_operations.OperationTests.test_remove_generated_field_stored",
                 "schema.tests.SchemaTests.test_add_generated_field_contains",
+                "schema.tests.SchemaTests.test_add_db_comment_generated_field",
                 # Failed to modify column's default value when has expression index
                 # https://github.com/pingcap/tidb/issues/52355
                 "migrations.test_operations.OperationTests.test_alter_field_with_func_index",
                 # TiDB has limited support for default value expressions
                 # https://docs.pingcap.com/tidb/dev/data-type-default-values#specify-expressions-as-default-values
                 "migrations.test_operations.OperationTests.test_add_field_database_default_function",
+                "migrations.test_operations.OperationTests.test_alter_field_add_database_default_func",
                 "schema.tests.SchemaTests.test_add_text_field_with_db_default",
                 "schema.tests.SchemaTests.test_db_default_equivalent_sql_noop",
                 "schema.tests.SchemaTests.test_db_default_output_field_resolving",
                 # about Pessimistic/Optimistic Transaction Model
                 "select_for_update.tests.SelectForUpdateTests.test_raw_lock_not_available",
-                # Wrong referenced_table_schema in information_schema.key_column_usage
-                # https://github.com/pingcap/tidb/issues/52350
-                "backends.mysql.test_introspection.TestCrossDatabaseRelations.test_omit_cross_database_relations",
                 # https://github.com/pingcap/tidb/issues/61091
                 "model_fields.test_jsonfield.TestQuerying.test_lookups_special_chars",
                 "model_fields.test_jsonfield.TestQuerying.test_lookups_special_chars_double_quotes",
+                # https://github.com/pingcap/tidb/issues/65334
+                "aggregation.tests.AggregateTestCase.test_any_value_aggregate_clause",
             },
         }
         if self.connection.tidb_version < (5,):
