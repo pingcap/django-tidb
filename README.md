@@ -41,6 +41,7 @@ To install django-tidb, you need to select the version that corresponds with you
 
 |django|django-tidb|install command|
 |:----:|:---------:|:-------------:|
+|v6.0.x|v6.0.x|`pip install 'django-tidb~=6.0.0'`|
 |v5.2.x|v5.2.x|`pip install 'django-tidb~=5.2.0'`|
 |v5.1.x|v5.1.x|`pip install 'django-tidb~=5.1.0'`|
 |v5.0.x|v5.0.x|`pip install 'django-tidb~=5.0.0'`|
@@ -63,8 +64,7 @@ DATABASES = {
         'PORT': 4000,
     },
 }
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-USE_TZ = False
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SECRET_KEY = 'django_tests_secret_key'
 ```
 
@@ -203,7 +203,7 @@ Test.objects.alias(distance=CosineDistance('embedding', [3, 1, 2])).filter(dista
 ## Supported versions
 
 - TiDB 5.4 and newer(https://www.pingcap.com/tidb-release-support-policy/)
-- Django 3.2, 4.1, 4.2, 5.0, 5.1 and 5.2
+- Django 3.2, 4.1, 4.2, 5.0, 5.1, 5.2 and 6.0
 - Python 3.6 and newer(must match Django's Python version requirement)
 
 ## Test
@@ -211,8 +211,8 @@ Test.objects.alias(distance=CosineDistance('embedding', [3, 1, 2])).filter(dista
 create your virtualenv with:
 
 ```bash
-$ virtualenv venv
-$ source venv/bin/activate
+$ python -m venv .venv
+$ source .venv/bin/activate
 ```
 
 you can use the command ```deactivate``` to exit from the virtual environment.
@@ -220,7 +220,7 @@ you can use the command ```deactivate``` to exit from the virtual environment.
 run all integration tests.
 
 ```bash
-$ DJANGO_VERSION=3.2.12 python run_testing_worker.py
+$ DJANGO_VERSION=6.0 python run_testing_worker.py
 ```
 
 ## Migrate from previous versions

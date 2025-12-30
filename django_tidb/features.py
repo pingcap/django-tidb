@@ -30,6 +30,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
     # https://github.com/pingcap/tidb/issues/45474
     can_create_inline_fk = False
     order_by_nulls_first = True
+    supports_any_value = True
     create_test_procedure_without_params_sql = None
     create_test_procedure_with_int_param_sql = None
     test_collations = {
@@ -74,7 +75,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
     @cached_property
     def django_test_skips(self):
         skips = {
-            "This doesn't work on MySQL.": {
+            "This doesn't work on MySQL": {
                 "db_functions.comparison.test_greatest.GreatestTests.test_coalesce_workaround",
                 "db_functions.comparison.test_least.LeastTests.test_coalesce_workaround",
                 # UPDATE ... ORDER BY syntax on MySQL/MariaDB does not support ordering by related fields
@@ -110,6 +111,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "ordering.tests.OrderingTests.test_orders_nulls_first_on_filtered_subquery",
                 # Unsupported modify column: this column has primary key flag
                 "schema.tests.SchemaTests.test_alter_auto_field_to_char_field",
+                "schema.tests.SchemaTests.test_alter_implicit_id_to_explicit",
                 # Unsupported modify column: can't remove auto_increment without @@tidb_allow_remove_auto_inc enabled
                 "schema.tests.SchemaTests.test_alter_auto_field_to_integer_field",
                 # Found wrong number (0) of check constraints for schema_author.height
@@ -181,29 +183,34 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
                 "migrations.test_operations.OperationTests.test_invalid_generated_field_persistency_change",
                 "migrations.test_operations.OperationTests.test_remove_generated_field_stored",
                 "schema.tests.SchemaTests.test_add_generated_field_contains",
+                "schema.tests.SchemaTests.test_add_db_comment_generated_field",
                 # Failed to modify column's default value when has expression index
                 # https://github.com/pingcap/tidb/issues/52355
                 "migrations.test_operations.OperationTests.test_alter_field_with_func_index",
                 # TiDB has limited support for default value expressions
                 # https://docs.pingcap.com/tidb/dev/data-type-default-values#specify-expressions-as-default-values
                 "migrations.test_operations.OperationTests.test_add_field_database_default_function",
+                "migrations.test_operations.OperationTests.test_alter_field_add_database_default_func",
                 "schema.tests.SchemaTests.test_add_text_field_with_db_default",
                 "schema.tests.SchemaTests.test_db_default_equivalent_sql_noop",
                 "schema.tests.SchemaTests.test_db_default_output_field_resolving",
                 # about Pessimistic/Optimistic Transaction Model
                 "select_for_update.tests.SelectForUpdateTests.test_raw_lock_not_available",
-                # Wrong referenced_table_schema in information_schema.key_column_usage
-                # https://github.com/pingcap/tidb/issues/52350
-                "backends.mysql.test_introspection.TestCrossDatabaseRelations.test_omit_cross_database_relations",
                 # https://github.com/pingcap/tidb/issues/61091
                 "model_fields.test_jsonfield.TestQuerying.test_lookups_special_chars",
                 "model_fields.test_jsonfield.TestQuerying.test_lookups_special_chars_double_quotes",
+                # https://github.com/pingcap/tidb/issues/65334
+                "aggregation.tests.AggregateTestCase.test_any_value_aggregate_clause",
+                # This test relies on MySQL's implicit physical scan order,
+                # which is an implementation detail rather than a guaranteed feature
+                # https://gist.github.com/wd0517/17b30fed4cdffd08a23d18038cee6bc3
+                "aggregation.tests.AggregateTestCase.test_string_agg_filter_outerref",
             },
         }
         if self.connection.tidb_version < (5,):
             skips.update(
                 {
-                    "tidb4": {
+                    "tidb_before_5": {
                         # Unsupported modify column
                         "schema.tests.SchemaTests.test_rename",
                         "schema.tests.SchemaTests.test_m2m_rename_field_in_target_model",
@@ -224,7 +231,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
         if self.connection.tidb_version < (6, 3):
             skips.update(
                 {
-                    "auto_random": {
+                    "tidb_before_63": {
                         "tidb.test_tidb_auto_random.TiDBAutoRandomMigrateTests"
                         ".test_create_table_explicit_auto_random_field_with_shard_bits_and_range",
                         "tidb.test_tidb_auto_random.TiDBAutoRandomMigrateTests"
@@ -235,7 +242,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
         if self.connection.tidb_version < (6, 6):
             skips.update(
                 {
-                    "tidb653": {
+                    "tidb_before_66": {
                         "fixtures_regress.tests.TestFixtures.test_loaddata_raises_error_when_fixture_has_invalid_foreign_key",
                         "migrations.test_operations.OperationTests.test_autofield__bigautofield_foreignfield_growth",
                         "migrations.test_operations.OperationTests.test_smallfield_autofield_foreignfield_growth",
@@ -250,10 +257,19 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
         if self.connection.tidb_version < (7, 2):
             skips.update(
                 {
-                    "tidb72": {
+                    "tidb_before_72": {
                         # TiDB support CHECK constraint from v7.2
                         # https://github.com/pingcap/tidb/issues/41711
                         "migrations.test_operations.OperationTests.test_create_model_constraint_percent_escaping",
+                    }
+                }
+            )
+        if self.connection.tidb_version < (8, 5, 4):
+            skips.update(
+                {
+                    "tidb_before_854": {
+                        # https://github.com/pingcap/tidb/issues/52350
+                        "backends.mysql.test_introspection.TestCrossDatabaseRelations.test_omit_cross_database_relations",
                     }
                 }
             )

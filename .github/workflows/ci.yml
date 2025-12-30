@@ -30,12 +30,11 @@ jobs:
       fail-fast: false
       matrix:
         python-version:
-          - '3.10'
-          - '3.11'
           - '3.12'
           - '3.13'
+          - '3.14'
         django-version:
-          - '5.2.9'
+          - '6.0'
         tidb-version:
           - 'v8.5.4'
           - 'v8.1.2'
@@ -48,7 +47,7 @@ jobs:
           # but it does not consider databases that do not support savepoints(TiDB < 6.2.0),
           # as a result, all `assertNumQueries` in test cases failed.
           # https://github.com/django/django/commit/798e38c2b9c46ab72e2ee8c33dc822f01b194b1e
-          - django-version: '5.2.9'
+          - django-version: '6.0'
             tidb-version: 'v5.4.3'
 
     name: py${{ matrix.python-version }}_tidb${{ matrix.tidb-version }}_django${{ matrix.django-version }}
@@ -86,15 +85,15 @@ jobs:
       fail-fast: false
       matrix:
         python-version:
-          - '3.13'
+          - '3.14'
         django-version:
-          - '5.2.9'
+          - '6.0'
 
     name: vector-py${{ matrix.python-version }}_django${{ matrix.django-version }}
     runs-on: ubuntu-latest
     services:
       tidb:
-        image: wangdi4zm/tind:v8.5.1-with-tiflash
+        image: wangdi4zm/tind:v8.5.4-with-tiflash
         ports:
           - 4000:4000
     steps:
@@ -116,7 +115,7 @@ jobs:
       - name: Hack for vector tests
         run: |
           sed '27a cp -rT ./tests/tidb_vector $DJANGO_TESTS_DIR/django/tests/tidb_vector' -i django_test_suite.sh
-          sed '31a pip install numpy~=1.0' -i django_test_suite.sh
+          sed '31a pip install numpy~=2.0' -i django_test_suite.sh
           cat django_test_suite.sh
           echo -n "tidb_vector" > django_test_apps.txt
           cat django_test_apps.txt
