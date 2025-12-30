@@ -35,11 +35,11 @@ jobs:
           - '3.12'
           - '3.13'
         django-version:
-          - '5.2.1'
+          - '5.2.9'
         tidb-version:
-          - 'v8.5.1'
+          - 'v8.5.4'
           - 'v8.1.2'
-          - 'v7.5.6'
+          - 'v7.5.7'
           - 'v7.1.6'
           - 'v6.5.9'
           - 'v5.4.3'
@@ -48,7 +48,7 @@ jobs:
           # but it does not consider databases that do not support savepoints(TiDB < 6.2.0),
           # as a result, all `assertNumQueries` in test cases failed.
           # https://github.com/django/django/commit/798e38c2b9c46ab72e2ee8c33dc822f01b194b1e
-          - django-version: '5.2.1'
+          - django-version: '5.2.9'
             tidb-version: 'v5.4.3'
 
     name: py${{ matrix.python-version }}_tidb${{ matrix.tidb-version }}_django${{ matrix.django-version }}
@@ -88,7 +88,7 @@ jobs:
         python-version:
           - '3.13'
         django-version:
-          - '5.2.1'
+          - '5.2.9'
 
     name: vector-py${{ matrix.python-version }}_django${{ matrix.django-version }}
     runs-on: ubuntu-latest
