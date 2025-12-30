@@ -75,7 +75,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
     @cached_property
     def django_test_skips(self):
         skips = {
-            "This doesn't work on MySQL.": {
+            "This doesn't work on MySQL": {
                 "db_functions.comparison.test_greatest.GreatestTests.test_coalesce_workaround",
                 "db_functions.comparison.test_least.LeastTests.test_coalesce_workaround",
                 # UPDATE ... ORDER BY syntax on MySQL/MariaDB does not support ordering by related fields
@@ -210,7 +210,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
         if self.connection.tidb_version < (5,):
             skips.update(
                 {
-                    "tidb4": {
+                    "tidb_before_5": {
                         # Unsupported modify column
                         "schema.tests.SchemaTests.test_rename",
                         "schema.tests.SchemaTests.test_m2m_rename_field_in_target_model",
@@ -231,7 +231,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
         if self.connection.tidb_version < (6, 3):
             skips.update(
                 {
-                    "auto_random": {
+                    "tidb_before_63": {
                         "tidb.test_tidb_auto_random.TiDBAutoRandomMigrateTests"
                         ".test_create_table_explicit_auto_random_field_with_shard_bits_and_range",
                         "tidb.test_tidb_auto_random.TiDBAutoRandomMigrateTests"
@@ -242,7 +242,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
         if self.connection.tidb_version < (6, 6):
             skips.update(
                 {
-                    "tidb653": {
+                    "tidb_before_66": {
                         "fixtures_regress.tests.TestFixtures.test_loaddata_raises_error_when_fixture_has_invalid_foreign_key",
                         "migrations.test_operations.OperationTests.test_autofield__bigautofield_foreignfield_growth",
                         "migrations.test_operations.OperationTests.test_smallfield_autofield_foreignfield_growth",
@@ -257,7 +257,7 @@ class DatabaseFeatures(MysqlDatabaseFeatures):
         if self.connection.tidb_version < (7, 2):
             skips.update(
                 {
-                    "tidb72": {
+                    "tidb_before_72": {
                         # TiDB support CHECK constraint from v7.2
                         # https://github.com/pingcap/tidb/issues/41711
                         "migrations.test_operations.OperationTests.test_create_model_constraint_percent_escaping",
