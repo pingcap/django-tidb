@@ -17,6 +17,7 @@
 # it look like this:
 #    5.7.25-TiDB-v5.1.0-64-gfb0eaf7b4
 # or 5.7.25-TiDB-v5.2.0-alpha-385-g0f0b06ab5
+# or 8.0.11-TiDB-CLOUD.202603.9
 class TiDBVersion:
     _version = (0, 0, 0)
 
@@ -24,7 +25,10 @@ class TiDBVersion:
         version_list = version.split("-")
         if len(version_list) < 3:
             return False
-        tidb_version_list = version_list[2].lstrip("v").split(".")
+
+        tidb_version_list = (
+            version_list[2].removeprefix("CLOUD.").lstrip("v").split(".")
+        )
         self._version = tuple(int(x) for x in tidb_version_list)
         return True
 
