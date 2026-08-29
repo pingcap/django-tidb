@@ -32,14 +32,15 @@ def patch_model_functions():
 
 
 def patch_model_options():
-    # Patch `tidb_auto_id_cache` to options.DEFAULT_NAMES,
+    extra_meta_options = ("tidb_auto_id_cache", "tiflash_replica",)
+    # Patch `extra_meta_options` to options.DEFAULT_NAMES,
     # so that user can define it in model's Meta class.
-    options.DEFAULT_NAMES += ("tidb_auto_id_cache",)
+    options.DEFAULT_NAMES += extra_meta_options
     # Because Django named import DEFAULT_NAMES in migrations,
     # so we need to patch it again here.
-    # Django will record `tidb_auto_id_cache` in migration files,
+    # Django will record `extra_meta_options` in migration files,
     # and then restore it when applying migrations.
-    state.DEFAULT_NAMES += ("tidb_auto_id_cache",)
+    state.DEFAULT_NAMES += extra_meta_options
 
 
 def monkey_patch():

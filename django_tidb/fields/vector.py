@@ -143,7 +143,9 @@ class VectorIndex(Index):
     class Document(models.Model):
         content = models.TextField()
         embedding = VectorField(dimensions=3)
+
         class Meta:
+            tiflash_replica = 1  # When defining a vector index, the tiflash_replica must be non-zero
             indexes = [
                 VectorIndex(CosineDistance("embedding"), name='idx_cos'),
             ]
@@ -189,10 +191,7 @@ class VectorIndex(Index):
         )
         fields = None
         col_suffixes = None
-        # TODO: remove the tiflash replica setting statement from sql_template
-        #       after we support `ADD_TIFLASH_ON_DEMAND` in the `CREATE VECTOR INDEX ...`
-        sql_template = """ALTER TABLE %(table)s SET TIFLASH REPLICA 1;
-        CREATE VECTOR INDEX %(name)s ON %(table)s%(using)s (%(columns)s)%(extra)s"""
+        sql_template = """CREATE VECTOR INDEX %(name)s ON %(table)s%(using)s (%(columns)s)%(extra)s"""
         return schema_editor._create_index_sql(
             model,
             fields=fields,
@@ -214,7 +213,7 @@ class DistanceBase(Func):
 
     def __init__(self, expression, vector=None, **extra):
         """
-        expression: the name of a field, or an expression returing a vector
+        expression: the name of a field, or an expression returning a vector
         vector: a vector to compare against
         """
         expressions = [expression]
