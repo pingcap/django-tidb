@@ -1,0 +1,14 @@
+# TiDB configuration for running the Django test suite.
+# Mirrors the settings of the wangdi4zm/tind images previously used in CI.
+
+[experimental]
+# Django's test suite creates expression indexes with functions that TiDB
+# rejects by default (error 8200, "unsafe functions"), for example in
+# migrations.test_operations.OperationTests.test_add_func_index.
+allow-expression-index = true
+
+[tikv-client.async-commit]
+# Single-node test cluster: no clock drift to guard against, so avoid the
+# extra commit latency.
+safe-window = 0
+allowed-clock-drift = 0

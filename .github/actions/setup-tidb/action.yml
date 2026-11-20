@@ -1,0 +1,41 @@
+name: Setup TiDB
+description: >-
+  Start a local TiDB cluster (PD + TiKV + TiDB, optionally TiFlash) with
+  `tiup playground`, listening on 127.0.0.1:4000.
+
+inputs:
+  tidb-version:
+    description: TiDB version to start, for example `v8.5.8`.
+    required: true
+  tiflash:
+    description: Number of TiFlash instances (0 to disable TiFlash).
+    required: false
+    default: '0'
+  timeout:
+    description: Seconds to wait for each startup attempt.
+    required: false
+    default: '600'
+  attempts:
+    description: Number of startup attempts.
+    required: false
+    default: '3'
+
+runs:
+  using: composite
+  steps:
+    # Cache only the downloaded components; mirror metadata is fetched fresh
+    # by the TiUP installer and playground data directories are not reused.
+    - name: Cache TiUP components
+      uses: actions/cache@v6
+      with:
+        path: ~/.tiup/components
+        key: tiup-${{ runner.os }}-${{ runner.arch }}-${{ inputs.tidb-version }}-tiflash${{ inputs.tiflash }}
+
+    - name: Start TiDB
+      shell: bash
+      run: '"$GITHUB_ACTION_PATH/start-tidb.sh" "$TIDB_VERSION" "$TIFLASH_COUNT"'
+      env:
+        TIDB_VERSION: ${{ inputs.tidb-version }}
+        TIFLASH_COUNT: ${{ inputs.tiflash }}
+        TIDB_START_TIMEOUT: ${{ inputs.timeout }}
+        TIDB_START_ATTEMPTS: ${{ inputs.attempts }}
