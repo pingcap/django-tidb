@@ -202,9 +202,12 @@ Test.objects.alias(distance=CosineDistance('embedding', [3, 1, 2])).filter(dista
 
 ## Supported versions
 
-- TiDB 5.4 and newer(https://www.pingcap.com/tidb-release-support-policy/)
-- Django 3.2, 4.1, 4.2, 5.0, 5.1, 5.2 and 6.0
-- Python 3.6 and newer(must match Django's Python version requirement)
+- TiDB 6.2 and newer. TiDB before v6.2.0 does not support `SAVEPOINT`, which
+  Django 4.2 and newer rely on. CI tests the
+  [LTS releases](https://www.pingcap.com/tidb-release-support-policy/) from v6.5.
+- Django 6.0. For other Django versions, use the matching django-tidb release
+  (see [Installing django-tidb](#installing-django-tidb)).
+- Python 3.12 and newer, as required by Django 6.0.
 
 ## Test
 
