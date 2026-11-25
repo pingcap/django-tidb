@@ -141,7 +141,7 @@ But there are some limitations:
 
 ### Vector (Beta)
 
-Now only TiDB Cloud Serverless cluster supports vector data type, see [Integrating Vector Search into TiDB Serverless for AI Applications](https://www.pingcap.com/blog/integrating-vector-search-into-tidb-for-ai-applications/).
+TiDB supports the vector data type on TiDB Cloud, and on TiDB Self-Managed from v8.4.0 (experimental). See [Vector Search Overview](https://docs.pingcap.com/tidb/stable/vector-search-overview/).
 
 `VectorField` is still in beta, and the API may change in the future.
 
