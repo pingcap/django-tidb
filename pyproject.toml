@@ -38,3 +38,7 @@ packages = ["django_tidb", "django_tidb.fields"]
 
 [tool.setuptools.dynamic]
 version = {attr = "django_tidb.__version__"}
+
+[tool.black]
+# Keep in sync with requires-python.
+target-version = ["py312"]
