@@ -37,7 +37,7 @@ pymysql.install_as_MySQLdb()
 
 To install django-tidb, you need to select the version that corresponds with your Django version. Please refer to the table below for guidance:
 
-> The minor release number of Django doesn't correspond to the minor release number of django-tidb. Use the latest minor release of each.
+> The patch release number of Django doesn't correspond to the patch release number of django-tidb. For example, django-tidb 6.0.x works with every Django 6.0.x. Use the latest patch release of each.
 
 |django|django-tidb|install command|
 |:----:|:---------:|:-------------:|
