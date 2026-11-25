@@ -5,7 +5,6 @@ from django.db.utils import ProgrammingError
 from django.test import TransactionTestCase
 from django.test.utils import isolate_apps
 
-
 AUTO_ID_CACHE_PATTERN = re.compile(r"\/\*T!\[auto_id_cache\] AUTO_ID_CACHE=(\d+) \*\/")
 
 
