@@ -1,0 +1,18 @@
+version: 2
+updates:
+  # Keep the GitHub Actions used by CI up to date.
+  - package-ecosystem: "github-actions"
+    directories:
+      # Workflows under .github/workflows.
+      - "/"
+      # Local composite actions (.github/actions/<name>/action.yml).
+      - "/.github/actions/*"
+    schedule:
+      interval: "weekly"
+    # Update all actions in a single pull request.
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: "ci"
