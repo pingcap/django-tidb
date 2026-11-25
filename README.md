@@ -165,6 +165,8 @@ You can also add an HNSW vector index when creating the table. For more informat
 A vector index is built on TiFlash, so the cluster needs a TiFlash node. django-tidb sets a TiFlash replica for the table (`ALTER TABLE ... SET TIFLASH REPLICA 1`) before it creates the index.
 
 ```python
+from django_tidb.fields.vector import L2Distance, VectorField, VectorIndex
+
 class Test(models.Model):
     embedding = VectorField(dimensions=3)
     class Meta:
@@ -188,9 +190,13 @@ TiDB Vector support below distance functions:
 - `CosineDistance`
 - `NegativeInnerProduct`
 
+They can be imported from `django_tidb.fields.vector`. See [Vector Functions and Operators](https://docs.pingcap.com/tidb/stable/vector-search-functions-and-operators/).
+
 Get instances with vector field and calculate distance to a given vector:
 
 ```python
+from django_tidb.fields.vector import CosineDistance
+
 Test.objects.annotate(distance=CosineDistance('embedding', [3, 1, 2]))
 ```
 
