@@ -73,9 +73,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ### Using `AUTO_RANDOM`
 
-[`AUTO_RANDOM`](https://docs.pingcap.com/tidb/stable/auto-random) is a feature in TiDB that generates unique IDs for a table automatically. It is similar to `AUTO_INCREMENT`, but it can avoid write hotspot in a single storage node caused by TiDB assigning consecutive IDs. It also have some restrictions, please refer to the [documentation](https://docs.pingcap.com/tidb/stable/auto-random#restrictions).
+[`AUTO_RANDOM`](https://docs.pingcap.com/tidb/stable/auto-random) is a feature in TiDB that generates unique IDs for a table automatically. It is similar to `AUTO_INCREMENT`, but it can avoid write hotspot in a single storage node caused by TiDB assigning consecutive IDs. It also has some restrictions, please refer to the [documentation](https://docs.pingcap.com/tidb/stable/auto-random#restrictions).
 
-To use `AUTO_RANDOM` in Django, you can do it by following two ways:
+To use `AUTO_RANDOM` in Django, you can do it in either of the following two ways:
 
 1. Declare globally in `settings.py` as shown below, it will affect all models:
 
@@ -122,7 +122,7 @@ Migrate from `AUTO_INCREMENT` to `AUTO_RANDOM`:
 
 ### Using `AUTO_ID_CACHE`
 
-[`AUTO_ID_CACHE`](https://docs.pingcap.com/tidb/stable/auto-increment#auto_id_cache) allow users to set the cache size for allocating the auto-increment ID, as you may know, TiDB guarantees that AUTO_INCREMENT values are monotonic (always increasing) on a per-server basis, but its value may appear to jump dramatically if an INSERT operation is performed against another TiDB Server, This is caused by the fact that each server has its own cache which is controlled by `AUTO_ID_CACHE`. But from TiDB v6.4.0, it introduces a centralized auto-increment ID allocating service, you can enable [*MySQL compatibility mode*](https://docs.pingcap.com/tidb/stable/auto-increment#mysql-compatibility-mode) by set `AUTO_ID_CACHE` to `1` when creating a table without losing performance.
+[`AUTO_ID_CACHE`](https://docs.pingcap.com/tidb/stable/auto-increment#auto_id_cache) allows users to set the cache size for allocating auto-increment IDs. TiDB guarantees that `AUTO_INCREMENT` values are monotonic (always increasing) on a per-server basis, but the value may appear to jump dramatically if an `INSERT` is performed against another TiDB server, because each server has its own cache, whose size is controlled by `AUTO_ID_CACHE`. TiDB v6.4.0 introduced a centralized auto-increment ID allocating service: setting `AUTO_ID_CACHE` to `1` when creating a table enables [*MySQL compatibility mode*](https://docs.pingcap.com/tidb/stable/auto-increment#mysql-compatibility-mode) without losing performance.
 
 To use `AUTO_ID_CACHE` in Django, you can specify `tidb_auto_id_cache` in the model's `Meta` class as shown below when creating a new table:
 
@@ -183,7 +183,7 @@ Test.objects.create(embedding=[1, 2, 3])
 
 #### Get instances with vector field
 
-TiDB Vector support below distance functions:
+TiDB supports the following vector distance functions:
 
 - `L1Distance`
 - `L2Distance`
