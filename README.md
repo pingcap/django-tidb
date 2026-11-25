@@ -65,7 +65,6 @@ DATABASES = {
     },
 }
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-SECRET_KEY = 'django_tests_secret_key'
 ```
 
 - [AUTO_RANDOM](#using-auto_random)
