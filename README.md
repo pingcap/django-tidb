@@ -161,7 +161,8 @@ class Test(models.Model):
     embedding = VectorField(dimensions=3)
 ```
 
-You can also add an hnsw index when creating the table, for more information, please refer to the [documentation](https://docs.google.com/document/d/15eAO0xrvEd6_tTxW_zEko4CECwnnSwQg8GGrqK1Caiw).
+You can also add an HNSW vector index when creating the table. For more information, see [Vector Search Index](https://docs.pingcap.com/tidb/stable/vector-search-index/).
+A vector index is built on TiFlash, so the cluster needs a TiFlash node. django-tidb sets a TiFlash replica for the table (`ALTER TABLE ... SET TIFLASH REPLICA 1`) before it creates the index.
 
 ```python
 class Test(models.Model):
