@@ -114,7 +114,7 @@ Migrate from `AUTO_INCREMENT` to `AUTO_RANDOM`:
     }
     ```
 
-3. Finnaly, migrate it to `BigAutoRandomField(bigint)`.
+3. Finally, migrate it to `BigAutoRandomField(bigint)`.
 
 > **Note**
 >
@@ -224,7 +224,7 @@ $ python -m venv .venv
 $ source .venv/bin/activate
 ```
 
-you can use the command ```deactivate``` to exit from the virtual environment.
+you can use the command `deactivate` to exit from the virtual environment.
 
 run all integration tests.
 
@@ -234,7 +234,7 @@ $ DJANGO_VERSION=6.0 python run_testing_worker.py
 
 ## Migrate from previous versions
 
-Releases on PyPi before 3.0.0 are published from repository https://github.com/blacktear23/django_tidb. This repository is a new implementation and released under versions from 3.0.0. No backwards compatibility is ensured. The most significant points are:
+Releases on PyPI before 3.0.0 are published from repository https://github.com/blacktear23/django_tidb. This repository is a new implementation and released under versions from 3.0.0. No backwards compatibility is ensured. The most significant points are:
 
 - Engine name is `django_tidb` instead of `django_tidb.tidb`.
 
