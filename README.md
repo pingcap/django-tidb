@@ -54,22 +54,49 @@ To install django-tidb, you need to select the version that corresponds with you
 Set `'ENGINE': 'django_tidb'` in your settings to this:
 
 ```python
+import os
+
 DATABASES = {
     'default': {
         'ENGINE': 'django_tidb',
         'NAME': 'django',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
+        'USER': os.environ['TIDB_USER'],
+        'PASSWORD': os.environ['TIDB_PASSWORD'],
+        'HOST': os.environ['TIDB_HOST'],
         'PORT': 4000,
     },
 }
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ```
 
+> **Note**
+>
+> Connect with a dedicated database user that has only the privileges your application needs, not `root`. Keep the password out of `settings.py`, for example in an environment variable as shown above.
+
+- [Connecting over TLS](#connecting-over-tls)
 - [AUTO_RANDOM](#using-auto_random)
 - [AUTO_ID_CACHE](#using-auto_id_cache)
 - [Vector (Beta)](#vector-beta)
+
+### Connecting over TLS
+
+Use TLS when the connection to TiDB leaves the local host. TiDB Cloud requires it. With mysqlclient, set `ssl_mode` and the CA certificate in `OPTIONS`:
+
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django_tidb',
+        ...
+        'OPTIONS': {
+            'ssl_mode': 'VERIFY_IDENTITY',
+            'ssl': {'ca': '/etc/ssl/certs/ca-certificates.crt'},
+        },
+    },
+}
+```
+
+`VERIFY_IDENTITY` encrypts the connection and also checks that the server certificate is valid for the host name. The CA certificate path depends on your OS (for example `/etc/ssl/cert.pem` on macOS). See [Connect to TiDB Cloud with TLS](https://docs.pingcap.com/tidbcloud/secure-connections-to-serverless-clusters/) for details.
+
 
 ### Using `AUTO_RANDOM`
 

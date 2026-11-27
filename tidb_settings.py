@@ -11,6 +11,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Settings for running Django's test suite against a local, throwaway TiDB
+# (see django_test_suite.sh). Not meant for production use: the defaults
+# connect as root without a password.
+
 import os
 
 hosts = os.getenv("TIDB_HOST", "127.0.0.1")
