@@ -42,7 +42,7 @@ jobs:
         django-version:
           - '6.0'
         tidb-version:
-          - 'v8.5.4'
+          - 'v8.5.8'
           - 'v8.1.2'
           - 'v7.5.7'
           - 'v7.1.6'
@@ -59,12 +59,6 @@ jobs:
     name: py${{ matrix.python-version }}_tidb${{ matrix.tidb-version }}_django${{ matrix.django-version }}
     runs-on: ubuntu-latest
 
-    services:
-      tidb:
-        image: wangdi4zm/tind:${{ matrix.tidb-version }}-standalone
-        ports:
-          - 4000:4000
-
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -80,6 +74,11 @@ jobs:
           python -m pip install tox tox-gh-actions
           sudo apt-get update
           sudo apt-get install -y libmemcached-dev zlib1g-dev
+
+      - name: Setup TiDB
+        uses: ./.github/actions/setup-tidb
+        with:
+          tidb-version: ${{ matrix.tidb-version }}
 
       - name: Run tests
         run: tox
@@ -97,11 +96,6 @@ jobs:
 
     name: vector-py${{ matrix.python-version }}_django${{ matrix.django-version }}
     runs-on: ubuntu-latest
-    services:
-      tidb:
-        image: wangdi4zm/tind:v8.5.4-with-tiflash
-        ports:
-          - 4000:4000
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -117,6 +111,12 @@ jobs:
           python -m pip install tox tox-gh-actions
           sudo apt-get update
           sudo apt-get install -y libmemcached-dev zlib1g-dev
+
+      - name: Setup TiDB with TiFlash
+        uses: ./.github/actions/setup-tidb
+        with:
+          tidb-version: v8.5.8
+          tiflash: 1
 
       - name: Hack for vector tests
         run: |
