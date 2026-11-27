@@ -37,7 +37,7 @@ pymysql.install_as_MySQLdb()
 
 To install django-tidb, you need to select the version that corresponds with your Django version. Please refer to the table below for guidance:
 
-> The minor release number of Django doesn't correspond to the minor release number of django-tidb. Use the latest minor release of each.
+> The patch release number of Django doesn't correspond to the patch release number of django-tidb. For example, django-tidb 6.0.x works with every Django 6.0.x. Use the latest patch release of each.
 
 |django|django-tidb|install command|
 |:----:|:---------:|:-------------:|
@@ -65,7 +65,6 @@ DATABASES = {
     },
 }
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-SECRET_KEY = 'django_tests_secret_key'
 ```
 
 - [AUTO_RANDOM](#using-auto_random)
@@ -74,9 +73,9 @@ SECRET_KEY = 'django_tests_secret_key'
 
 ### Using `AUTO_RANDOM`
 
-[`AUTO_RANDOM`](https://docs.pingcap.com/tidb/stable/auto-random) is a feature in TiDB that generates unique IDs for a table automatically. It is similar to `AUTO_INCREMENT`, but it can avoid write hotspot in a single storage node caused by TiDB assigning consecutive IDs. It also have some restrictions, please refer to the [documentation](https://docs.pingcap.com/tidb/stable/auto-random#restrictions).
+[`AUTO_RANDOM`](https://docs.pingcap.com/tidb/stable/auto-random) is a feature in TiDB that generates unique IDs for a table automatically. It is similar to `AUTO_INCREMENT`, but it can avoid write hotspot in a single storage node caused by TiDB assigning consecutive IDs. It also has some restrictions, please refer to the [documentation](https://docs.pingcap.com/tidb/stable/auto-random#restrictions).
 
-To use `AUTO_RANDOM` in Django, you can do it by following two ways:
+To use `AUTO_RANDOM` in Django, you can do it in either of the following two ways:
 
 1. Declare globally in `settings.py` as shown below, it will affect all models:
 
@@ -115,7 +114,7 @@ Migrate from `AUTO_INCREMENT` to `AUTO_RANDOM`:
     }
     ```
 
-3. Finnaly, migrate it to `BigAutoRandomField(bigint)`.
+3. Finally, migrate it to `BigAutoRandomField(bigint)`.
 
 > **Note**
 >
@@ -123,7 +122,7 @@ Migrate from `AUTO_INCREMENT` to `AUTO_RANDOM`:
 
 ### Using `AUTO_ID_CACHE`
 
-[`AUTO_ID_CACHE`](https://docs.pingcap.com/tidb/stable/auto-increment#auto_id_cache) allow users to set the cache size for allocating the auto-increment ID, as you may know, TiDB guarantees that AUTO_INCREMENT values are monotonic (always increasing) on a per-server basis, but its value may appear to jump dramatically if an INSERT operation is performed against another TiDB Server, This is caused by the fact that each server has its own cache which is controlled by `AUTO_ID_CACHE`. But from TiDB v6.4.0, it introduces a centralized auto-increment ID allocating service, you can enable [*MySQL compatibility mode*](https://docs.pingcap.com/tidb/stable/auto-increment#mysql-compatibility-mode) by set `AUTO_ID_CACHE` to `1` when creating a table without losing performance.
+[`AUTO_ID_CACHE`](https://docs.pingcap.com/tidb/stable/auto-increment#auto_id_cache) allows users to set the cache size for allocating auto-increment IDs. TiDB guarantees that `AUTO_INCREMENT` values are monotonic (always increasing) on a per-server basis, but the value may appear to jump dramatically if an `INSERT` is performed against another TiDB server, because each server has its own cache, whose size is controlled by `AUTO_ID_CACHE`. TiDB v6.4.0 introduced a centralized auto-increment ID allocating service: setting `AUTO_ID_CACHE` to `1` when creating a table enables [*MySQL compatibility mode*](https://docs.pingcap.com/tidb/stable/auto-increment#mysql-compatibility-mode) without losing performance.
 
 To use `AUTO_ID_CACHE` in Django, you can specify `tidb_auto_id_cache` in the model's `Meta` class as shown below when creating a new table:
 
@@ -142,7 +141,7 @@ But there are some limitations:
 
 ### Vector (Beta)
 
-Now only TiDB Cloud Serverless cluster supports vector data type, see [Integrating Vector Search into TiDB Serverless for AI Applications](https://www.pingcap.com/blog/integrating-vector-search-into-tidb-for-ai-applications/).
+TiDB supports the vector data type on TiDB Cloud, and on TiDB Self-Managed from v8.4.0 (experimental). See [Vector Search Overview](https://docs.pingcap.com/tidb/stable/vector-search-overview/).
 
 `VectorField` is still in beta, and the API may change in the future.
 
@@ -162,9 +161,12 @@ class Test(models.Model):
     embedding = VectorField(dimensions=3)
 ```
 
-You can also add an hnsw index when creating the table, for more information, please refer to the [documentation](https://docs.google.com/document/d/15eAO0xrvEd6_tTxW_zEko4CECwnnSwQg8GGrqK1Caiw).
+You can also add an HNSW vector index when creating the table. For more information, see [Vector Search Index](https://docs.pingcap.com/tidb/stable/vector-search-index/).
+A vector index is built on TiFlash, so the cluster needs a TiFlash node. django-tidb sets a TiFlash replica for the table (`ALTER TABLE ... SET TIFLASH REPLICA 1`) before it creates the index.
 
 ```python
+from django_tidb.fields.vector import L2Distance, VectorField, VectorIndex
+
 class Test(models.Model):
     embedding = VectorField(dimensions=3)
     class Meta:
@@ -181,16 +183,20 @@ Test.objects.create(embedding=[1, 2, 3])
 
 #### Get instances with vector field
 
-TiDB Vector support below distance functions:
+TiDB supports the following vector distance functions:
 
 - `L1Distance`
 - `L2Distance`
 - `CosineDistance`
 - `NegativeInnerProduct`
 
+They can be imported from `django_tidb.fields.vector`. See [Vector Functions and Operators](https://docs.pingcap.com/tidb/stable/vector-search-functions-and-operators/).
+
 Get instances with vector field and calculate distance to a given vector:
 
 ```python
+from django_tidb.fields.vector import CosineDistance
+
 Test.objects.annotate(distance=CosineDistance('embedding', [3, 1, 2]))
 ```
 
@@ -202,9 +208,12 @@ Test.objects.alias(distance=CosineDistance('embedding', [3, 1, 2])).filter(dista
 
 ## Supported versions
 
-- TiDB 5.4 and newer(https://www.pingcap.com/tidb-release-support-policy/)
-- Django 3.2, 4.1, 4.2, 5.0, 5.1, 5.2 and 6.0
-- Python 3.6 and newer(must match Django's Python version requirement)
+- TiDB 6.2 and newer. TiDB before v6.2.0 does not support `SAVEPOINT`, which
+  Django 4.2 and newer rely on. CI tests the
+  [LTS releases](https://www.pingcap.com/tidb-release-support-policy/) from v6.5.
+- Django 6.0. For other Django versions, use the matching django-tidb release
+  (see [Installing django-tidb](#installing-django-tidb)).
+- Python 3.12 and newer, as required by Django 6.0.
 
 ## Test
 
@@ -215,7 +224,7 @@ $ python -m venv .venv
 $ source .venv/bin/activate
 ```
 
-you can use the command ```deactivate``` to exit from the virtual environment.
+you can use the command `deactivate` to exit from the virtual environment.
 
 run all integration tests.
 
@@ -225,7 +234,7 @@ $ DJANGO_VERSION=6.0 python run_testing_worker.py
 
 ## Migrate from previous versions
 
-Releases on PyPi before 3.0.0 are published from repository https://github.com/blacktear23/django_tidb. This repository is a new implementation and released under versions from 3.0.0. No backwards compatibility is ensured. The most significant points are:
+Releases on PyPI before 3.0.0 are published from repository https://github.com/blacktear23/django_tidb. This repository is a new implementation and released under versions from 3.0.0. No backwards compatibility is ensured. The most significant points are:
 
 - Engine name is `django_tidb` instead of `django_tidb.tidb`.
 
