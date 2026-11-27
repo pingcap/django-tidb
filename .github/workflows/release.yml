@@ -51,6 +51,10 @@ jobs:
     environment:
       name: pypi
       url: https://pypi.org/project/django-tidb/
+    permissions:
+      # Trusted Publishing: PyPI accepts an OIDC token issued for this
+      # workflow and the "pypi" environment, so no API token is stored.
+      id-token: write
     steps:
     - name: Download the distribution packages
       uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
@@ -60,6 +64,5 @@ jobs:
     - name: Publish distribution 📦 to PyPI
       uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
       with:
-        password: ${{ secrets.PYPI_API_TOKEN }}
         verbose: true
         print-hash: true
