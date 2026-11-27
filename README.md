@@ -80,7 +80,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ### Connecting over TLS
 
-Use TLS when the connection to TiDB leaves the local host. TiDB Cloud requires it. With mysqlclient, set `ssl_mode` and the CA certificate in `OPTIONS`:
+Use TLS when the connection to TiDB leaves the local host. TiDB Cloud Starter and Essential require TLS for public endpoint connections. With mysqlclient, set `ssl_mode` and the CA certificate in `OPTIONS`:
 
 ```python
 DATABASES = {
@@ -95,7 +95,11 @@ DATABASES = {
 }
 ```
 
-`VERIFY_IDENTITY` encrypts the connection and also checks that the server certificate is valid for the host name. The CA certificate path depends on your OS (for example `/etc/ssl/cert.pem` on macOS). See [Connect to TiDB Cloud with TLS](https://docs.pingcap.com/tidbcloud/secure-connections-to-serverless-clusters/) for details.
+`VERIFY_IDENTITY` encrypts the connection and also checks that the server certificate is valid for the host name. The CA certificate path depends on your OS (for example `/etc/ssl/cert.pem` on macOS).
+
+For TiDB Cloud Dedicated, download the cluster's CA certificate from the TiDB Cloud console and set it as `ca` instead of the system CA bundle.
+
+For details, see [TLS Connections to TiDB Cloud Starter or Essential](https://docs.pingcap.com/tidbcloud/secure-connections-to-serverless-clusters/) and [TLS Connections to TiDB Cloud Dedicated](https://docs.pingcap.com/tidbcloud/tidb-cloud-tls-connect-to-dedicated/).
 
 
 ### Using `AUTO_RANDOM`
