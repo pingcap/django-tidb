@@ -28,8 +28,6 @@ from .operations import DatabaseOperations
 from .schema import DatabaseSchemaEditor
 from .version import TiDBVersion
 
-server_version = TiDBVersion()
-
 
 class DatabaseWrapper(MysqlDatabaseWrapper):
     # Django has some hard code for mysql in `JSONFields` and tests through check vendor name,
@@ -90,13 +88,17 @@ class DatabaseWrapper(MysqlDatabaseWrapper):
 
     @cached_property
     def tidb_version(self):
-        match = server_version.match(self.tidb_server_info)
+        # Parse into a new object for each connection. A module-level object
+        # would be shared by all connections and threads, so one connection
+        # could read the version of another between match() and .version.
+        version = TiDBVersion()
+        match = version.match(self.tidb_server_info)
         if not match:
             raise Exception(
                 "Unable to determine Tidb version from version string %r"
                 % self.tidb_server_info
             )
-        return server_version.version
+        return version.version
 
     @cached_property
     def sql_mode(self):
