@@ -35,26 +35,25 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # Every Python version supported by the Django series, tested against
+        # every TiDB version.
         python-version:
           - '3.12'
           - '3.13'
           - '3.14'
         django-version:
-          - '6.0'
+          - '6.0.10'
+        # The latest patch release of each TiDB LTS series.
+        # TiDB < 6.2.0 is not tested: it does not support savepoints, and
+        # Django >= 4.2 (`debug_transaction`) makes all `assertNumQueries`
+        # fail on such databases.
+        # https://github.com/django/django/commit/798e38c2b9c46ab72e2ee8c33dc822f01b194b1e
         tidb-version:
           - 'v8.5.8'
           - 'v8.1.2'
-          - 'v7.5.7'
+          - 'v7.5.8'
           - 'v7.1.6'
-          - 'v6.5.9'
-          - 'v5.4.3'
-        exclude:
-          # Django introduced the `debug_transaction` feature in version 4.2.x,
-          # but it does not consider databases that do not support savepoints(TiDB < 6.2.0),
-          # as a result, all `assertNumQueries` in test cases failed.
-          # https://github.com/django/django/commit/798e38c2b9c46ab72e2ee8c33dc822f01b194b1e
-          - django-version: '6.0'
-            tidb-version: 'v5.4.3'
+          - 'v6.5.12'
 
     name: py${{ matrix.python-version }}_tidb${{ matrix.tidb-version }}_django${{ matrix.django-version }}
     runs-on: ubuntu-latest
@@ -92,7 +91,7 @@ jobs:
         python-version:
           - '3.14'
         django-version:
-          - '6.0'
+          - '6.0.10'
 
     name: vector-py${{ matrix.python-version }}_django${{ matrix.django-version }}
     runs-on: ubuntu-latest
